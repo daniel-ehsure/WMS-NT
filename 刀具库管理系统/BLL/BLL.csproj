@@ -39,6 +39,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LayoutBLL.cs" />
     <Compile Include="CommonBLL.cs" />
+    <Compile Include="WarehouseBLL.cs" />
+    <Compile Include="PlaceAreaBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

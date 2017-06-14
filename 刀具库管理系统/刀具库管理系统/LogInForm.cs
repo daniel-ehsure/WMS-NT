@@ -50,6 +50,7 @@ namespace UI
         private void btnLogin_Click(object sender, EventArgs e)
         {
             Log.saveLog(txtUserName.Text.Trim() + " 登陆");
+
             if (validate())//验证成功
             {
                 //封装数据对象
@@ -78,6 +79,7 @@ namespace UI
                     Global.longid = user.C_loginID;
                     Global.login = user;
 
+                    Log.saveLog(txtUserName.Text.Trim() + " 登陆成功！");
 
                     try
                     {
@@ -106,12 +108,15 @@ namespace UI
                 {
                     if (loginTimes == Global.loginTime)
                     {
+                        Log.saveLog(txtUserName.Text.Trim() + " 超出登陆失败次数，系统自动退出！");
                         Application.Exit();
                     }
                     else
                     {
                         MessageBox.Show("你第[" + (loginTimes + 1) + "]次登录没有成功，请核对用户名称、登录密码！", "提示：你有" + (Global.loginTime - loginTimes) + "次机会", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         loginTimes++;
+
+                        Log.saveLog(txtUserName.Text.Trim() + " 第" + loginTimes + "登陆失败！");
                     }
                 }
             }

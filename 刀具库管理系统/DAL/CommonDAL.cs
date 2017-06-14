@@ -12,8 +12,30 @@ namespace DAL
 {
   public class CommonDAL
     {
-        private DBHelper dbHelper = new SQLDBHelper();
+        public DBHelper dbHelper = new SQLDBHelper();
 
+        public string GetNextCode(string tableName, int lenght, string condition)
+        {
+            try
+            {
+                int code;
+                string sql = "select max(c_id) from " + tableName + " where 1=1 " + condition;
+
+                object obj = dbHelper.GetScalar(sql);
+                code = Convert.IsDBNull(obj) ? 1 : Convert.ToInt32(obj) + 1;
+
+                return code.ToString().PadLeft(lenght, '0');
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+        }
         /// <summary>
         /// 是否重名
         /// </summary>
@@ -21,7 +43,7 @@ namespace DAL
         /// <param name="name"></param>
         /// <param name="meno"></param>
         /// <returns></returns>
-        public bool isExit(string tableName, string name)
+        public bool IsExit(string tableName, string name)
         {
             try
             {
@@ -58,13 +80,46 @@ namespace DAL
         }
 
         /// <summary>
+        /// 根据编码获得信息
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DataRow GetById(String tableName, string id)
+        {
+            DataRow dr = null;
+
+            string sql = " SELECT * from " + tableName + " where C_ID = '" + id + "'";
+
+            try
+            {
+                DataTable dt = dbHelper.GetDataSet(sql);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    dr = dt.Rows[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+
+            return dr;
+        }
+
+        /// <summary>
         /// 获得全部信息
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="name"></param>
         /// <param name="meno"></param>
         /// <returns></returns>
-        public DataTable getList(string tableName)
+        public DataTable GetList(string tableName)
         {
             string sql = "select * from " + tableName;
             DataTable dt = new DataTable();

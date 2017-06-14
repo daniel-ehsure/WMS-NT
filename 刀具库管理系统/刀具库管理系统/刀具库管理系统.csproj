@@ -44,6 +44,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicWarehouse\WarehouseAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicWarehouse\WarehouseAdd.Designer.cs">
+      <DependentUpon>WarehouseAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicWarehouse\WarehouseList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicWarehouse\WarehouseList.Designer.cs">
+      <DependentUpon>WarehouseList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicWarehouse\WarehouseModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicWarehouse\WarehouseModify.Designer.cs">
+      <DependentUpon>WarehouseModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +94,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BasicWarehouse\WarehouseAdd.resx">
+      <DependentUpon>WarehouseAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicWarehouse\WarehouseList.resx">
+      <DependentUpon>WarehouseList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicWarehouse\WarehouseModify.resx">
+      <DependentUpon>WarehouseModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmployeeForm.resx">
       <DependentUpon>EmployeeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +131,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicPlaceArea\PlaceAreaAdd.resx">
+      <DependentUpon>PlaceAreaAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicPlaceArea\PlaceAreaList.resx">
+      <DependentUpon>PlaceAreaList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicPlaceArea\PlaceAreaModify.resx">
+      <DependentUpon>PlaceAreaModify.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -136,6 +172,24 @@
     </Compile>
     <Compile Include="LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicPlaceArea\PlaceAreaAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicPlaceArea\PlaceAreaAdd.Designer.cs">
+      <DependentUpon>PlaceAreaAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicPlaceArea\PlaceAreaList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicPlaceArea\PlaceAreaList.Designer.cs">
+      <DependentUpon>PlaceAreaList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicPlaceArea\PlaceAreaModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicPlaceArea\PlaceAreaModify.Designer.cs">
+      <DependentUpon>PlaceAreaModify.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

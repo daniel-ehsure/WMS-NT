@@ -44,6 +44,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicMaterielType\MaterielTypeAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMaterielType\MaterielTypeAdd.Designer.cs">
+      <DependentUpon>MaterielTypeAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicMaterielType\MaterielTypeModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMaterielType\MaterielTypeModify.Designer.cs">
+      <DependentUpon>MaterielTypeModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="BasicWarehouse\WarehouseAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +98,12 @@
     <Compile Include="MainForm.designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BasicMaterielType\MaterielTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMaterielType\MaterielTypeForm.Designer.cs">
+      <DependentUpon>MaterielTypeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModPassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +112,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BasicMaterielType\MaterielTypeAdd.resx">
+      <DependentUpon>MaterielTypeAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMaterielType\MaterielTypeModify.resx">
+      <DependentUpon>MaterielTypeModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BasicWarehouse\WarehouseAdd.resx">
       <DependentUpon>WarehouseAdd.cs</DependentUpon>
     </EmbeddedResource>
@@ -114,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMaterielType\MaterielTypeForm.resx">
+      <DependentUpon>MaterielTypeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModPassword.resx">
       <DependentUpon>ModPassword.cs</DependentUpon>
@@ -239,6 +266,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Resources\use.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BasicMateriel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

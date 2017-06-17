@@ -430,7 +430,7 @@ namespace DAL
         /// <returns></returns>
         public DataTable getStationList(string id, string name)
         {
-            string sql = "SELECT [C_ID], [C_name], [c_meno]  FROM [T_JB_STATION] where 1=1 ";
+            string sql = "SELECT [C_ID], [C_name], [c_MEMO]  FROM [T_JB_STATION] where 1=1 ";
             DataTable dt = new DataTable();
             try
             {

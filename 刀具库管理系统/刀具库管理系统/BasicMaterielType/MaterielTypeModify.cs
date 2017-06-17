@@ -11,12 +11,12 @@ using Model;
 
 namespace UI
 {
-    public partial class PlaceAreaModify : Form
+    public partial class MaterielTypeModify : Form
     {
-        PlaceAreaBLL bll = new PlaceAreaBLL();
+        MaterielTypeBLL bll = new MaterielTypeBLL();
         string id;
 
-        public PlaceAreaModify(string id)
+        public MaterielTypeModify(string id)
         {
             InitializeComponent();
 
@@ -30,7 +30,7 @@ namespace UI
         {
             try
             {
-                T_JB_PLACEAREA mo = bll.GetById(id);
+                T_JB_MATERIELTYPE mo = bll.GetById(id);
 
                 if (mo == null)
                 {
@@ -39,9 +39,12 @@ namespace UI
                 }
                 else
                 {
-                    lblId.Text = mo.C_ID;
-                    txtName.Text = mo.C_NAME;
-                    txtMemo.Text = mo.C_MEMO;
+                    this.lblId.Text = mo.C_id;
+                    this.txtName.Text = mo.C_name;
+                    this.lblPid.Text = mo.C_pre_id;
+                    this.txtMemo.Text = mo.C_memo;
+                    cbEnd.Checked = mo.I_end == 0 ? false : true;
+                    cbJx.Checked = mo.I_if_jx == 0 ? false : true;
                 }
             }
             catch (Exception)
@@ -58,28 +61,30 @@ namespace UI
         private void btnSave_Click(object sender, EventArgs e)
         {
 
-            if (bll.IsExitNotSelf(id, txtName.Text.Trim()))
+            if (bll.IsExit(lblPid.Text, txtName.Text.Trim(), id))
             {
                 MessageBox.Show("名称重复！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                T_JB_PLACEAREA mo = new T_JB_PLACEAREA();
+                T_JB_MATERIELTYPE mo = new T_JB_MATERIELTYPE();
 
-                mo.C_ID = id;
-                mo.C_NAME = txtName.Text.Trim();
-                mo.C_MEMO = txtMemo.Text.Trim();
-
+                mo.C_id = id;
+                mo.C_pre_id = lblPid.Text;
+                mo.C_name = txtName.Text.Trim();
+                mo.C_memo = txtMemo.Text.Trim();
+                mo.I_end = cbEnd.Checked ? 1 : 0;
+                mo.I_if_jx = cbJx.Checked ? 1 : 0;
 
                 if (bll.Update(mo))
                 {
                     MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("修改货区成功！Id：" + lblId.Text);
+                    Log.saveLog("修改物料类型成功！Id：" + lblId.Text);
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

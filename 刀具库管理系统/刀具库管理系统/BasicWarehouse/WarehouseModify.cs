@@ -28,20 +28,35 @@ namespace UI
 
         private void Init()
         {
-            T_JB_WAREHOUSE mo = bll.GetById(id);
+            try
+            {
+                T_JB_WAREHOUSE mo = bll.GetById(id);
 
-            lblId.Text = mo.C_ID;
-            txtName.Text = mo.C_NAME;
-            txtCom.Text = mo.C_COM;
-            txtBaudrate.Text = mo.C_BAUDRATE;
-            txtPort.Text = mo.C_PORT;
-            txtWritePort.Text = mo.C_WRITE_PORT;
-            txtReadPort.Text = mo.C_READ_PORT;
-            txtIpAddress.Text = mo.C_IP_ADDRESS;
-            txtType.Text = mo.C_TYPE;
-            cbAuto.Checked = mo.I_AUTO == 0 ? false : true;
-            cbIn.Checked = mo.I_IN_MOBILE == 0 ? false : true;
-            cbOut.Checked = mo.I_OUT_MOBILE == 0 ? false : true;
+                if (mo == null)
+                {
+                    MessageBox.Show("获取信息失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Close();
+                }
+                else
+                {
+                    lblId.Text = mo.C_ID;
+                    txtName.Text = mo.C_NAME;
+                    txtCom.Text = mo.C_COM;
+                    txtBaudrate.Text = mo.C_BAUDRATE;
+                    txtPort.Text = mo.C_PORT;
+                    txtWritePort.Text = mo.C_WRITE_PORT;
+                    txtReadPort.Text = mo.C_READ_PORT;
+                    txtIpAddress.Text = mo.C_IP_ADDRESS;
+                    txtType.Text = mo.C_TYPE;
+                    cbAuto.Checked = mo.I_AUTO == 0 ? false : true;
+                    cbIn.Checked = mo.I_IN_MOBILE == 0 ? false : true;
+                    cbOut.Checked = mo.I_OUT_MOBILE == 0 ? false : true;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnQuit_Click(object sender, EventArgs e)

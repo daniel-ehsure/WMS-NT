@@ -41,7 +41,6 @@ namespace DAL
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="name"></param>
-        /// <param name="meno"></param>
         /// <returns></returns>
         public bool IsExit(string tableName, string name)
         {
@@ -116,8 +115,6 @@ namespace DAL
         /// 获得全部信息
         /// </summary>
         /// <param name="tableName"></param>
-        /// <param name="name"></param>
-        /// <param name="meno"></param>
         /// <returns></returns>
         public DataTable GetList(string tableName)
         {
@@ -189,7 +186,7 @@ namespace DAL
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="name"></param>
-        /// <param name="meno"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public bool isExit(string tableName, string name, string id)
         {
@@ -226,58 +223,6 @@ namespace DAL
             {
                 dbHelper.getConnection().Close();
             }
-        }
-
-        /// <summary>
-        /// 获得全部信息
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="name"></param>
-        /// <param name="meno"></param>
-        /// <returns></returns>
-        public DataTable getListForEmpty(string tableName, string name, string meno)
-        {
-            string sql = "select * from " + tableName + " where 1=1";
-            DataTable dt = new DataTable();
-            try
-            {
-                if (name != null || meno != null)
-                {
-                    Hashtable table = new Hashtable();
-
-                    if (name != null)
-                    {
-                        sql += " and C_NAME like @C_NAME";
-                        table.Add("C_NAME", "%" + name + "%");
-                    }
-
-                    if (meno != null)
-                    {
-                        sql += " and c_meno like @c_meno";
-                        table.Add("c_meno", "%" + meno + "%");
-                    }
-
-                    sql += " order by convert(numeric,c_id) asc";
-                    DbParameter[] parms = dbHelper.getParams(table);
-                    dt = dbHelper.GetDataSet(sql, parms);
-                }
-                else
-                {
-                    sql += " order by convert(numeric,c_id) asc";
-                    dt = dbHelper.GetDataSet(sql);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Log.write(ex.Message + "\r\n" + ex.StackTrace);
-                throw ex;
-            }
-            finally
-            {
-                dbHelper.getConnection().Close();
-            }
-            return dt;
         }
     }
 }

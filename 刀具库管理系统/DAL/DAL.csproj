@@ -39,6 +39,7 @@
     <Compile Include="LayoutDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommonDAL.cs" />
+    <Compile Include="MaterielTypeDAL.cs" />
     <Compile Include="WarehouseDAL.cs" />
     <Compile Include="PlaceAreaDAL.cs" />
   </ItemGroup>

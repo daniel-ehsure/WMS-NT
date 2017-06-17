@@ -359,7 +359,7 @@ namespace DAL
                 sql = " delete from OUTLOOK_TABLE_JB_USER where JIAOSE in ";
                 sql += ccid;
                 dbHelper.ExecuteCommand(sql);
-                sql = " delete from T_JB_MATERIEL_USER where JIAOSE in ";
+                sql = " delete from T_JB_MATERIEL_USER where C_JIAOSE in ";
                 sql += ccid;
                 dbHelper.ExecuteCommand(sql);
                 sql = "delete from T_JB_LOGIN_PASS where C_LOGID in ";

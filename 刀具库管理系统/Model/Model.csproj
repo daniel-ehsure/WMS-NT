@@ -45,6 +45,7 @@
     <Compile Include="T_JB_MaterielType.cs" />
     <Compile Include="T_JB_WAREHOUSE.cs" />
     <Compile Include="T_JB_PLACEAREA.cs" />
+    <Compile Include="T_DM_UNIT.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

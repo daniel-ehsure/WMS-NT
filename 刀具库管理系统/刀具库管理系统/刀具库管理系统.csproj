@@ -195,6 +195,15 @@
     <EmbeddedResource Include="BasicPlaceArea\PlaceAreaModify.resx">
       <DependentUpon>PlaceAreaModify.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BasicUnit\UnitAdd.resx">
+      <DependentUpon>UnitAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicUnit\UnitForm.resx">
+      <DependentUpon>UnitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicUnit\UnitModify.resx">
+      <DependentUpon>UnitModify.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -244,6 +253,24 @@
     </Compile>
     <Compile Include="BasicPlaceArea\PlaceAreaModify.Designer.cs">
       <DependentUpon>PlaceAreaModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicUnit\UnitAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicUnit\UnitAdd.Designer.cs">
+      <DependentUpon>UnitAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicUnit\UnitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicUnit\UnitForm.Designer.cs">
+      <DependentUpon>UnitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicUnit\UnitModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicUnit\UnitModify.Designer.cs">
+      <DependentUpon>UnitModify.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

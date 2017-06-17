@@ -17,13 +17,13 @@ namespace UI
 
         #region 初始化树需要
         public Hashtable messages = new Hashtable();
-        private List<T_JB_MATERIELTYPE> code_Child = new List<T_JB_MATERIELTYPE>();
+        private List<T_JB_MaterielType> code_Child = new List<T_JB_MaterielType>();
         private TreeNode currnetNode = null;
-        public T_JB_MATERIELTYPE currentType = null;
+        public T_JB_MaterielType currentType = null;
 
         #endregion
 
-        public T_JB_MATERIELTYPE addType = null;
+        public T_JB_MaterielType addType = null;
 
         bool isQuery = false;
 
@@ -51,7 +51,7 @@ namespace UI
                 //c_id = null;
                 //c_name = null;
                 currnetNode = e.Node;
-                currentType = (T_JB_MATERIELTYPE)messages[e.Node];
+                currentType = (T_JB_MaterielType)messages[e.Node];
                 if (currentType.I_end == 1)
                 {
                     this.button1.Enabled = false;
@@ -206,7 +206,7 @@ namespace UI
             TreeNode root = new TreeNode("全部");
             root.ImageIndex = 2;
 
-            T_JB_MATERIELTYPE all = new T_JB_MATERIELTYPE();
+            T_JB_MaterielType all = new T_JB_MaterielType();
             all.C_name = "全部";
             all.C_id = "0";
             messages.Add(root, all);
@@ -237,7 +237,7 @@ namespace UI
         /// <param name="node"></param>
         private void addTree(string id, TreeNode node)
         {
-            List<T_JB_MATERIELTYPE> list = bll.GetAllChild(id);
+            List<T_JB_MaterielType> list = bll.GetAllChild(id);
 
             if (list.Count <= 0)
             {
@@ -340,7 +340,7 @@ namespace UI
         /// 给树添加新增的类型节点
         /// </summary>
         /// <param name="dm_type"></param>
-        public void addNewType(T_JB_MATERIELTYPE dm_type)
+        public void addNewType(T_JB_MaterielType dm_type)
         {
             TreeNode subnode = new TreeNode(dm_type.C_name);
             subnode.ImageIndex = 1;
@@ -359,7 +359,7 @@ namespace UI
             {
                 return;
             }
-            T_JB_MATERIELTYPE tempType = (T_JB_MATERIELTYPE)messages[tnParent];
+            T_JB_MaterielType tempType = (T_JB_MaterielType)messages[tnParent];
             if (tempType.C_id == strValue)
             {
 
@@ -412,12 +412,12 @@ namespace UI
             {
                 return;
             }
-            T_JB_MATERIELTYPE tempType = (T_JB_MATERIELTYPE)messages[tnParent];
+            T_JB_MaterielType tempType = (T_JB_MaterielType)messages[tnParent];
             if (tempType.C_id == strValue)
             {
                 messages.Remove(tnParent);
 
-                T_JB_MATERIELTYPE newType = bll.GetById(strValue);
+                T_JB_MaterielType newType = bll.GetById(strValue);
                 tnParent.Text = newType.C_name;
                 messages.Add(tnParent, newType);
                 return;

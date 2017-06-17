@@ -56,6 +56,24 @@
     <Compile Include="BasicMaterielType\MaterielTypeModify.Designer.cs">
       <DependentUpon>MaterielTypeModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="BasicMateriel\MaterielForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMateriel\MaterielForm.Designer.cs">
+      <DependentUpon>MaterielForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicMateriel\MaterielModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMateriel\MaterielModify.designer.cs">
+      <DependentUpon>MaterielModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicMateriel\MaterielAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMateriel\MaterielAdd.designer.cs">
+      <DependentUpon>MaterielAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="BasicWarehouse\WarehouseAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +135,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BasicMaterielType\MaterielTypeModify.resx">
       <DependentUpon>MaterielTypeModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMateriel\MaterielForm.resx">
+      <DependentUpon>MaterielForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMateriel\MaterielModify.resx">
+      <DependentUpon>MaterielModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMateriel\MaterielAdd.resx">
+      <DependentUpon>MaterielAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BasicWarehouse\WarehouseAdd.resx">
       <DependentUpon>WarehouseAdd.cs</DependentUpon>
@@ -266,9 +293,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Resources\use.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BasicMateriel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

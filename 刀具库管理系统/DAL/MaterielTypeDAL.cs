@@ -18,16 +18,16 @@ namespace DAL
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public List<T_JB_MATERIELTYPE> getAllChild(string pid)
+        public List<T_JB_MaterielType> getAllChild(string pid)
         {
-            List<T_JB_MATERIELTYPE> list = new List<T_JB_MATERIELTYPE>();
+            List<T_JB_MaterielType> list = new List<T_JB_MaterielType>();
             string sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE, I_IF_JX, I_END, C_MEMO FROM  T_JB_MATERIELTYPE  where c_pre_id = '" + pid + "'  order by c_id";
             try
             {
                 DataTable ds = dbHelper.GetDataSet(sql);
                 for (int i = 0; i < ds.Rows.Count; i++)
                 {
-                    T_JB_MATERIELTYPE dm_type = new T_JB_MATERIELTYPE();
+                    T_JB_MaterielType dm_type = new T_JB_MaterielType();
 
                     dm_type.C_id = Convert.IsDBNull(ds.Rows[i]["C_ID"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_ID"]);
                     dm_type.C_name = Convert.IsDBNull(ds.Rows[i]["C_NAME"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_NAME"]);
@@ -165,7 +165,7 @@ namespace DAL
         /// <param name="name"></param>
         /// <param name="MEMO"></param>
         /// <returns></returns>
-        public string Save(T_JB_MATERIELTYPE dm_type)
+        public string Save(T_JB_MaterielType dm_type)
         {
             try
             {
@@ -349,16 +349,16 @@ namespace DAL
         /// <param name="tableName"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T_JB_MATERIELTYPE getById(string id)
+        public T_JB_MaterielType getById(string id)
         {
-            T_JB_MATERIELTYPE area = null;
+            T_JB_MaterielType area = null;
             string sql = " SELECT * from  T_JB_MATERIELTYPE where C_ID = '" + id + "'";
             try
             {
                 DataTable dt = dbHelper.GetDataSet(sql);
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    area = new T_JB_MATERIELTYPE();
+                    area = new T_JB_MaterielType();
                     area.C_id = dt.Rows[0]["C_ID"].ToString();
                     area.C_name = dt.Rows[0]["C_NAME"].ToString();
                     area.C_pre_id = DBNull.Value.Equals(dt.Rows[0]["C_PRE_ID"]) ? "0" : dt.Rows[0]["C_PRE_ID"].ToString();
@@ -430,7 +430,7 @@ namespace DAL
         /// </summary>
         /// <param name="dm_type">类型信息</param>
         /// <returns></returns>
-        public bool update(T_JB_MATERIELTYPE dm_type)
+        public bool update(T_JB_MaterielType dm_type)
         {
             try
             {

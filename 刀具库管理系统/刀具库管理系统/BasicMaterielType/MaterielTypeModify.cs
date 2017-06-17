@@ -30,7 +30,7 @@ namespace UI
         {
             try
             {
-                T_JB_MATERIELTYPE mo = bll.GetById(id);
+                T_JB_MaterielType mo = bll.GetById(id);
 
                 if (mo == null)
                 {
@@ -67,7 +67,7 @@ namespace UI
             }
             else
             {
-                T_JB_MATERIELTYPE mo = new T_JB_MATERIELTYPE();
+                T_JB_MaterielType mo = new T_JB_MaterielType();
 
                 mo.C_id = id;
                 mo.C_pre_id = lblPid.Text;

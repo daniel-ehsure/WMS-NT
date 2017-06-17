@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model
 {
-    public class T_JB_MATERIELTYPE
+    public class T_JB_MaterielType
     {      
         private string c_id;
         /// <summary>

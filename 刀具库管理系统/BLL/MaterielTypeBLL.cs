@@ -15,7 +15,7 @@ namespace BLL
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-       public List<T_JB_MATERIELTYPE> GetAllChild(string pid)
+       public List<T_JB_MaterielType> GetAllChild(string pid)
        {
            return dal.getAllChild(pid);
        }
@@ -49,7 +49,7 @@ namespace BLL
         /// <param name="name"></param>
         /// <param name="meno"></param>
         /// <returns></returns>
-       public string Save(T_JB_MATERIELTYPE dm_type)
+       public string Save(T_JB_MaterielType dm_type)
        {
            return dal.Save(dm_type);
        }
@@ -86,7 +86,7 @@ namespace BLL
         /// <param name="tableName"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-       public T_JB_MATERIELTYPE GetById(string id)
+       public T_JB_MaterielType GetById(string id)
        {
            return dal.getById(id);
        }
@@ -108,7 +108,7 @@ namespace BLL
         /// </summary>
         /// <param name="dm_type">类型信息</param>
         /// <returns></returns>
-       public bool Update(T_JB_MATERIELTYPE dm_type)
+       public bool Update(T_JB_MaterielType dm_type)
        {
            return dal.update(dm_type);
        }

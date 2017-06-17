@@ -41,7 +41,8 @@
     <Compile Include="T_JB_COMPONENT.cs" />
     <Compile Include="T_JB_COMPONENT_PROCEDURE.cs" />
     <Compile Include="T_Jb_Login_Pass.cs" />
-    <Compile Include="T_JB_MATERIELTYPE.cs" />
+    <Compile Include="T_JB_Materiel.cs" />
+    <Compile Include="T_JB_MaterielType.cs" />
     <Compile Include="T_JB_WAREHOUSE.cs" />
     <Compile Include="T_JB_PLACEAREA.cs" />
   </ItemGroup>

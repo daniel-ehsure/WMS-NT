@@ -40,6 +40,7 @@
     <Compile Include="LayoutBLL.cs" />
     <Compile Include="CommonBLL.cs" />
     <Compile Include="MaterielTypeBLL.cs" />
+    <Compile Include="MaterielBLL.cs" />
     <Compile Include="WarehouseBLL.cs" />
     <Compile Include="PlaceAreaBLL.cs" />
   </ItemGroup>

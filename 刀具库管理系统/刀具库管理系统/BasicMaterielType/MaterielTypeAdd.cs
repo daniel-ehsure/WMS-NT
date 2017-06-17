@@ -41,7 +41,7 @@ namespace UI
             }
             else
             {
-                T_JB_MATERIELTYPE temp = new T_JB_MATERIELTYPE();
+                T_JB_MaterielType temp = new T_JB_MaterielType();
                 temp.C_name = txtName.Text.Trim();
                 temp.C_pre_id = lblPid.Text.Trim();
                 temp.I_grade = 1;

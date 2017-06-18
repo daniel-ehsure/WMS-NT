@@ -44,6 +44,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicEmployee\EmployeeAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicEmployee\EmployeeAdd.designer.cs">
+      <DependentUpon>EmployeeAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicEmployee\EmployeeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicEmployee\EmployeeForm.Designer.cs">
+      <DependentUpon>EmployeeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicEmployee\EmployeeModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicEmployee\EmployeeModify.designer.cs">
+      <DependentUpon>EmployeeModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="BasicMaterielType\MaterielTypeAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,17 +110,17 @@
     <Compile Include="BasicWarehouse\WarehouseModify.Designer.cs">
       <DependentUpon>WarehouseModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmployeeForm.Designer.cs">
-      <DependentUpon>EmployeeForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="JurisdictionForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="JurisdictionForm.Designer.cs">
       <DependentUpon>JurisdictionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JurisdictionMaterielForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JurisdictionMaterielForm.Designer.cs">
+      <DependentUpon>JurisdictionMaterielForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LogInForm.cs">
       <SubType>Form</SubType>
@@ -130,8 +148,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BasicEmployee\EmployeeAdd.resx">
+      <DependentUpon>EmployeeAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicEmployee\EmployeeForm.resx">
+      <DependentUpon>EmployeeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicEmployee\EmployeeModify.resx">
+      <DependentUpon>EmployeeModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BasicMaterielType\MaterielTypeAdd.resx">
       <DependentUpon>MaterielTypeAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMaterielType\MaterielTypeForm.resx">
+      <DependentUpon>MaterielTypeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BasicMaterielType\MaterielTypeModify.resx">
       <DependentUpon>MaterielTypeModify.cs</DependentUpon>
@@ -154,20 +184,17 @@
     <EmbeddedResource Include="BasicWarehouse\WarehouseModify.resx">
       <DependentUpon>WarehouseModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmployeeForm.resx">
-      <DependentUpon>EmployeeForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="JurisdictionForm.resx">
       <DependentUpon>JurisdictionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JurisdictionMaterielForm.resx">
+      <DependentUpon>JurisdictionMaterielForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogInForm.resx">
       <DependentUpon>LogInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BasicMaterielType\MaterielTypeForm.resx">
-      <DependentUpon>MaterielTypeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModPassword.resx">
       <DependentUpon>ModPassword.cs</DependentUpon>

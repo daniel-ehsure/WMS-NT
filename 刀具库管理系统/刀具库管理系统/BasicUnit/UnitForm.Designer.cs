@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaterielTypeForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnitForm));
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,16 +46,15 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.txtPid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.txtMeno = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -228,7 +227,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Controls.Add(this.txtPid);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.lblName);
@@ -248,17 +246,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(750, 77);
             this.panel1.TabIndex = 0;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(323, 18);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBox1.Size = new System.Drawing.Size(84, 16);
-            this.checkBox1.TabIndex = 69;
-            this.checkBox1.Text = "：是否末级";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // txtPid
             // 
@@ -293,44 +280,6 @@
             this.lblName.Text = "*";
             this.lblName.Visible = false;
             // 
-            // txtMeno
-            // 
-            this.txtMeno.Location = new System.Drawing.Point(54, 44);
-            this.txtMeno.Margin = new System.Windows.Forms.Padding(2);
-            this.txtMeno.MaxLength = 100;
-            this.txtMeno.Name = "txtMeno";
-            this.txtMeno.Size = new System.Drawing.Size(353, 21);
-            this.txtMeno.TabIndex = 27;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(18, 48);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(41, 12);
-            this.label16.TabIndex = 26;
-            this.label16.Text = "备注：";
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(54, 14);
-            this.txtName.Margin = new System.Windows.Forms.Padding(2);
-            this.txtName.MaxLength = 25;
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(91, 21);
-            this.txtName.TabIndex = 25;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(20, 18);
-            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(41, 12);
-            this.label17.TabIndex = 24;
-            this.label17.Text = "名称：";
-            // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.LightGray;
@@ -362,6 +311,44 @@
             this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // txtMeno
+            // 
+            this.txtMeno.Location = new System.Drawing.Point(54, 44);
+            this.txtMeno.Margin = new System.Windows.Forms.Padding(2);
+            this.txtMeno.MaxLength = 100;
+            this.txtMeno.Name = "txtMeno";
+            this.txtMeno.Size = new System.Drawing.Size(251, 21);
+            this.txtMeno.TabIndex = 27;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(18, 48);
+            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(41, 12);
+            this.label16.TabIndex = 26;
+            this.label16.Text = "备注：";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(54, 14);
+            this.txtName.Margin = new System.Windows.Forms.Padding(2);
+            this.txtName.MaxLength = 25;
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(91, 21);
+            this.txtName.TabIndex = 25;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(20, 18);
+            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(41, 12);
+            this.label17.TabIndex = 24;
+            this.label17.Text = "名称：";
             // 
             // button5
             // 
@@ -428,7 +415,7 @@
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // MaterielTypeForm
+            // UnitForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -442,9 +429,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "MaterielTypeForm";
+            this.Name = "UnitForm";
             this.Text = "物料类别维护";
-            this.Load += new System.EventHandler(this.MaterielTypeForm_Load);
+            this.Load += new System.EventHandler(this.UnitForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -485,7 +472,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ImageList imageList3;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox txtPid;
 
     }

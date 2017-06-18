@@ -55,13 +55,13 @@ namespace DAL
         /// <param name="name"></param>
         /// <param name="MEMO"></param>
         /// <returns></returns>
-        public DataTable getList(string pid, string name, string memo, int end)
+        public DataTable getList(string pid, string name, string memo)
         {
             string sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID], [C_MEMO] FROM [T_DM_UNIT] where 1=1 ";
             DataTable dt = new DataTable();
             try
             {
-                if (pid != null || name != null || memo != null || end != -1)
+                if (pid != null || name != null || memo != null)
                 {
                     Hashtable table = new Hashtable();
                     if (pid != null)

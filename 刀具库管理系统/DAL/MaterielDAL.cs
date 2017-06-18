@@ -305,76 +305,77 @@ namespace DAL
       /// <param name="id"></param>
       /// <returns></returns>
       public bool isInUse(string id,string userid)
-      {
-          try
-          {
+      {//todo:
+          //try
+          //{
             
-              string sql = "";
-              sql = " select count(*) from T_OPERATE_STOCKS where C_MATERIEL_ID = @id ";
+          //    string sql = "";
+          //    sql = " select count(*) from T_OPERATE_STOCKS where C_MATERIEL_ID = @id ";
 
-              Hashtable table = new Hashtable();
-              table.Add("id", id);
+          //    Hashtable table = new Hashtable();
+          //    table.Add("id", id);
 
-              DbParameter[] parms = dbHelper.getParams(table);
-              object obj = dbHelper.GetScalar(sql, parms);
-             int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
+          //    DbParameter[] parms = dbHelper.getParams(table);
+          //    object obj = dbHelper.GetScalar(sql, parms);
+          //   int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
 
-             sql = " select count(*) from T_Runing_Dolist where C_MATERIEL = @id ";
+          //   sql = " select count(*) from T_Runing_Dolist where C_MATERIEL = @id ";
 
-             Hashtable table2 = new Hashtable();
-             table2.Add("id", id);
+          //   Hashtable table2 = new Hashtable();
+          //   table2.Add("id", id);
 
-             DbParameter[] parms2 = dbHelper.getParams(table2);
-             object obj2 = dbHelper.GetScalar(sql, parms2);
-             int count2 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
+          //   DbParameter[] parms2 = dbHelper.getParams(table2);
+          //   object obj2 = dbHelper.GetScalar(sql, parms2);
+          //   int count2 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
 
-             sql = " select count(*) from T_JB_LAYOUT where C_MATERIEL = @id OR C_MATERIEL_FINISH = @id";
+          //   sql = " select count(*) from T_JB_LAYOUT where C_MATERIEL = @id OR C_MATERIEL_FINISH = @id";
 
-             Hashtable table3 = new Hashtable();
-             table3.Add("id", id);
+          //   Hashtable table3 = new Hashtable();
+          //   table3.Add("id", id);
 
-             DbParameter[] parms3 = dbHelper.getParams(table3);
-             object obj3 = dbHelper.GetScalar(sql, parms3);
-             int count3 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj3);
+          //   DbParameter[] parms3 = dbHelper.getParams(table3);
+          //   object obj3 = dbHelper.GetScalar(sql, parms3);
+          //   int count3 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj3);
 
-             sql = " select count(*) from T_OPERATE_INOUT_SUB where C_MATERIEL = @id ";
+          //   sql = " select count(*) from T_OPERATE_INOUT_SUB where C_MATERIEL = @id ";
 
-             Hashtable table4 = new Hashtable();
-             table4.Add("id", id);
+          //   Hashtable table4 = new Hashtable();
+          //   table4.Add("id", id);
 
-             DbParameter[] parms4 = dbHelper.getParams(table4);
-             object obj4= dbHelper.GetScalar(sql, parms4);
-             int count4 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj4);
+          //   DbParameter[] parms4 = dbHelper.getParams(table4);
+          //   object obj4= dbHelper.GetScalar(sql, parms4);
+          //   int count4 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj4);
 
-             sql = " select count(*) from T_JB_MATERIEL_USER where C_MATERIEL = @id and C_JIAOSE <> @userid ";
+          //   sql = " select count(*) from T_JB_MATERIEL_USER where C_MATERIEL = @id and C_JIAOSE <> @userid ";
 
-             Hashtable table5 = new Hashtable();
-             table5.Add("id", id);
-             table5.Add("userid", userid);
+          //   Hashtable table5 = new Hashtable();
+          //   table5.Add("id", id);
+          //   table5.Add("userid", userid);
 
-             DbParameter[] parms5 = dbHelper.getParams(table5);
-             object obj5 = dbHelper.GetScalar(sql, parms5);
-             int count5 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj5);
+          //   DbParameter[] parms5 = dbHelper.getParams(table5);
+          //   object obj5 = dbHelper.GetScalar(sql, parms5);
+          //   int count5 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj5);
 
-             if (count1 > 0 || count2 > 0 || count3 > 0 || count4 > 0 || count5 > 0)
-             {
-                 return true;
-             }
-             else
-             {
-                 return false;
-             }
+          //   if (count1 > 0 || count2 > 0 || count3 > 0 || count4 > 0 || count5 > 0)
+          //   {
+          //       return true;
+          //   }
+          //   else
+          //   {
+          //       return false;
+          //   }
               
-          }
-          catch (Exception ex)
-          {
-              Log.write(ex.Message + "\r\n" + ex.StackTrace);
-              throw ex;
-          }
-          finally
-          {
-              dbHelper.getConnection().Close();
-          }
+          //}
+          //catch (Exception ex)
+          //{
+          //    Log.write(ex.Message + "\r\n" + ex.StackTrace);
+          //    throw ex;
+          //}
+          //finally
+          //{
+          //    dbHelper.getConnection().Close();
+          //}
+          return false;
       }
 
 
@@ -591,16 +592,6 @@ namespace DAL
           try
           {
               com.Transaction = tran;
-              long dec_id = 0;
-              string c_id = string.Empty;
-              int count = 0;
-
-              sql = "SELECT max(c_id) FROM  T_JB_MATERIEL ";
-
-              com.CommandText = sql;
-
-              object obj = com.ExecuteScalar();
-              dec_id = Convert.IsDBNull(obj) ? 1000 : Convert.ToInt64(obj);
 
               sql = "INSERT INTO [T_JB_MATERIEL]([C_ID],[C_TYPE], [C_NAME], [I_SINGLE], [DEC_PRICE], [C_STANDARD], " +
                            "   [I_LENGTH], [I_WIDTH] ,[I_THICK],[C_AREA],[I_FINISH],[C_MEMO],"+ 
@@ -609,8 +600,6 @@ namespace DAL
                            " @C_PICCODE, @I_LAYOUTCOUNT, @C_SURFACE, @C_SCIENCE, @DEC_AREA, @DEC_WEIGHT, @I_BUY, @DEC_production )";
               com.CommandText = sql;
               Hashtable table = new Hashtable();
-              dec_id = dec_id + 1;
-              c_id = dec_id.ToString();
               table.Add("C_ID", materiel.C_id);
               table.Add("C_TYPE", materiel.C_type);
               table.Add("C_NAME", materiel.C_name);
@@ -804,8 +793,7 @@ namespace DAL
           try
           {
               string sql = " select '"+jiaose+"' as jiaose,(select count(*) from T_JB_MATERIEL_USER where C_MATERIEL = a.c_id and C_JIAOSE = '"+jiaose+"' ) as yesno, "+
-                  "  a.C_ID,a.C_NAME,a.C_TYPE,b.C_NAME as C_TYPENAME,a.C_STANDARD,a.C_AREA,c.C_NAME as C_AREANAME,I_FINISH, "+
-                  "       case I_FINISH when 1 then '是' else '否' end as C_FINISH,I_LENGTH,I_WIDTH,I_THICK,a.C_MEMO "+
+                  "  a.C_ID,a.C_NAME,a.C_TYPE,b.C_NAME as C_TYPENAME,a.C_STANDARD,a.C_AREA,c.C_NAME as C_AREANAME,a.C_MEMO "+
                   "       from T_JB_MATERIEL a left join T_JB_MATERIELTYPE b on a.C_TYPE = b.C_ID left join t_jb_placeArea c on a.C_AREA = c.C_ID";
              
               dt = dbHelper.GetDataSet(sql);

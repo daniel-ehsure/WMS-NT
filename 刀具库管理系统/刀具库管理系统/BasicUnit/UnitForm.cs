@@ -32,12 +32,7 @@ namespace UI
             InitializeComponent();
         }
 
-        private void MaterielTypeForm_Load(object sender, EventArgs e)
-        {
-            initTree();
-            initNew(currentType.C_id);
-            setList(currentType.C_id, null, null, -1);
-        }
+
 
         /// <summary>
         /// 选择类别
@@ -55,7 +50,7 @@ namespace UI
 
                 initNew(currentType.C_id);
                 isQuery = false;
-                setList(currentType.C_id, null, null, -1);
+                setList(currentType.C_id, null, null);
             }
             catch (Exception)
             {
@@ -97,7 +92,7 @@ namespace UI
             if (addType !=null)
             {
                 addNewType(addType);
-                setList(currentType.C_id, null, null, -1);
+                setList(currentType.C_id, null, null);
                 initNew(currentType.C_id);
                 addType = null;
             }
@@ -258,9 +253,9 @@ namespace UI
         /// <param name="name"></param>
         /// <param name="meno"></param>
         /// <param name="end"></param>
-        private void setList(string pid, string name, string meno, int end)
+        private void setList(string pid, string name, string meno)
         {
-            this.dgv_Data.DataSource = bll.GetList(pid, name, meno, end);
+            this.dgv_Data.DataSource = bll.GetList(pid, name, meno);
             getName();
         }
 
@@ -281,20 +276,12 @@ namespace UI
                 {
                     meno = txtMeno.Text;
                 }
-                int end = -1;
-                if (checkBox1.Checked)
-                {
-                    end = 1;
-                }
-                //else
-                //{
-                //    end = 0;
-                //}
-                setList(null, name, meno, end);
+
+                setList(null, name, meno);
             }
             else
             {
-                setList(currentType.C_id, null, null, -1);
+                setList(currentType.C_id, null, null);
             }
         }
 
@@ -319,7 +306,6 @@ namespace UI
             this.txtName.Text = string.Empty;
             this.lblName.Visible = false;
             this.txtPid.Text = pid;
-            this.checkBox1.Checked = false;
             this.txtMeno.Text = string.Empty;
 
         }
@@ -453,6 +439,13 @@ namespace UI
                     }
                 }
             }
+        }
+
+        private void UnitForm_Load(object sender, EventArgs e)
+        {
+            initTree();
+            initNew(currentType.C_id);
+            setList(currentType.C_id, null, null);
         }
     }
 }

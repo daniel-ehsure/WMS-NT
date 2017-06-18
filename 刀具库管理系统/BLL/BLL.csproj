@@ -44,6 +44,7 @@
     <Compile Include="WarehouseBLL.cs" />
     <Compile Include="PlaceAreaBLL.cs" />
     <Compile Include="UnitBLL.cs" />
+    <Compile Include="EmployeeBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

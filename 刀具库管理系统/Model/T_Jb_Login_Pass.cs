@@ -68,7 +68,7 @@ namespace Model
         }
         private string c_cc_id;
         /// <summary>
-        /// 仓库编码
+        /// 库房编码
         /// </summary>
         public string C_cc_id
         {

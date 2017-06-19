@@ -9,7 +9,7 @@ using System.Data;
 namespace BLL
 {
     /// <summary>
-    /// 仓库BLL
+    /// 库房BLL
     /// </summary>
     public class PlaceAreaBLL
     {

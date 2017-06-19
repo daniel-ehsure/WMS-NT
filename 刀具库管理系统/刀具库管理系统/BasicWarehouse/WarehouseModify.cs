@@ -91,7 +91,7 @@ namespace UI
                 if (bll.Update(mo))
                 {
                     MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("修改仓库成功！Id：" + lblId.Text);
+                    Log.saveLog("修改库房成功！Id：" + lblId.Text);
                     Close();
                 }
                 else

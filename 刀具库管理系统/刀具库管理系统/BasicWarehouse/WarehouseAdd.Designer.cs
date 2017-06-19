@@ -283,7 +283,7 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(101, 12);
             this.label11.TabIndex = 59;
-            this.label11.Text = "是否自动化仓库：";
+            this.label11.Text = "是否自动化库房：";
             // 
             // label12
             // 
@@ -368,7 +368,7 @@
             this.Name = "WarehouseAdd";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "增加仓库";
+            this.Text = "增加库房";
             this.ResumeLayout(false);
             this.PerformLayout();
 

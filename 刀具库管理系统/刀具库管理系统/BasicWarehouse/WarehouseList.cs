@@ -126,7 +126,7 @@ namespace UI
             dgv_Data.Columns[6].HeaderText = "端口";
             dgv_Data.Columns[7].HeaderText = "写端口";
             dgv_Data.Columns[8].HeaderText = "读端口";
-            dgv_Data.Columns[9].HeaderText = "是否自动化仓库";
+            dgv_Data.Columns[9].HeaderText = "是否自动化库房";
             dgv_Data.Columns[10].HeaderText = "入库使用移动终端";
             dgv_Data.Columns[11].HeaderText = "出库使用移动终端";
         }

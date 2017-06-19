@@ -387,7 +387,6 @@ namespace DAL
             {
                 conn.Close();
             }
-
         }
 
       /// <summary>

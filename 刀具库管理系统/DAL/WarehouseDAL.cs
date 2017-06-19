@@ -22,9 +22,7 @@ namespace DAL
         /// <summary>
         /// 是否重名
         /// </summary>
-        /// <param name="tableName"></param>
         /// <param name="name"></param>
-        /// <param name="meno"></param>
         /// <returns></returns>
         public bool IsExit(string name)
         {
@@ -65,9 +63,7 @@ namespace DAL
         /// <summary>
         /// 获得列表
         /// </summary>
-        /// <param name="tableName"></param>
         /// <param name="name"></param>
-        /// <param name="meno"></param>
         /// <returns></returns>
         public DataTable GetList(string name)
         {
@@ -262,9 +258,8 @@ namespace DAL
         /// <summary>
         /// 是否重名，不包括自己
         /// </summary>
-        /// <param name="tableName"></param>
+        /// <param name="id"></param>
         /// <param name="name"></param>
-        /// <param name="meno"></param>
         /// <returns></returns>
         public bool IsExitNotSelf(string name, string id)
         {

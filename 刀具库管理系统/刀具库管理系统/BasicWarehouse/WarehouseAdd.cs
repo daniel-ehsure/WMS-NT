@@ -53,7 +53,7 @@ namespace UI
                 if (bll.Save(mo))
                 {
                     MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("添加仓库成功！Id：" + lblId.Text);
+                    Log.saveLog("添加库房成功！Id：" + lblId.Text);
                     Close();
                 }
                 else

@@ -221,7 +221,7 @@
             this.Name = "MaterielTypeAdd";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "增加仓库";
+            this.Text = "增加库房";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class MaterielTypeModify
+    partial class PlaceModify
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaterielTypeModify));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlaceModify));
             this.lblPid = new System.Windows.Forms.Label();
             this.cbJx = new System.Windows.Forms.CheckBox();
             this.cbEnd = new System.Windows.Forms.CheckBox();
@@ -217,7 +217,7 @@
             this.lblId.TabIndex = 75;
             this.lblId.Text = "Id";
             // 
-            // MaterielTypeModify
+            // PlaceModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -240,7 +240,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.label6);
-            this.Name = "MaterielTypeModify";
+            this.Name = "PlaceModify";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "修改库房";

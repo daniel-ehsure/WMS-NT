@@ -213,13 +213,13 @@ namespace UI
             messages.Add(root, all);
 
 
-            code_Child = bll.GetAllChild("0");
+            code_Child = bll.GetAllChild("0",0);
             for (int i = 0; i < code_Child.Count; i++)
             {
                 TreeNode subNode = new TreeNode(code_Child[i].C_name);
                 subNode.ImageIndex = 1;
                 root.Nodes.Add(subNode);
-                addTree(code_Child[i].C_id, subNode);
+                addTree(code_Child[i].C_id, subNode,0);
                 messages.Add(subNode, code_Child[i]);
             }
 
@@ -236,9 +236,9 @@ namespace UI
         /// </summary>
         /// <param name="id"></param>
         /// <param name="node"></param>
-        private void addTree(string id, TreeNode node)
+        private void addTree(string id, TreeNode node, int grade)
         {
-            List<T_JB_Place> list = bll.GetAllChild(id);
+            List<T_JB_Place> list = bll.GetAllChild(id, grade++);
 
             if (list.Count <= 0)
             {
@@ -251,7 +251,7 @@ namespace UI
                     TreeNode subNode = new TreeNode(list[i].C_name);
                     subNode.ImageIndex = 1;
                     node.Nodes.Add(subNode);
-                    addTree(list[i].C_id, subNode);
+                    addTree(list[i].C_id, subNode, grade);
                     messages.Add(subNode, list[i]);
                 }
             }

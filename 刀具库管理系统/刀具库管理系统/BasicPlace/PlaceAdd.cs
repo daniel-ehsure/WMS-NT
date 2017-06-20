@@ -17,6 +17,7 @@ namespace UI
 
         string pid;
         PlaceForm parentForm;
+        Dictionary<int, Dictionary<string, Control>> dicCtrl;
 
         public PlaceAdd(PlaceForm parentForm)
         {
@@ -29,6 +30,9 @@ namespace UI
             Init();
         }
 
+        /// <summary>
+        /// 初始化
+        /// </summary>
         private void Init()
         {
             Dictionary<string, Control> dic1 = new Dictionary<string, Control> { { "num", txtNum1 }, { "name", txtName1 }, { "width", txtWidth1 }, { "length", txtLength1 }, { "end", cbEnd1 } };
@@ -38,10 +42,21 @@ namespace UI
             Dictionary<string, Control> dic5 = new Dictionary<string, Control> { { "num", txtNum5 }, { "name", txtName5 }, { "width", txtWidth5 }, { "length", txtLength5 }, { "end", cbEnd5 } };
             Dictionary<string, Control> dic6 = new Dictionary<string, Control> { { "num", txtNum6 }, { "name", txtName6 }, { "width", txtWidth6 }, { "length", txtLength6 }, { "end", cbEnd6 } };
             Dictionary<string, Control> dic7 = new Dictionary<string, Control> { { "num", txtNum7 }, { "name", txtName7 }, { "width", txtWidth7 }, { "length", txtLength7 }, { "end", cbEnd7 } };
-            Dictionary<int, Dictionary<string, Control>> dicCtrl = new Dictionary<int, Dictionary<string, Control>> { { 1, dic1 }, { 2, dic2 }, { 3, dic3 }, { 4, dic4 }, { 5, dic5 }, { 6, dic6 }, { 7, dic7 }};
+            dicCtrl = new Dictionary<int, Dictionary<string, Control>> { { 1, dic1 }, { 2, dic2 }, { 3, dic3 }, { 4, dic4 }, { 5, dic5 }, { 6, dic6 }, { 7, dic7 } };
 
-            //first, add ctrl into dic
-            //then, show them which may show
+
+            for (int i = 0; i < parentForm.currentPlace.I_grade; i++)
+            {
+                SetDic(dicCtrl[dicCtrl.Count - 1 - i]);
+            }
+        }
+
+        private void SetDic(Dictionary<string, Control> dic)
+        {
+            foreach (var item in dic.Values)
+            {
+                item.Enabled = false;
+            }
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
@@ -51,34 +66,35 @@ namespace UI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (bll.IsExit(lblPid.Text.Trim(), txtName1.Text.Trim()))
+            //todo:validate
+
+            List<List<object>> list = new List<List<object>>();
+
+            foreach (var item in dicCtrl.Values)
             {
-                MessageBox.Show("名称重复！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (string.IsNullOrEmpty(item["num"].Text.Trim()))
+                {
+                    list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["width"].Text.Trim(), item["length"].Text.Trim(), ((CheckBox)item["end"]).Checked ? 1 : 0 });
+                }
+            }
+
+
+
+            
+
+            if (bll.SaveList(list, pid, parentForm.currentPlace.I_grade))
+            {
+                //parentForm.addType = temp;
+
+                MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Log.saveLog("添加物料类型成功！");
+                Close();
             }
             else
             {
-                T_JB_Place temp = new T_JB_Place();
-                temp.C_name = txtName1.Text.Trim();
-                temp.C_pre_id = lblPid.Text.Trim();
-                temp.I_grade = 1;
-                temp.I_end = cbEnd1.Checked ? 1 : 0;
-
-                string c_id = bll.Save(temp);
-
-                if (c_id != null && !(string.Empty.Equals(c_id.Trim())))
-                {
-                    temp.C_id = c_id;
-                    parentForm.addType = temp;
-
-                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("添加物料类型成功！Id：" + c_id);
-                    Close();
-                }
-                else
-                {
-                    MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
     }
 }

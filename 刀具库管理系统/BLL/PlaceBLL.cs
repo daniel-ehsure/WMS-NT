@@ -15,9 +15,9 @@ namespace BLL
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-       public List<T_JB_Place> GetAllChild(string pid)
+       public List<T_JB_Place> GetAllChild(string pid, int grade)
        {
-           return dal.getAllChild(pid);
+           return dal.getAllChild(pid, grade);
        }
 
         /// <summary>
@@ -53,6 +53,19 @@ namespace BLL
        {
            return dal.Save(dm_type);
        }
+
+       /// <summary>
+       /// 批量保存
+       /// </summary>
+       /// <param name="tableName"></param>
+       /// <param name="name"></param>
+       /// <param name="meno"></param>
+       /// <returns></returns>
+       public bool SaveList(List<List<object>> list, string pid, int grade)
+       {
+           return dal.SaveList(list, pid, grade);
+       }
+
         /// <summary>
         /// 物料类型是否有子类型
         /// </summary>

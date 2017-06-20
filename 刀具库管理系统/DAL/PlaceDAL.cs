@@ -18,7 +18,7 @@ namespace DAL
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public List<T_JB_Place> getAllChild(string pid)
+        public List<T_JB_Place> getAllChild(string pid, int grade)
         {
             List<T_JB_Place> list = new List<T_JB_Place>();
             string sql;
@@ -26,10 +26,15 @@ namespace DAL
             {
                 sql = "SELECT C_ID, C_NAME from  T_JB_WAREHOUSE order by c_id";
             }
+            else if (grade == 0)
+            {
+                sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE FROM  T_JB_Place  where c_warehouse = '" + pid + "'  order by c_id";
+            }
             else
             {
                 sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE FROM  T_JB_Place  where c_pre_id = '" + pid + "'  order by c_id";
             }
+
             try
             {
                 DataTable ds = dbHelper.GetDataSet(sql);
@@ -40,8 +45,8 @@ namespace DAL
                     dm_type.C_id = Convert.IsDBNull(ds.Rows[i]["C_ID"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_ID"]);
                     dm_type.C_name = Convert.IsDBNull(ds.Rows[i]["C_NAME"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_NAME"]);
                     dm_type.C_pre_id = pid.Equals("0") ? "0" : Convert.IsDBNull(ds.Rows[i]["C_PRE_ID"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_PRE_ID"]);
-                    
-                    dm_type.I_grade = pid.Equals("0")?0:Convert.IsDBNull(ds.Rows[i]["I_GRADE"]) ? 0 : Convert.ToInt32(ds.Rows[i]["I_GRADE"]);
+
+                    dm_type.I_grade = pid.Equals("0") ? 0 : Convert.IsDBNull(ds.Rows[i]["I_GRADE"]) ? 0 : Convert.ToInt32(ds.Rows[i]["I_GRADE"]);
                     list.Add(dm_type);
                 }
             }
@@ -216,6 +221,105 @@ namespace DAL
             finally
             {
                 dbHelper.getConnection().Close();
+            }
+        }
+
+        /// <summary>
+        /// 批量保存
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="name"></param>
+        /// <param name="MEMO"></param>
+        /// <returns></returns>
+        public bool SaveList(List<List<object>> list, string pid, int grade)
+        {
+            DbConnection conn = dbHelper.getConnection();
+
+            try
+            {
+                conn.Open();
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                conn.Close();
+                throw ex;
+            }
+
+            DbTransaction tran = conn.BeginTransaction();
+            DbCommand com = conn.CreateCommand();
+            string sql = string.Empty;
+            try
+            {
+                com.Transaction = tran;
+
+                sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END, C_WAREHOUSE, I_INUSE, I_LENGTH, I_WIDTH) " +
+                               "values (@C_ID,@C_NAME,@C_PRE_ID,@I_GRADE,@I_END,@C_WAREHOUSE, @I_INUSE, @I_LENGTH, @I_WIDTH)";
+
+                int num1 = int.Parse(list[0][0].ToString());
+                string upId = grade == 0 ? "" : pid;
+                for (int i = 0; i < num1; i++)
+                {
+                    int num = 1;
+                    int gradeCurrent = grade + 1 + i;
+                    int n = int.Parse(list[i][0].ToString());
+
+
+                    AddPlace(list, 0, i, upId);
+
+                    for (int k = 0; k < i + 1; k++)
+                    {
+
+                        num *= int.Parse(list[k][0].ToString());
+                    }
+
+                    for (int j = 0; j < num; j++)
+                    {
+                        Hashtable table = new Hashtable();
+
+                        string id = gradeCurrent == 0 ? j.ToString().PadLeft(2, '0') : pid + j.ToString().PadLeft(2, '0');
+
+                        table.Add("c_id", id);
+                        table.Add("C_NAME", dm_type.C_name);
+                        table.Add("C_PRE_ID", dm_type.C_pre_id);
+                        table.Add("I_GRADE", dm_type.I_grade);
+                        table.Add("I_END", dm_type.I_end);
+                        table.Add("I_END", dm_type.I_end);
+                        table.Add("C_MEMO", dm_type.C_memo);
+
+                        DbParameter[] parms = dbHelper.getParams(table);
+
+                        dbHelper.ExecuteCommand(sql, parms);
+                    }
+                }
+
+                tran.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                tran.Rollback();
+                conn.Close();
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void AddPlace(List<List<object>> list, int count, int num, string upId)
+        {
+            string id = upId + num.ToString().PadLeft(2, '0');
+            //todo:add
+            if (count <= list.Count)
+            {
+                count++;
+                for (int i = 0; i < count; i++)
+                {
+                    AddPlace(list, count, i, id);
+                }
             }
         }
 

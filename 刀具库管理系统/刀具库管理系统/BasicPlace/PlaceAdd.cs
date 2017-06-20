@@ -22,10 +22,26 @@ namespace UI
         {
             InitializeComponent();
 
-            this.pid = parentForm.currentType.C_id;
+            this.pid = parentForm.currentPlace.C_id;
             this.parentForm = parentForm;
             lblPid.Text = pid;
 
+            Init();
+        }
+
+        private void Init()
+        {
+            Dictionary<string, Control> dic1 = new Dictionary<string, Control> { { "num", txtNum1 }, { "name", txtName1 }, { "width", txtWidth1 }, { "length", txtLength1 }, { "end", cbEnd1 } };
+            Dictionary<string, Control> dic2 = new Dictionary<string, Control> { { "num", txtNum2 }, { "name", txtName2 }, { "width", txtWidth2 }, { "length", txtLength2 }, { "end", cbEnd2 } };
+            Dictionary<string, Control> dic3 = new Dictionary<string, Control> { { "num", txtNum3 }, { "name", txtName3 }, { "width", txtWidth3 }, { "length", txtLength3 }, { "end", cbEnd3 } };
+            Dictionary<string, Control> dic4 = new Dictionary<string, Control> { { "num", txtNum4 }, { "name", txtName4 }, { "width", txtWidth4 }, { "length", txtLength4 }, { "end", cbEnd4 } };
+            Dictionary<string, Control> dic5 = new Dictionary<string, Control> { { "num", txtNum5 }, { "name", txtName5 }, { "width", txtWidth5 }, { "length", txtLength5 }, { "end", cbEnd5 } };
+            Dictionary<string, Control> dic6 = new Dictionary<string, Control> { { "num", txtNum6 }, { "name", txtName6 }, { "width", txtWidth6 }, { "length", txtLength6 }, { "end", cbEnd6 } };
+            Dictionary<string, Control> dic7 = new Dictionary<string, Control> { { "num", txtNum7 }, { "name", txtName7 }, { "width", txtWidth7 }, { "length", txtLength7 }, { "end", cbEnd7 } };
+            Dictionary<int, Dictionary<string, Control>> dicCtrl = new Dictionary<int, Dictionary<string, Control>> { { 1, dic1 }, { 2, dic2 }, { 3, dic3 }, { 4, dic4 }, { 5, dic5 }, { 6, dic6 }, { 7, dic7 }};
+
+            //first, add ctrl into dic
+            //then, show them which may show
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
@@ -35,17 +51,17 @@ namespace UI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (bll.IsExit(lblPid.Text.Trim(), txtName.Text.Trim()))
+            if (bll.IsExit(lblPid.Text.Trim(), txtName1.Text.Trim()))
             {
                 MessageBox.Show("名称重复！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 T_JB_Place temp = new T_JB_Place();
-                temp.C_name = txtName.Text.Trim();
+                temp.C_name = txtName1.Text.Trim();
                 temp.C_pre_id = lblPid.Text.Trim();
                 temp.I_grade = 1;
-                temp.I_end = cbEnd.Checked ? 1 : 0;
+                temp.I_end = cbEnd1.Checked ? 1 : 0;
 
                 string c_id = bll.Save(temp);
 

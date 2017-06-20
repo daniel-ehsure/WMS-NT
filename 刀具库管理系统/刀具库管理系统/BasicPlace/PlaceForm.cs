@@ -19,7 +19,7 @@ namespace UI
         public Hashtable messages = new Hashtable();
         private List<T_JB_Place> code_Child = new List<T_JB_Place>();
         private TreeNode currnetNode = null;
-        public T_JB_Place currentType = null;
+        public T_JB_Place currentPlace = null;
 
         #endregion
 
@@ -35,8 +35,8 @@ namespace UI
         private void PlaceForm_Load(object sender, EventArgs e)
         {
             initTree();
-            initNew(currentType.C_id);
-            setList(currentType.C_id, null, null, -1);
+            initNew(currentPlace.C_id);
+            setList(currentPlace.C_id, null, null, -1);
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace UI
                 //c_id = null;
                 //c_name = null;
                 currnetNode = e.Node;
-                currentType = (T_JB_Place)messages[e.Node];
-                if (currentType.I_end == 1)
+                currentPlace = (T_JB_Place)messages[e.Node];
+                if (currentPlace.I_end == 1)
                 {
                     this.button1.Enabled = false;
                 }
@@ -60,9 +60,9 @@ namespace UI
                 {
                     this.button1.Enabled = true;
                 }
-                initNew(currentType.C_id);
+                initNew(currentPlace.C_id);
                 isQuery = false;
-                setList(currentType.C_id, null, null, -1);
+                setList(currentPlace.C_id, null, null, -1);
             }
             catch (Exception)
             {
@@ -88,7 +88,7 @@ namespace UI
         /// <param name="e"></param>
         private void button5_Click(object sender, EventArgs e)
         {
-            initNew(currentType.C_id);
+            initNew(currentPlace.C_id);
         }
 
         /// <summary>
@@ -98,14 +98,15 @@ namespace UI
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            //todo:级别判断，7级或最小控制单元不能添加
             PlaceAdd wa = new PlaceAdd(this);
             wa.ShowDialog();
 
             if (addType !=null)
             {
                 addNewType(addType);
-                setList(currentType.C_id, null, null, -1);
-                initNew(currentType.C_id);
+                setList(currentPlace.C_id, null, null, -1);
+                initNew(currentPlace.C_id);
                 addType = null;
             }
 
@@ -225,7 +226,7 @@ namespace UI
 
             this.treeView1.Nodes.Add(root);
             currnetNode = root;
-            currentType = all;
+            currentPlace = all;
             //展开根节点
             root.Expand();
         }
@@ -301,7 +302,7 @@ namespace UI
             }
             else
             {
-                setList(currentType.C_id, null, null, -1);
+                setList(currentPlace.C_id, null, null, -1);
             }
         }
 

@@ -256,41 +256,15 @@ namespace DAL
                 sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END, C_WAREHOUSE, I_INUSE, I_LENGTH, I_WIDTH) " +
                                "values (@C_ID,@C_NAME,@C_PRE_ID,@I_GRADE,@I_END,@C_WAREHOUSE, @I_INUSE, @I_LENGTH, @I_WIDTH)";
 
+                com.CommandText = sql;
+
                 int num1 = int.Parse(list[0][0].ToString());
-                string upId = grade == 0 ? "" : pid;
+
                 for (int i = 0; i < num1; i++)
                 {
-                    int num = 1;
-                    int gradeCurrent = grade + 1 + i;
                     int n = int.Parse(list[i][0].ToString());
 
-
-                    AddPlace(list, 0, i, upId);
-
-                    for (int k = 0; k < i + 1; k++)
-                    {
-
-                        num *= int.Parse(list[k][0].ToString());
-                    }
-
-                    for (int j = 0; j < num; j++)
-                    {
-                        Hashtable table = new Hashtable();
-
-                        string id = gradeCurrent == 0 ? j.ToString().PadLeft(2, '0') : pid + j.ToString().PadLeft(2, '0');
-
-                        table.Add("c_id", id);
-                        table.Add("C_NAME", dm_type.C_name);
-                        table.Add("C_PRE_ID", dm_type.C_pre_id);
-                        table.Add("I_GRADE", dm_type.I_grade);
-                        table.Add("I_END", dm_type.I_end);
-                        table.Add("I_END", dm_type.I_end);
-                        table.Add("C_MEMO", dm_type.C_memo);
-
-                        DbParameter[] parms = dbHelper.getParams(table);
-
-                        dbHelper.ExecuteCommand(sql, parms);
-                    }
+                    AddPlace(list, 0, i, pid, grade + 1, com);
                 }
 
                 tran.Commit();
@@ -309,16 +283,51 @@ namespace DAL
             }
         }
 
-        private void AddPlace(List<List<object>> list, int count, int num, string upId)
+        /// <summary>
+        /// 增加货位
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="count"></param>
+        /// <param name="num"></param>
+        /// <param name="upId"></param>
+        private void AddPlace(List<List<object>> list, int count, int num, string pid, int grade, DbCommand com)
         {
-            string id = upId + num.ToString().PadLeft(2, '0');
-            //todo:add
+            string id;
+
+            Hashtable table = new Hashtable();
+            if (grade==1)
+            {
+                table.Add("C_PRE_ID", DBNull.Value);
+                table.Add("C_WAREHOUSE", pid);
+                id = num.ToString().PadLeft(2, '0');
+            }
+            else
+            {
+                table.Add("C_PRE_ID", pid);
+                table.Add("C_WAREHOUSE", DBNull.Value);
+                id = pid + num.ToString().PadLeft(2, '0');
+            }
+
+            table.Add("C_ID", id);
+            table.Add("C_NAME", list[count][1].ToString());
+            table.Add("I_GRADE", grade);
+            table.Add("I_LENGTH", int.Parse(list[count][2].ToString()));
+            table.Add("I_WIDTH", int.Parse(list[count][3].ToString()));
+            table.Add("I_END", int.Parse(list[count][4].ToString()));
+            table.Add("I_INUSE", 1);
+
+            DbParameter[] parms = dbHelper.getParams(table);
+
+            com.Parameters.Clear();
+            com.Parameters.AddRange(parms);
+            com.ExecuteNonQuery();
+
             if (count <= list.Count)
             {
                 count++;
                 for (int i = 0; i < count; i++)
                 {
-                    AddPlace(list, count, i, id);
+                    AddPlace(list, count, i, id, grade, com);
                 }
             }
         }

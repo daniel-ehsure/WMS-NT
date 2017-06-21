@@ -15,6 +15,7 @@ namespace UI
     {
         PlaceBLL bll = new PlaceBLL();
 
+        bool hasEnd;
         string pid;
         PlaceForm parentForm;
         Dictionary<int, Dictionary<string, Control>> dicCtrl;
@@ -44,6 +45,10 @@ namespace UI
             Dictionary<string, Control> dic7 = new Dictionary<string, Control> { { "num", txtNum7 }, { "name", txtName7 }, { "width", txtWidth7 }, { "length", txtLength7 }, { "end", cbEnd7 } };
             dicCtrl = new Dictionary<int, Dictionary<string, Control>> { { 1, dic1 }, { 2, dic2 }, { 3, dic3 }, { 4, dic4 }, { 5, dic5 }, { 6, dic6 }, { 7, dic7 } };
 
+            foreach (var key in dicCtrl.Keys)
+            {
+                dicCtrl[key]["end"].Tag = key;
+            }
 
             for (int i = 0; i < parentForm.currentPlace.I_grade; i++)
             {
@@ -66,21 +71,45 @@ namespace UI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //todo:validate
+            bool isEnd;
+
+            foreach (var key in dicCtrl.Keys)
+            {
+                if (dicCtrl[key]["num"].Enabled)
+                {
+                    isEnd = IsEnd(dicCtrl[key]);
+
+                    if (key == 1)
+                    {
+                        if (!IsNotNull(dicCtrl[key]))
+                        {
+                            MessageBox.Show("请完善第1行数据！");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (HasInput(dicCtrl[key]))
+                        {
+                            if (!IsNotNull(dicCtrl[key]))
+                            {
+                                MessageBox.Show("请完善第" + key + "行数据！");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
 
             List<List<object>> list = new List<List<object>>();
 
             foreach (var item in dicCtrl.Values)
             {
-                if (string.IsNullOrEmpty(item["num"].Text.Trim()))
+                if (item["num"].Enabled && string.IsNullOrEmpty(item["num"].Text.Trim()))
                 {
-                    list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["width"].Text.Trim(), item["length"].Text.Trim(), ((CheckBox)item["end"]).Checked ? 1 : 0 });
+                    list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), ((CheckBox)item["end"]).Checked ? 1 : 0 });
                 }
             }
-
-
-
-            
 
             if (bll.SaveList(list, pid, parentForm.currentPlace.I_grade))
             {
@@ -95,6 +124,40 @@ namespace UI
                 MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+        }
+
+        private bool HasInput(Dictionary<string, Control> dic)
+        {
+            return string.IsNullOrEmpty(dic["num"].Text.Trim()) || string.IsNullOrEmpty(dic["name"].Text.Trim()) || string.IsNullOrEmpty(dic["width"].Text.Trim()) || string.IsNullOrEmpty(dic["length"].Text.Trim()) || ((CheckBox)dic["end"]).Checked;
+        }
+
+        private bool IsEnd(Dictionary<string, Control> dic)
+        {
+            return ((CheckBox)dic["end"]).Checked;
+        }
+
+        private bool IsNotNull(Dictionary<string, Control> dic)
+        {
+            return string.IsNullOrEmpty(dic["num"].Text.Trim()) && string.IsNullOrEmpty(dic["name"].Text.Trim()) && string.IsNullOrEmpty(dic["width"].Text.Trim()) && string.IsNullOrEmpty(dic["length"].Text.Trim());
+        }
+
+        private void cbEnd2_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+
+            if (hasEnd && !cb.Checked)
+            {
+                //页面可用性复原    
+            }
+            else
+            {
+                //干掉下面的
+            }
+
+
+
+            cb.CheckedChanged -= cbEnd2_CheckedChanged;
+            cb.CheckedChanged += cbEnd2_CheckedChanged;
         }
     }
 }

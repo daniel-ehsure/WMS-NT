@@ -160,7 +160,6 @@
             this.cbEnd1.Size = new System.Drawing.Size(15, 14);
             this.cbEnd1.TabIndex = 60;
             this.cbEnd1.UseVisualStyleBackColor = true;
-            this.cbEnd1.Click += new System.EventHandler(this.cbEnd_Click);
             // 
             // lblPid
             // 
@@ -238,7 +237,6 @@
             this.cbEnd2.Size = new System.Drawing.Size(15, 14);
             this.cbEnd2.TabIndex = 60;
             this.cbEnd2.UseVisualStyleBackColor = true;
-            this.cbEnd2.Click += new System.EventHandler(this.cbEnd_Click);
             this.cbEnd2.CheckedChanged += new System.EventHandler(this.cbEnd2_CheckedChanged);
             // 
             // txtWidth2
@@ -281,7 +279,6 @@
             this.cbEnd3.Size = new System.Drawing.Size(15, 14);
             this.cbEnd3.TabIndex = 60;
             this.cbEnd3.UseVisualStyleBackColor = true;
-            this.cbEnd3.Click += new System.EventHandler(this.cbEnd_Click);
             this.cbEnd3.CheckedChanged += new System.EventHandler(this.cbEnd2_CheckedChanged);
             // 
             // txtWidth3
@@ -324,7 +321,6 @@
             this.cbEnd4.Size = new System.Drawing.Size(15, 14);
             this.cbEnd4.TabIndex = 60;
             this.cbEnd4.UseVisualStyleBackColor = true;
-            this.cbEnd4.Click += new System.EventHandler(this.cbEnd_Click);
             this.cbEnd4.CheckedChanged += new System.EventHandler(this.cbEnd2_CheckedChanged);
             // 
             // txtWidth4
@@ -367,7 +363,6 @@
             this.cbEnd5.Size = new System.Drawing.Size(15, 14);
             this.cbEnd5.TabIndex = 60;
             this.cbEnd5.UseVisualStyleBackColor = true;
-            this.cbEnd5.Click += new System.EventHandler(this.cbEnd_Click);
             this.cbEnd5.CheckedChanged += new System.EventHandler(this.cbEnd2_CheckedChanged);
             // 
             // txtWidth5
@@ -410,7 +405,6 @@
             this.cbEnd6.Size = new System.Drawing.Size(15, 14);
             this.cbEnd6.TabIndex = 60;
             this.cbEnd6.UseVisualStyleBackColor = true;
-            this.cbEnd6.Click += new System.EventHandler(this.cbEnd_Click);
             this.cbEnd6.CheckedChanged += new System.EventHandler(this.cbEnd2_CheckedChanged);
             // 
             // txtWidth6
@@ -453,7 +447,6 @@
             this.cbEnd7.Size = new System.Drawing.Size(15, 14);
             this.cbEnd7.TabIndex = 60;
             this.cbEnd7.UseVisualStyleBackColor = true;
-            this.cbEnd7.Click += new System.EventHandler(this.cbEnd_Click);
             this.cbEnd7.CheckedChanged += new System.EventHandler(this.cbEnd2_CheckedChanged);
             // 
             // txtWidth7

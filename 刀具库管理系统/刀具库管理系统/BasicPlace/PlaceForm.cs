@@ -23,7 +23,7 @@ namespace UI
 
         #endregion
 
-        public T_JB_Place addType = null;
+        public bool isAdd;
 
         bool isQuery = false;
 
@@ -102,12 +102,12 @@ namespace UI
             PlaceAdd wa = new PlaceAdd(this);
             wa.ShowDialog();
 
-            if (addType !=null)
+            if (isAdd)
             {
-                addNewType(addType);
+                addNewType();
                 setList(currentPlace.C_id, null, null, -1);
                 initNew(currentPlace.C_id);
-                addType = null;
+                isAdd = false;
             }
 
         }
@@ -335,13 +335,9 @@ namespace UI
         /// <summary>
         /// 给树添加新增的类型节点
         /// </summary>
-        /// <param name="dm_type"></param>
-        public void addNewType(T_JB_Place dm_type)
+        public void addNewType()
         {
-            TreeNode subnode = new TreeNode(dm_type.C_name);
-            subnode.ImageIndex = 1;
-            currnetNode.Nodes.Add(subnode);
-            messages.Add(subnode, dm_type);
+            initTree();
         }
 
         /// <summary>

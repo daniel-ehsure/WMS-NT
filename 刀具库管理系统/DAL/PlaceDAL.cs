@@ -262,8 +262,6 @@ namespace DAL
 
                 for (int i = 0; i < num1; i++)
                 {
-                    int n = int.Parse(list[i][0].ToString());
-
                     AddPlace(list, 0, i, pid, grade + 1, com);
                 }
 
@@ -275,7 +273,8 @@ namespace DAL
                 tran.Rollback();
                 conn.Close();
                 Log.write(ex.Message + "\r\n" + ex.StackTrace);
-                throw ex;
+                //throw ex;
+                return false;
             }
             finally
             {
@@ -295,21 +294,21 @@ namespace DAL
             string id;
 
             Hashtable table = new Hashtable();
-            if (grade==1)
+            if (grade == 1)
             {
                 table.Add("C_PRE_ID", DBNull.Value);
                 table.Add("C_WAREHOUSE", pid);
-                id = num.ToString().PadLeft(2, '0');
+                id = pid + (num + 1).ToString().PadLeft(2, '0');
             }
             else
             {
                 table.Add("C_PRE_ID", pid);
                 table.Add("C_WAREHOUSE", DBNull.Value);
-                id = pid + num.ToString().PadLeft(2, '0');
+                id = pid + (num + 1).ToString().PadLeft(2, '0');
             }
 
             table.Add("C_ID", id);
-            table.Add("C_NAME", list[count][1].ToString());
+            table.Add("C_NAME", (num + 1).ToString() + list[count][1].ToString());
             table.Add("I_GRADE", grade);
             table.Add("I_LENGTH", int.Parse(list[count][2].ToString()));
             table.Add("I_WIDTH", int.Parse(list[count][3].ToString()));
@@ -322,12 +321,12 @@ namespace DAL
             com.Parameters.AddRange(parms);
             com.ExecuteNonQuery();
 
-            if (count <= list.Count)
+            if (count + 1 < list.Count)
             {
                 count++;
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < int.Parse(list[count][0].ToString()); i++)
                 {
-                    AddPlace(list, count, i, id, grade, com);
+                    AddPlace(list, count, i, id, grade + 1, com);
                 }
             }
         }

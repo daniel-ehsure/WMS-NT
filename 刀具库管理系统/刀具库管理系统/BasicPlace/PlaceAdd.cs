@@ -71,6 +71,7 @@ namespace UI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            //todo:add try
             bool isEnd;
 
             foreach (var key in dicCtrl.Keys)
@@ -105,7 +106,7 @@ namespace UI
 
             foreach (var item in dicCtrl.Values)
             {
-                if (item["num"].Enabled && string.IsNullOrEmpty(item["num"].Text.Trim()))
+                if (item["num"].Enabled && !string.IsNullOrEmpty(item["num"].Text.Trim()))
                 {
                     list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), ((CheckBox)item["end"]).Checked ? 1 : 0 });
                 }
@@ -113,7 +114,7 @@ namespace UI
 
             if (bll.SaveList(list, pid, parentForm.currentPlace.I_grade))
             {
-                //parentForm.addType = temp;
+                parentForm.isAdd = true;
 
                 MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Log.saveLog("添加物料类型成功！");
@@ -128,7 +129,7 @@ namespace UI
 
         private bool HasInput(Dictionary<string, Control> dic)
         {
-            return string.IsNullOrEmpty(dic["num"].Text.Trim()) || string.IsNullOrEmpty(dic["name"].Text.Trim()) || string.IsNullOrEmpty(dic["width"].Text.Trim()) || string.IsNullOrEmpty(dic["length"].Text.Trim()) || ((CheckBox)dic["end"]).Checked;
+            return !string.IsNullOrEmpty(dic["num"].Text.Trim()) || !string.IsNullOrEmpty(dic["name"].Text.Trim()) || !string.IsNullOrEmpty(dic["width"].Text.Trim()) || !string.IsNullOrEmpty(dic["length"].Text.Trim()) || ((CheckBox)dic["end"]).Checked;
         }
 
         private bool IsEnd(Dictionary<string, Control> dic)
@@ -138,7 +139,7 @@ namespace UI
 
         private bool IsNotNull(Dictionary<string, Control> dic)
         {
-            return string.IsNullOrEmpty(dic["num"].Text.Trim()) && string.IsNullOrEmpty(dic["name"].Text.Trim()) && string.IsNullOrEmpty(dic["width"].Text.Trim()) && string.IsNullOrEmpty(dic["length"].Text.Trim());
+            return !(string.IsNullOrEmpty(dic["num"].Text.Trim()) | string.IsNullOrEmpty(dic["name"].Text.Trim()) | string.IsNullOrEmpty(dic["width"].Text.Trim()) | string.IsNullOrEmpty(dic["length"].Text.Trim()));
         }
 
         private void cbEnd2_CheckedChanged(object sender, EventArgs e)

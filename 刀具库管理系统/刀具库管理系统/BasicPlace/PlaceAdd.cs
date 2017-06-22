@@ -54,16 +54,16 @@ namespace UI
                 //根据级别，限制可增加的层数
                 if (key + grade > 7)
                 {
-                    SetDicEnable(dicCtrl[key]);
+                    SetDicEnable(dicCtrl[key], false);
                 }
             }
         }
 
-        private void SetDicEnable(Dictionary<string, Control> dic)
+        private void SetDicEnable(Dictionary<string, Control> dic, bool enabled)
         {
             foreach (var item in dic.Values)
             {
-                item.Enabled = false;
+                item.Enabled = enabled;
             }
         }
 
@@ -111,7 +111,7 @@ namespace UI
             {
                 if (item["num"].Enabled && !string.IsNullOrEmpty(item["num"].Text.Trim()))
                 {
-                    list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), ((CheckBox)item["end"]).Checked ? 1 : 0 });
+                    list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), (int)item["end"].Tag == 7 ? 1 : ((CheckBox)item["end"]).Checked ? 1 : 0 });
                 }
             }
 
@@ -145,23 +145,38 @@ namespace UI
             return !(string.IsNullOrEmpty(dic["num"].Text.Trim()) | string.IsNullOrEmpty(dic["name"].Text.Trim()) | string.IsNullOrEmpty(dic["width"].Text.Trim()) | string.IsNullOrEmpty(dic["length"].Text.Trim()));
         }
 
-        private void cbEnd2_CheckedChanged(object sender, EventArgs e)
+        private void cbEnd_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
 
             if (hasEnd && !cb.Checked)
             {
                 //页面可用性复原    
+                hasEnd = false;
+                foreach (var key in dicCtrl.Keys)
+                {
+                    if (key + grade <= 7)
+                    {
+                        SetDicEnable(dicCtrl[key], true);
+                    }
+                }
             }
             else
             {
-                //干掉下面的
+                hasEnd = true;
+                int level = (int)cb.Tag;
+                foreach (var key in dicCtrl.Keys)
+                {
+                    if (key > level)
+                    {
+                        SetDicEnable(dicCtrl[key], false);
+                        CheckBox cb1 = (CheckBox)dicCtrl[key]["end"];
+                        cb1.CheckedChanged -= cbEnd_CheckedChanged;
+                        cb1.Checked = false;
+                        cb1.CheckedChanged += cbEnd_CheckedChanged;
+                    }
+                }
             }
-
-
-
-            cb.CheckedChanged -= cbEnd2_CheckedChanged;
-            cb.CheckedChanged += cbEnd2_CheckedChanged;
         }
     }
 }

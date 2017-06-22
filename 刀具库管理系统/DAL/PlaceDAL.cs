@@ -28,11 +28,11 @@ namespace DAL
             }
             else if (grade == 0)
             {
-                sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE FROM  T_JB_Place  where c_warehouse = '" + pid + "'  order by c_id";
+                sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END FROM  T_JB_Place  where c_warehouse = '" + pid + "'  order by c_id";
             }
             else
             {
-                sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE FROM  T_JB_Place  where c_pre_id = '" + pid + "'  order by c_id";
+                sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END FROM  T_JB_Place  where c_pre_id = '" + pid + "'  order by c_id";
             }
 
             try
@@ -45,7 +45,7 @@ namespace DAL
                     dm_type.C_id = Convert.IsDBNull(ds.Rows[i]["C_ID"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_ID"]);
                     dm_type.C_name = Convert.IsDBNull(ds.Rows[i]["C_NAME"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_NAME"]);
                     dm_type.C_pre_id = pid.Equals("0") ? "0" : Convert.IsDBNull(ds.Rows[i]["C_PRE_ID"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_PRE_ID"]);
-
+                    dm_type.I_end = pid.Equals("0") ? 0 : Convert.IsDBNull(ds.Rows[i]["I_END"]) ? 0 : Convert.ToInt32(ds.Rows[i]["I_END"]);
                     dm_type.I_grade = pid.Equals("0") ? 0 : Convert.IsDBNull(ds.Rows[i]["I_GRADE"]) ? 0 : Convert.ToInt32(ds.Rows[i]["I_GRADE"]);
                     list.Add(dm_type);
                 }
@@ -71,7 +71,7 @@ namespace DAL
         /// <returns></returns>
         public DataTable getList(string pid, string name, string memo, int end)
         {
-            string sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID], [I_GRADE],[I_END], [I_END] FROM [T_JB_Place] where 1=1 ";
+            string sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END] FROM [T_JB_Place] where 1=1 ";
             DataTable dt = new DataTable();
             try
             {
@@ -95,13 +95,13 @@ namespace DAL
                         table.Add("I_END", end);
                     }
 
-                    sql += " order by convert(numeric,c_id) desc";
+                    sql += " order by convert(numeric,c_id) asc";
                     DbParameter[] parms = dbHelper.getParams(table);
                     dt = dbHelper.GetDataSet(sql, parms);
                 }
                 else
                 {
-                    sql += " order by convert(numeric,c_id) desc";
+                    sql += " order by convert(numeric,c_id) asc";
                     dt = dbHelper.GetDataSet(sql);
                 }
 
@@ -332,7 +332,7 @@ namespace DAL
         }
 
         /// <summary>
-        /// 物料类型是否有子类型
+        /// 货位是否有下级
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -372,12 +372,14 @@ namespace DAL
             }
         }
         /// <summary>
-        /// 物料类型是否被使用
+        /// 货位是否被使用
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public bool isInUse(string id)
         {
+            return false;
+            //todo:有库存、或在出入库列表
             try
             {
                 int count = 0;

@@ -243,7 +243,7 @@
             this.Name = "PlaceModify";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "修改库房";
+            this.Text = "修改货位";
             this.ResumeLayout(false);
             this.PerformLayout();
 

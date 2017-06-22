@@ -50,12 +50,12 @@
             this.txtPid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.txtMeno = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -107,7 +107,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(158, 399);
+            this.groupBox1.Size = new System.Drawing.Size(225, 399);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             // 
@@ -120,7 +120,7 @@
             this.treeView1.Location = new System.Drawing.Point(3, 17);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(152, 379);
+            this.treeView1.Size = new System.Drawing.Size(219, 379);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -156,7 +156,7 @@
             // label5
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Location = new System.Drawing.Point(166, 8);
+            this.label5.Location = new System.Drawing.Point(233, 8);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(8, 399);
             this.label5.TabIndex = 24;
@@ -168,11 +168,11 @@
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.panel1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(174, 8);
+            this.groupBox2.Location = new System.Drawing.Point(241, 8);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(754, 399);
+            this.groupBox2.Size = new System.Drawing.Size(687, 399);
             this.groupBox2.TabIndex = 25;
             this.groupBox2.TabStop = false;
             // 
@@ -183,7 +183,7 @@
             this.panel2.Location = new System.Drawing.Point(2, 103);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(750, 294);
+            this.panel2.Size = new System.Drawing.Size(683, 294);
             this.panel2.TabIndex = 3;
             // 
             // dgv_Data
@@ -201,7 +201,7 @@
             this.dgv_Data.RowHeadersVisible = false;
             this.dgv_Data.RowTemplate.Height = 23;
             this.dgv_Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Data.Size = new System.Drawing.Size(750, 294);
+            this.dgv_Data.Size = new System.Drawing.Size(683, 294);
             this.dgv_Data.TabIndex = 63;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             this.dgv_Data.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_Data_CellFormatting);
@@ -212,7 +212,7 @@
             this.label13.Location = new System.Drawing.Point(2, 95);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(750, 8);
+            this.label13.Size = new System.Drawing.Size(683, 8);
             this.label13.TabIndex = 2;
             // 
             // label14
@@ -222,7 +222,7 @@
             this.label14.Location = new System.Drawing.Point(2, 93);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(750, 2);
+            this.label14.Size = new System.Drawing.Size(683, 2);
             this.label14.TabIndex = 1;
             this.label14.Text = "label14";
             // 
@@ -246,7 +246,7 @@
             this.panel1.Location = new System.Drawing.Point(2, 16);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(750, 77);
+            this.panel1.Size = new System.Drawing.Size(683, 77);
             this.panel1.TabIndex = 0;
             // 
             // checkBox1
@@ -293,6 +293,38 @@
             this.lblName.Text = "*";
             this.lblName.Visible = false;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.LightGray;
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.ImageIndex = 5;
+            this.button2.ImageList = this.imageList1;
+            this.button2.Location = new System.Drawing.Point(584, 41);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 25);
+            this.button2.TabIndex = 64;
+            this.button2.Text = "关闭(&C)";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.Color.LightGray;
+            this.button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button8.ImageIndex = 4;
+            this.button8.ImageList = this.imageList1;
+            this.button8.Location = new System.Drawing.Point(505, 41);
+            this.button8.Margin = new System.Windows.Forms.Padding(2);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 25);
+            this.button8.TabIndex = 31;
+            this.button8.Text = "删除(&D)";
+            this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // txtMeno
             // 
             this.txtMeno.Location = new System.Drawing.Point(54, 44);
@@ -330,38 +362,6 @@
             this.label17.Size = new System.Drawing.Size(41, 12);
             this.label17.TabIndex = 24;
             this.label17.Text = "名称：";
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.LightGray;
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.ImageIndex = 5;
-            this.button2.ImageList = this.imageList1;
-            this.button2.Location = new System.Drawing.Point(584, 41);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 25);
-            this.button2.TabIndex = 64;
-            this.button2.Text = "关闭(&C)";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.LightGray;
-            this.button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button8.ImageIndex = 4;
-            this.button8.ImageList = this.imageList1;
-            this.button8.Location = new System.Drawing.Point(505, 41);
-            this.button8.Margin = new System.Windows.Forms.Padding(2);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 25);
-            this.button8.TabIndex = 31;
-            this.button8.Text = "删除(&D)";
-            this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button5
             // 

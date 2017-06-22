@@ -99,7 +99,7 @@ namespace UI
         private void button1_Click(object sender, EventArgs e)
         {
             //todo:级别判断，7级或最小控制单元不能添加
-            if (currentPlace.I_grade==null)
+            if (currentPlace.I_grade < 0)
             {
                 MessageBox.Show("不能在当前级别下添加！");
             }
@@ -107,21 +107,23 @@ namespace UI
             {
                 MessageBox.Show("不能在最小控制单元下添加！");
             }
-            else if (currnetNode.)
+            else if (currnetNode.Nodes != null && currnetNode.Nodes.Count > 0)
             {
-
+                MessageBox.Show("当前级别已存在下级！");
             }
-            PlaceAdd wa = new PlaceAdd(this);
-            wa.ShowDialog();
-
-            if (isAdd)
+            else
             {
-                addNewType();
-                setList(currentPlace.C_id, null, null, -1);
-                initNew(currentPlace.C_id);
-                isAdd = false;
-            }
+                PlaceAdd wa = new PlaceAdd(this);
+                wa.ShowDialog();
 
+                if (isAdd)
+                {
+                    addNewType();
+                    setList(currentPlace.C_id, null, null, -1);
+                    initNew(currentPlace.C_id);
+                    isAdd = false;
+                }
+            }
         }
 
         //删除
@@ -146,12 +148,12 @@ namespace UI
                         if (bll.IsHaveChild(id))
                         {
                             lists.Clear();
-                            MessageBox.Show("要删除的类型下有子类型，请删除子类型后重试!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("要删除的货位下有子货位，请删除子货位后重试!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         }
                         else
                         {
-                            if (bll.IsInUse(id)) //类型被使用
+                            if (bll.IsInUse(id)) //货位被使用
                             {
                                 lists.Clear();
                                 MessageBox.Show("该信息被使用，不能删除!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -222,16 +224,17 @@ namespace UI
             T_JB_Place all = new T_JB_Place();
             all.C_name = "全部";
             all.C_id = "0";
+            all.I_grade = -1;
             messages.Add(root, all);
 
 
-            code_Child = bll.GetAllChild("0",0);
+            code_Child = bll.GetAllChild("0", 0);
             for (int i = 0; i < code_Child.Count; i++)
             {
                 TreeNode subNode = new TreeNode(code_Child[i].C_name);
                 subNode.ImageIndex = 1;
                 root.Nodes.Add(subNode);
-                addTree(code_Child[i].C_id, subNode,0);
+                addTree(code_Child[i].C_id, subNode, 0);
                 messages.Add(subNode, code_Child[i]);
             }
 
@@ -345,7 +348,7 @@ namespace UI
         }
 
         /// <summary>
-        /// 给树添加新增的类型节点
+        /// 给树添加新增的货位节点
         /// </summary>
         public void addNewType()
         {
@@ -453,7 +456,7 @@ namespace UI
         /// <param name="e"></param>
         private void dgv_Data_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            if (e.ColumnIndex == 4 || e.ColumnIndex == 3)
             {
                 e.FormattingApplied = true;
                 DataGridViewRow row = dgv_Data.Rows[e.RowIndex];

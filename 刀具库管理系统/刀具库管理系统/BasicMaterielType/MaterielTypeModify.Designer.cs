@@ -243,7 +243,7 @@
             this.Name = "MaterielTypeModify";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "修改库房";
+            this.Text = "修改物料类别";
             this.ResumeLayout(false);
             this.PerformLayout();
 

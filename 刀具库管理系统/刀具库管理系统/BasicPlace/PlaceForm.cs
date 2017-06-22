@@ -99,6 +99,18 @@ namespace UI
         private void button1_Click(object sender, EventArgs e)
         {
             //todo:级别判断，7级或最小控制单元不能添加
+            if (currentPlace.I_grade==null)
+            {
+                MessageBox.Show("不能在当前级别下添加！");
+            }
+            else if (currentPlace.I_end == 1)
+            {
+                MessageBox.Show("不能在最小控制单元下添加！");
+            }
+            else if (currnetNode.)
+            {
+
+            }
             PlaceAdd wa = new PlaceAdd(this);
             wa.ShowDialog();
 

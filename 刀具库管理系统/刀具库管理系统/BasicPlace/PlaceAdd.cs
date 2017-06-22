@@ -19,6 +19,7 @@ namespace UI
         string pid;
         PlaceForm parentForm;
         Dictionary<int, Dictionary<string, Control>> dicCtrl;
+        int grade;
 
         public PlaceAdd(PlaceForm parentForm)
         {
@@ -27,6 +28,7 @@ namespace UI
             this.pid = parentForm.currentPlace.C_id;
             this.parentForm = parentForm;
             lblPid.Text = pid;
+            this.grade = parentForm.currentPlace.I_grade;
 
             Init();
         }
@@ -48,15 +50,16 @@ namespace UI
             foreach (var key in dicCtrl.Keys)
             {
                 dicCtrl[key]["end"].Tag = key;
-            }
 
-            for (int i = 0; i < parentForm.currentPlace.I_grade; i++)
-            {
-                SetDic(dicCtrl[dicCtrl.Count - 1 - i]);
+                //根据级别，限制可增加的层数
+                if (key + grade > 7)
+                {
+                    SetDicEnable(dicCtrl[key]);
+                }
             }
         }
 
-        private void SetDic(Dictionary<string, Control> dic)
+        private void SetDicEnable(Dictionary<string, Control> dic)
         {
             foreach (var item in dic.Values)
             {

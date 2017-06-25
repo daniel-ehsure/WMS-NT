@@ -117,13 +117,44 @@ namespace BLL
        }
 
         /// <summary>
-        /// 更新类型
+       /// 更新货位
         /// </summary>
-        /// <param name="dm_type">类型信息</param>
+       /// <param name="place">货位</param>
         /// <returns></returns>
-       public bool Update(T_JB_Place dm_type)
+       public bool Update(T_JB_Place place)
        {
-           return dal.update(dm_type);
+           return dal.update(place);
+       }
+
+       /// <summary>
+       /// 更新货位的货区
+       /// </summary>
+       /// <returns></returns>
+       public bool UpdateArea(List<String> places, string placeArea)
+       {
+           return dal.UpdateArea(places, placeArea);
+       }
+
+       /// <summary>
+       /// 根据上级获得信息
+       /// </summary>
+       /// <param name="tableName"></param>
+       /// <param name="id"></param>
+       /// <returns></returns>
+       public DataTable GetByPreId(string preId)
+       {
+           return dal.GetByPreId(preId);
+       }
+
+       /// <summary>
+       /// 根据上级、货区、类型获得信息
+       /// </summary>
+       /// <param name="tableName"></param>
+       /// <param name="id"></param>
+       /// <returns></returns>
+       public DataTable GetPlaceList(string preId, string area, int type)
+       {
+           return dal.GetPlaceList(preId, area, type);
        }
     }
 }

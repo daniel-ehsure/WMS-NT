@@ -119,7 +119,7 @@ namespace UI
                 if (isAdd)
                 {
                     addNewType();
-                    setList(currentPlace.C_id, null, null, -1);
+                    setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
                     initNew(currentPlace.C_id);
                     isAdd = false;
                 }

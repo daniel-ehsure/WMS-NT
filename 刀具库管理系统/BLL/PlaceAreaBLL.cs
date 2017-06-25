@@ -22,7 +22,7 @@ namespace BLL
 
         public string GetNextCode()
         {
-            return dal.GetNextCode(2);
+            return dal.GetNextCode(4);
         }
 
         public bool IsExit(string name)

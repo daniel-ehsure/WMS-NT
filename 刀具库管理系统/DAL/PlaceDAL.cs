@@ -74,7 +74,7 @@ namespace DAL
             string sql;
             if (grade < 0)
             {
-                return new DataTable();
+                sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END], [I_GRADE] FROM [T_JB_Place] where 1=0 ";
             }
             else
             {
@@ -89,7 +89,7 @@ namespace DAL
                     Hashtable table = new Hashtable();
                     if (pid != null)
                     {
-                        if (grade == 1)
+                        if (grade == 0)
                         {
                             sql += " and c_warehouse = @C_PRE_ID";
                             table.Add("C_PRE_ID", pid);
@@ -560,11 +560,11 @@ namespace DAL
         }
 
         /// <summary>
-        /// 更新类型
+        /// 更新货位
         /// </summary>
-        /// <param name="dm_type">类型信息</param>
+        /// <param name="dm_type">货位</param>
         /// <returns></returns>
-        public bool update(T_JB_Place dm_type)
+        public bool update(T_JB_Place place)
         {
             try
             {
@@ -572,13 +572,13 @@ namespace DAL
                 string sql = "UPDATE T_JB_Place SET C_NAME=@C_NAME, I_END=@I_END, I_INUSE=@I_INUSE, I_LENGTH=@I_LENGTH, I_WIDTH=@I_WIDTH, C_MEMO=@C_MEMO " +
                              "WHERE C_ID=@C_ID ";
                 Hashtable table = new Hashtable();
-                table.Add("C_ID", dm_type.C_id);
-                table.Add("C_NAME", dm_type.C_name);
-                table.Add("I_END", dm_type.I_end);
-                table.Add("I_INUSE", dm_type.I_inuse);
-                table.Add("I_LENGTH", dm_type.I_length);
-                table.Add("I_WIDTH", dm_type.I_width);
-                table.Add("C_MEMO", dm_type.C_memo);
+                table.Add("C_ID", place.C_id);
+                table.Add("C_NAME", place.C_name);
+                table.Add("I_END", place.I_end);
+                table.Add("I_INUSE", place.I_inuse);
+                table.Add("I_LENGTH", place.I_length);
+                table.Add("I_WIDTH", place.I_width);
+                table.Add("C_MEMO", place.C_memo);
                 DbParameter[] parms = dbHelper.getParams(table);
 
                 count = dbHelper.ExecuteCommand(sql, parms);
@@ -600,6 +600,142 @@ namespace DAL
             {
                 dbHelper.getConnection().Close();
             }
+        }
+
+
+        /// <summary>
+        /// 更新货位的货区
+        /// </summary>
+        /// <param name="dm_type">类型信息</param>
+        /// <returns></returns>
+        public bool UpdateArea(List<String> places, string placeArea)
+        {
+            DbConnection conn = dbHelper.getConnection();
+
+            try
+            {
+                conn.Open();
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                conn.Close();
+                throw ex;
+            }
+
+            DbTransaction tran = conn.BeginTransaction();
+            DbCommand com = conn.CreateCommand();
+            string sql = string.Empty;
+            try
+            {
+                com.Transaction = tran;
+
+                sql = "UPDATE T_JB_Place SET C_AREA=@C_AREA " +
+                             "WHERE C_ID=@C_ID ";
+
+                com.CommandText = sql;
+
+                for (int i = 0; i < places.Count; i++)
+                {
+                    Hashtable table = new Hashtable();
+                    table.Add("C_ID", places[i]);
+                    table.Add("C_AREA", placeArea);
+                    DbParameter[] parms = dbHelper.getParams(table);
+                    com.Parameters.Clear();
+                    com.Parameters.AddRange(parms);
+                    com.ExecuteNonQuery();
+                }
+
+                tran.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+        }
+
+        /// <summary>
+        /// 根据上级获得信息
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DataTable GetByPreId(string preId)
+        {
+            DataTable dt = new DataTable();
+
+            string sql = " SELECT C_ID as id, C_NAME as name from  T_JB_Place where C_PRE_ID = '" + preId + "'";
+            try
+            {
+                dt = dbHelper.GetDataSet(sql);
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+
+            return dt;
+        }
+
+        /// <summary>
+        /// 根据上级、货区、类型获得信息
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DataTable GetPlaceList(string preId, string area, int type)
+        {
+            string sql = "SELECT a.[C_ID], a.[C_NAME], [I_INUSE], case  [I_INUSE] when 1 then '可用' else '不可用' end as C_INUSE, " +
+                         "  [I_LENGTH], [I_WIDTH], b.c_name as c_type FROM [T_JB_PLACE] a left join t_jb_placeArea b on a.C_AREA = b.c_id  where I_END=1";
+            DataTable dt = new DataTable();
+            try
+            {
+                Hashtable table = new Hashtable();
+                if (preId != null)
+                {
+                    sql += " and a.C_PRE_ID like '"+preId+"%'";
+                }
+                if (area != null)
+                {
+                    sql += " and a.c_area =@area ";
+
+                    table.Add("area", area);
+                }
+                if (type == 2)
+                {
+                    sql += " and (a.C_AREA = '' or a.C_AREA is null)";
+                }
+                else if (type == 3)
+                {
+                    sql += " and (a.C_AREA != '' or a.C_AREA is not null)";
+                }
+
+                DbParameter[] parms = dbHelper.getParams(table);
+                sql += " order by a.C_ID";
+                dt = dbHelper.GetDataSet(sql, parms);
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+
+            return dt;
         }
     }
 }

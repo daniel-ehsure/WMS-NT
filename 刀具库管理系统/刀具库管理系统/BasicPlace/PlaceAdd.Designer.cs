@@ -34,8 +34,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.label6 = new System.Windows.Forms.Label();
-            this.btnQuit = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.cbEnd1 = new System.Windows.Forms.CheckBox();
             this.lblPid = new System.Windows.Forms.Label();
@@ -75,11 +73,14 @@
             this.txtWidth7 = new System.Windows.Forms.TextBox();
             this.txtLength7 = new System.Windows.Forms.TextBox();
             this.txtNum7 = new System.Windows.Forms.TextBox();
+            this.btnQuit = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtName1
             // 
-            this.txtName1.Location = new System.Drawing.Point(149, 47);
+            this.txtName1.Location = new System.Drawing.Point(149, 60);
             this.txtName1.MaxLength = 25;
             this.txtName1.Name = "txtName1";
             this.txtName1.Size = new System.Drawing.Size(105, 21);
@@ -88,7 +89,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(183, 21);
+            this.label7.Location = new System.Drawing.Point(183, 34);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 56;
@@ -109,6 +110,337 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(325, 1);
             this.label6.TabIndex = 55;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(423, 34);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 12);
+            this.label11.TabIndex = 59;
+            this.label11.Text = "最小控制单元：";
+            // 
+            // cbEnd1
+            // 
+            this.cbEnd1.AutoSize = true;
+            this.cbEnd1.Location = new System.Drawing.Point(439, 63);
+            this.cbEnd1.Name = "cbEnd1";
+            this.cbEnd1.Size = new System.Drawing.Size(15, 14);
+            this.cbEnd1.TabIndex = 60;
+            this.cbEnd1.UseVisualStyleBackColor = true;
+            this.cbEnd1.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
+            // 
+            // lblPid
+            // 
+            this.lblPid.AutoSize = true;
+            this.lblPid.Location = new System.Drawing.Point(75, 9);
+            this.lblPid.Name = "lblPid";
+            this.lblPid.Size = new System.Drawing.Size(17, 12);
+            this.lblPid.TabIndex = 61;
+            this.lblPid.Text = "id";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(282, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 62;
+            this.label1.Text = "长度：";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(358, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 62;
+            this.label2.Text = "宽度：";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(87, 34);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 63;
+            this.label3.Text = "数量：";
+            // 
+            // txtWidth1
+            // 
+            this.txtWidth1.Location = new System.Drawing.Point(271, 60);
+            this.txtWidth1.MaxLength = 25;
+            this.txtWidth1.Name = "txtWidth1";
+            this.txtWidth1.Size = new System.Drawing.Size(61, 21);
+            this.txtWidth1.TabIndex = 64;
+            // 
+            // txtLength1
+            // 
+            this.txtLength1.Location = new System.Drawing.Point(349, 60);
+            this.txtLength1.MaxLength = 25;
+            this.txtLength1.Name = "txtLength1";
+            this.txtLength1.Size = new System.Drawing.Size(61, 21);
+            this.txtLength1.TabIndex = 64;
+            // 
+            // txtNum1
+            // 
+            this.txtNum1.Location = new System.Drawing.Point(71, 60);
+            this.txtNum1.MaxLength = 25;
+            this.txtNum1.Name = "txtNum1";
+            this.txtNum1.Size = new System.Drawing.Size(61, 21);
+            this.txtNum1.TabIndex = 64;
+            // 
+            // txtName2
+            // 
+            this.txtName2.Location = new System.Drawing.Point(155, 87);
+            this.txtName2.MaxLength = 25;
+            this.txtName2.Name = "txtName2";
+            this.txtName2.Size = new System.Drawing.Size(105, 21);
+            this.txtName2.TabIndex = 47;
+            // 
+            // cbEnd2
+            // 
+            this.cbEnd2.AutoSize = true;
+            this.cbEnd2.Location = new System.Drawing.Point(445, 90);
+            this.cbEnd2.Name = "cbEnd2";
+            this.cbEnd2.Size = new System.Drawing.Size(15, 14);
+            this.cbEnd2.TabIndex = 60;
+            this.cbEnd2.UseVisualStyleBackColor = true;
+            this.cbEnd2.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
+            // 
+            // txtWidth2
+            // 
+            this.txtWidth2.Location = new System.Drawing.Point(277, 87);
+            this.txtWidth2.MaxLength = 25;
+            this.txtWidth2.Name = "txtWidth2";
+            this.txtWidth2.Size = new System.Drawing.Size(61, 21);
+            this.txtWidth2.TabIndex = 64;
+            // 
+            // txtLength2
+            // 
+            this.txtLength2.Location = new System.Drawing.Point(355, 87);
+            this.txtLength2.MaxLength = 25;
+            this.txtLength2.Name = "txtLength2";
+            this.txtLength2.Size = new System.Drawing.Size(61, 21);
+            this.txtLength2.TabIndex = 64;
+            // 
+            // txtNum2
+            // 
+            this.txtNum2.Location = new System.Drawing.Point(77, 87);
+            this.txtNum2.MaxLength = 25;
+            this.txtNum2.Name = "txtNum2";
+            this.txtNum2.Size = new System.Drawing.Size(61, 21);
+            this.txtNum2.TabIndex = 64;
+            // 
+            // txtName3
+            // 
+            this.txtName3.Location = new System.Drawing.Point(161, 114);
+            this.txtName3.MaxLength = 25;
+            this.txtName3.Name = "txtName3";
+            this.txtName3.Size = new System.Drawing.Size(105, 21);
+            this.txtName3.TabIndex = 47;
+            // 
+            // cbEnd3
+            // 
+            this.cbEnd3.AutoSize = true;
+            this.cbEnd3.Location = new System.Drawing.Point(451, 117);
+            this.cbEnd3.Name = "cbEnd3";
+            this.cbEnd3.Size = new System.Drawing.Size(15, 14);
+            this.cbEnd3.TabIndex = 60;
+            this.cbEnd3.UseVisualStyleBackColor = true;
+            this.cbEnd3.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
+            // 
+            // txtWidth3
+            // 
+            this.txtWidth3.Location = new System.Drawing.Point(283, 114);
+            this.txtWidth3.MaxLength = 25;
+            this.txtWidth3.Name = "txtWidth3";
+            this.txtWidth3.Size = new System.Drawing.Size(61, 21);
+            this.txtWidth3.TabIndex = 64;
+            // 
+            // txtLength3
+            // 
+            this.txtLength3.Location = new System.Drawing.Point(361, 114);
+            this.txtLength3.MaxLength = 25;
+            this.txtLength3.Name = "txtLength3";
+            this.txtLength3.Size = new System.Drawing.Size(61, 21);
+            this.txtLength3.TabIndex = 64;
+            // 
+            // txtNum3
+            // 
+            this.txtNum3.Location = new System.Drawing.Point(83, 114);
+            this.txtNum3.MaxLength = 25;
+            this.txtNum3.Name = "txtNum3";
+            this.txtNum3.Size = new System.Drawing.Size(61, 21);
+            this.txtNum3.TabIndex = 64;
+            // 
+            // txtName4
+            // 
+            this.txtName4.Location = new System.Drawing.Point(167, 141);
+            this.txtName4.MaxLength = 25;
+            this.txtName4.Name = "txtName4";
+            this.txtName4.Size = new System.Drawing.Size(105, 21);
+            this.txtName4.TabIndex = 47;
+            // 
+            // cbEnd4
+            // 
+            this.cbEnd4.AutoSize = true;
+            this.cbEnd4.Location = new System.Drawing.Point(457, 144);
+            this.cbEnd4.Name = "cbEnd4";
+            this.cbEnd4.Size = new System.Drawing.Size(15, 14);
+            this.cbEnd4.TabIndex = 60;
+            this.cbEnd4.UseVisualStyleBackColor = true;
+            this.cbEnd4.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
+            // 
+            // txtWidth4
+            // 
+            this.txtWidth4.Location = new System.Drawing.Point(289, 141);
+            this.txtWidth4.MaxLength = 25;
+            this.txtWidth4.Name = "txtWidth4";
+            this.txtWidth4.Size = new System.Drawing.Size(61, 21);
+            this.txtWidth4.TabIndex = 64;
+            // 
+            // txtLength4
+            // 
+            this.txtLength4.Location = new System.Drawing.Point(367, 141);
+            this.txtLength4.MaxLength = 25;
+            this.txtLength4.Name = "txtLength4";
+            this.txtLength4.Size = new System.Drawing.Size(61, 21);
+            this.txtLength4.TabIndex = 64;
+            // 
+            // txtNum4
+            // 
+            this.txtNum4.Location = new System.Drawing.Point(89, 141);
+            this.txtNum4.MaxLength = 25;
+            this.txtNum4.Name = "txtNum4";
+            this.txtNum4.Size = new System.Drawing.Size(61, 21);
+            this.txtNum4.TabIndex = 64;
+            // 
+            // txtName5
+            // 
+            this.txtName5.Location = new System.Drawing.Point(173, 168);
+            this.txtName5.MaxLength = 25;
+            this.txtName5.Name = "txtName5";
+            this.txtName5.Size = new System.Drawing.Size(105, 21);
+            this.txtName5.TabIndex = 47;
+            // 
+            // cbEnd5
+            // 
+            this.cbEnd5.AutoSize = true;
+            this.cbEnd5.Location = new System.Drawing.Point(463, 171);
+            this.cbEnd5.Name = "cbEnd5";
+            this.cbEnd5.Size = new System.Drawing.Size(15, 14);
+            this.cbEnd5.TabIndex = 60;
+            this.cbEnd5.UseVisualStyleBackColor = true;
+            this.cbEnd5.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
+            // 
+            // txtWidth5
+            // 
+            this.txtWidth5.Location = new System.Drawing.Point(295, 168);
+            this.txtWidth5.MaxLength = 25;
+            this.txtWidth5.Name = "txtWidth5";
+            this.txtWidth5.Size = new System.Drawing.Size(61, 21);
+            this.txtWidth5.TabIndex = 64;
+            // 
+            // txtLength5
+            // 
+            this.txtLength5.Location = new System.Drawing.Point(373, 168);
+            this.txtLength5.MaxLength = 25;
+            this.txtLength5.Name = "txtLength5";
+            this.txtLength5.Size = new System.Drawing.Size(61, 21);
+            this.txtLength5.TabIndex = 64;
+            // 
+            // txtNum5
+            // 
+            this.txtNum5.Location = new System.Drawing.Point(95, 168);
+            this.txtNum5.MaxLength = 25;
+            this.txtNum5.Name = "txtNum5";
+            this.txtNum5.Size = new System.Drawing.Size(61, 21);
+            this.txtNum5.TabIndex = 64;
+            // 
+            // txtName6
+            // 
+            this.txtName6.Location = new System.Drawing.Point(179, 195);
+            this.txtName6.MaxLength = 25;
+            this.txtName6.Name = "txtName6";
+            this.txtName6.Size = new System.Drawing.Size(105, 21);
+            this.txtName6.TabIndex = 47;
+            // 
+            // cbEnd6
+            // 
+            this.cbEnd6.AutoSize = true;
+            this.cbEnd6.Location = new System.Drawing.Point(469, 198);
+            this.cbEnd6.Name = "cbEnd6";
+            this.cbEnd6.Size = new System.Drawing.Size(15, 14);
+            this.cbEnd6.TabIndex = 60;
+            this.cbEnd6.UseVisualStyleBackColor = true;
+            this.cbEnd6.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
+            // 
+            // txtWidth6
+            // 
+            this.txtWidth6.Location = new System.Drawing.Point(301, 195);
+            this.txtWidth6.MaxLength = 25;
+            this.txtWidth6.Name = "txtWidth6";
+            this.txtWidth6.Size = new System.Drawing.Size(61, 21);
+            this.txtWidth6.TabIndex = 64;
+            // 
+            // txtLength6
+            // 
+            this.txtLength6.Location = new System.Drawing.Point(379, 195);
+            this.txtLength6.MaxLength = 25;
+            this.txtLength6.Name = "txtLength6";
+            this.txtLength6.Size = new System.Drawing.Size(61, 21);
+            this.txtLength6.TabIndex = 64;
+            // 
+            // txtNum6
+            // 
+            this.txtNum6.Location = new System.Drawing.Point(101, 195);
+            this.txtNum6.MaxLength = 25;
+            this.txtNum6.Name = "txtNum6";
+            this.txtNum6.Size = new System.Drawing.Size(61, 21);
+            this.txtNum6.TabIndex = 64;
+            // 
+            // txtName7
+            // 
+            this.txtName7.Location = new System.Drawing.Point(185, 222);
+            this.txtName7.MaxLength = 25;
+            this.txtName7.Name = "txtName7";
+            this.txtName7.Size = new System.Drawing.Size(105, 21);
+            this.txtName7.TabIndex = 47;
+            // 
+            // cbEnd7
+            // 
+            this.cbEnd7.AutoSize = true;
+            this.cbEnd7.Location = new System.Drawing.Point(475, 225);
+            this.cbEnd7.Name = "cbEnd7";
+            this.cbEnd7.Size = new System.Drawing.Size(15, 14);
+            this.cbEnd7.TabIndex = 60;
+            this.cbEnd7.UseVisualStyleBackColor = true;
+            this.cbEnd7.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
+            // 
+            // txtWidth7
+            // 
+            this.txtWidth7.Location = new System.Drawing.Point(307, 222);
+            this.txtWidth7.MaxLength = 25;
+            this.txtWidth7.Name = "txtWidth7";
+            this.txtWidth7.Size = new System.Drawing.Size(61, 21);
+            this.txtWidth7.TabIndex = 64;
+            // 
+            // txtLength7
+            // 
+            this.txtLength7.Location = new System.Drawing.Point(385, 222);
+            this.txtLength7.MaxLength = 25;
+            this.txtLength7.Name = "txtLength7";
+            this.txtLength7.Size = new System.Drawing.Size(61, 21);
+            this.txtLength7.TabIndex = 64;
+            // 
+            // txtNum7
+            // 
+            this.txtNum7.Location = new System.Drawing.Point(107, 222);
+            this.txtNum7.MaxLength = 25;
+            this.txtNum7.Name = "txtNum7";
+            this.txtNum7.Size = new System.Drawing.Size(61, 21);
+            this.txtNum7.TabIndex = 64;
             // 
             // btnQuit
             // 
@@ -143,336 +475,14 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(423, 21);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 12);
-            this.label11.TabIndex = 59;
-            this.label11.Text = "最小控制单元：";
-            // 
-            // cbEnd1
-            // 
-            this.cbEnd1.AutoSize = true;
-            this.cbEnd1.Location = new System.Drawing.Point(439, 50);
-            this.cbEnd1.Name = "cbEnd1";
-            this.cbEnd1.Size = new System.Drawing.Size(15, 14);
-            this.cbEnd1.TabIndex = 60;
-            this.cbEnd1.UseVisualStyleBackColor = true;
-            this.cbEnd1.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
-            // 
-            // lblPid
-            // 
-            this.lblPid.AutoSize = true;
-            this.lblPid.Location = new System.Drawing.Point(25, 9);
-            this.lblPid.Name = "lblPid";
-            this.lblPid.Size = new System.Drawing.Size(29, 12);
-            this.lblPid.TabIndex = 61;
-            this.lblPid.Text = "上级";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(282, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 62;
-            this.label1.Text = "长度：";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(358, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 62;
-            this.label2.Text = "宽度：";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(87, 21);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 63;
-            this.label3.Text = "数量：";
-            // 
-            // txtWidth1
-            // 
-            this.txtWidth1.Location = new System.Drawing.Point(271, 47);
-            this.txtWidth1.MaxLength = 25;
-            this.txtWidth1.Name = "txtWidth1";
-            this.txtWidth1.Size = new System.Drawing.Size(61, 21);
-            this.txtWidth1.TabIndex = 64;
-            // 
-            // txtLength1
-            // 
-            this.txtLength1.Location = new System.Drawing.Point(349, 47);
-            this.txtLength1.MaxLength = 25;
-            this.txtLength1.Name = "txtLength1";
-            this.txtLength1.Size = new System.Drawing.Size(61, 21);
-            this.txtLength1.TabIndex = 64;
-            // 
-            // txtNum1
-            // 
-            this.txtNum1.Location = new System.Drawing.Point(71, 47);
-            this.txtNum1.MaxLength = 25;
-            this.txtNum1.Name = "txtNum1";
-            this.txtNum1.Size = new System.Drawing.Size(61, 21);
-            this.txtNum1.TabIndex = 64;
-            // 
-            // txtName2
-            // 
-            this.txtName2.Location = new System.Drawing.Point(155, 74);
-            this.txtName2.MaxLength = 25;
-            this.txtName2.Name = "txtName2";
-            this.txtName2.Size = new System.Drawing.Size(105, 21);
-            this.txtName2.TabIndex = 47;
-            // 
-            // cbEnd2
-            // 
-            this.cbEnd2.AutoSize = true;
-            this.cbEnd2.Location = new System.Drawing.Point(445, 77);
-            this.cbEnd2.Name = "cbEnd2";
-            this.cbEnd2.Size = new System.Drawing.Size(15, 14);
-            this.cbEnd2.TabIndex = 60;
-            this.cbEnd2.UseVisualStyleBackColor = true;
-            this.cbEnd2.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
-            // 
-            // txtWidth2
-            // 
-            this.txtWidth2.Location = new System.Drawing.Point(277, 74);
-            this.txtWidth2.MaxLength = 25;
-            this.txtWidth2.Name = "txtWidth2";
-            this.txtWidth2.Size = new System.Drawing.Size(61, 21);
-            this.txtWidth2.TabIndex = 64;
-            // 
-            // txtLength2
-            // 
-            this.txtLength2.Location = new System.Drawing.Point(355, 74);
-            this.txtLength2.MaxLength = 25;
-            this.txtLength2.Name = "txtLength2";
-            this.txtLength2.Size = new System.Drawing.Size(61, 21);
-            this.txtLength2.TabIndex = 64;
-            // 
-            // txtNum2
-            // 
-            this.txtNum2.Location = new System.Drawing.Point(77, 74);
-            this.txtNum2.MaxLength = 25;
-            this.txtNum2.Name = "txtNum2";
-            this.txtNum2.Size = new System.Drawing.Size(61, 21);
-            this.txtNum2.TabIndex = 64;
-            // 
-            // txtName3
-            // 
-            this.txtName3.Location = new System.Drawing.Point(161, 101);
-            this.txtName3.MaxLength = 25;
-            this.txtName3.Name = "txtName3";
-            this.txtName3.Size = new System.Drawing.Size(105, 21);
-            this.txtName3.TabIndex = 47;
-            // 
-            // cbEnd3
-            // 
-            this.cbEnd3.AutoSize = true;
-            this.cbEnd3.Location = new System.Drawing.Point(451, 104);
-            this.cbEnd3.Name = "cbEnd3";
-            this.cbEnd3.Size = new System.Drawing.Size(15, 14);
-            this.cbEnd3.TabIndex = 60;
-            this.cbEnd3.UseVisualStyleBackColor = true;
-            this.cbEnd3.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
-            // 
-            // txtWidth3
-            // 
-            this.txtWidth3.Location = new System.Drawing.Point(283, 101);
-            this.txtWidth3.MaxLength = 25;
-            this.txtWidth3.Name = "txtWidth3";
-            this.txtWidth3.Size = new System.Drawing.Size(61, 21);
-            this.txtWidth3.TabIndex = 64;
-            // 
-            // txtLength3
-            // 
-            this.txtLength3.Location = new System.Drawing.Point(361, 101);
-            this.txtLength3.MaxLength = 25;
-            this.txtLength3.Name = "txtLength3";
-            this.txtLength3.Size = new System.Drawing.Size(61, 21);
-            this.txtLength3.TabIndex = 64;
-            // 
-            // txtNum3
-            // 
-            this.txtNum3.Location = new System.Drawing.Point(83, 101);
-            this.txtNum3.MaxLength = 25;
-            this.txtNum3.Name = "txtNum3";
-            this.txtNum3.Size = new System.Drawing.Size(61, 21);
-            this.txtNum3.TabIndex = 64;
-            // 
-            // txtName4
-            // 
-            this.txtName4.Location = new System.Drawing.Point(167, 128);
-            this.txtName4.MaxLength = 25;
-            this.txtName4.Name = "txtName4";
-            this.txtName4.Size = new System.Drawing.Size(105, 21);
-            this.txtName4.TabIndex = 47;
-            // 
-            // cbEnd4
-            // 
-            this.cbEnd4.AutoSize = true;
-            this.cbEnd4.Location = new System.Drawing.Point(457, 131);
-            this.cbEnd4.Name = "cbEnd4";
-            this.cbEnd4.Size = new System.Drawing.Size(15, 14);
-            this.cbEnd4.TabIndex = 60;
-            this.cbEnd4.UseVisualStyleBackColor = true;
-            this.cbEnd4.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
-            // 
-            // txtWidth4
-            // 
-            this.txtWidth4.Location = new System.Drawing.Point(289, 128);
-            this.txtWidth4.MaxLength = 25;
-            this.txtWidth4.Name = "txtWidth4";
-            this.txtWidth4.Size = new System.Drawing.Size(61, 21);
-            this.txtWidth4.TabIndex = 64;
-            // 
-            // txtLength4
-            // 
-            this.txtLength4.Location = new System.Drawing.Point(367, 128);
-            this.txtLength4.MaxLength = 25;
-            this.txtLength4.Name = "txtLength4";
-            this.txtLength4.Size = new System.Drawing.Size(61, 21);
-            this.txtLength4.TabIndex = 64;
-            // 
-            // txtNum4
-            // 
-            this.txtNum4.Location = new System.Drawing.Point(89, 128);
-            this.txtNum4.MaxLength = 25;
-            this.txtNum4.Name = "txtNum4";
-            this.txtNum4.Size = new System.Drawing.Size(61, 21);
-            this.txtNum4.TabIndex = 64;
-            // 
-            // txtName5
-            // 
-            this.txtName5.Location = new System.Drawing.Point(173, 155);
-            this.txtName5.MaxLength = 25;
-            this.txtName5.Name = "txtName5";
-            this.txtName5.Size = new System.Drawing.Size(105, 21);
-            this.txtName5.TabIndex = 47;
-            // 
-            // cbEnd5
-            // 
-            this.cbEnd5.AutoSize = true;
-            this.cbEnd5.Location = new System.Drawing.Point(463, 158);
-            this.cbEnd5.Name = "cbEnd5";
-            this.cbEnd5.Size = new System.Drawing.Size(15, 14);
-            this.cbEnd5.TabIndex = 60;
-            this.cbEnd5.UseVisualStyleBackColor = true;
-            this.cbEnd5.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
-            // 
-            // txtWidth5
-            // 
-            this.txtWidth5.Location = new System.Drawing.Point(295, 155);
-            this.txtWidth5.MaxLength = 25;
-            this.txtWidth5.Name = "txtWidth5";
-            this.txtWidth5.Size = new System.Drawing.Size(61, 21);
-            this.txtWidth5.TabIndex = 64;
-            // 
-            // txtLength5
-            // 
-            this.txtLength5.Location = new System.Drawing.Point(373, 155);
-            this.txtLength5.MaxLength = 25;
-            this.txtLength5.Name = "txtLength5";
-            this.txtLength5.Size = new System.Drawing.Size(61, 21);
-            this.txtLength5.TabIndex = 64;
-            // 
-            // txtNum5
-            // 
-            this.txtNum5.Location = new System.Drawing.Point(95, 155);
-            this.txtNum5.MaxLength = 25;
-            this.txtNum5.Name = "txtNum5";
-            this.txtNum5.Size = new System.Drawing.Size(61, 21);
-            this.txtNum5.TabIndex = 64;
-            // 
-            // txtName6
-            // 
-            this.txtName6.Location = new System.Drawing.Point(179, 182);
-            this.txtName6.MaxLength = 25;
-            this.txtName6.Name = "txtName6";
-            this.txtName6.Size = new System.Drawing.Size(105, 21);
-            this.txtName6.TabIndex = 47;
-            // 
-            // cbEnd6
-            // 
-            this.cbEnd6.AutoSize = true;
-            this.cbEnd6.Location = new System.Drawing.Point(469, 185);
-            this.cbEnd6.Name = "cbEnd6";
-            this.cbEnd6.Size = new System.Drawing.Size(15, 14);
-            this.cbEnd6.TabIndex = 60;
-            this.cbEnd6.UseVisualStyleBackColor = true;
-            this.cbEnd6.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
-            // 
-            // txtWidth6
-            // 
-            this.txtWidth6.Location = new System.Drawing.Point(301, 182);
-            this.txtWidth6.MaxLength = 25;
-            this.txtWidth6.Name = "txtWidth6";
-            this.txtWidth6.Size = new System.Drawing.Size(61, 21);
-            this.txtWidth6.TabIndex = 64;
-            // 
-            // txtLength6
-            // 
-            this.txtLength6.Location = new System.Drawing.Point(379, 182);
-            this.txtLength6.MaxLength = 25;
-            this.txtLength6.Name = "txtLength6";
-            this.txtLength6.Size = new System.Drawing.Size(61, 21);
-            this.txtLength6.TabIndex = 64;
-            // 
-            // txtNum6
-            // 
-            this.txtNum6.Location = new System.Drawing.Point(101, 182);
-            this.txtNum6.MaxLength = 25;
-            this.txtNum6.Name = "txtNum6";
-            this.txtNum6.Size = new System.Drawing.Size(61, 21);
-            this.txtNum6.TabIndex = 64;
-            // 
-            // txtName7
-            // 
-            this.txtName7.Location = new System.Drawing.Point(185, 209);
-            this.txtName7.MaxLength = 25;
-            this.txtName7.Name = "txtName7";
-            this.txtName7.Size = new System.Drawing.Size(105, 21);
-            this.txtName7.TabIndex = 47;
-            // 
-            // cbEnd7
-            // 
-            this.cbEnd7.AutoSize = true;
-            this.cbEnd7.Location = new System.Drawing.Point(475, 212);
-            this.cbEnd7.Name = "cbEnd7";
-            this.cbEnd7.Size = new System.Drawing.Size(15, 14);
-            this.cbEnd7.TabIndex = 60;
-            this.cbEnd7.UseVisualStyleBackColor = true;
-            this.cbEnd7.CheckedChanged += new System.EventHandler(this.cbEnd_CheckedChanged);
-            // 
-            // txtWidth7
-            // 
-            this.txtWidth7.Location = new System.Drawing.Point(307, 209);
-            this.txtWidth7.MaxLength = 25;
-            this.txtWidth7.Name = "txtWidth7";
-            this.txtWidth7.Size = new System.Drawing.Size(61, 21);
-            this.txtWidth7.TabIndex = 64;
-            // 
-            // txtLength7
-            // 
-            this.txtLength7.Location = new System.Drawing.Point(385, 209);
-            this.txtLength7.MaxLength = 25;
-            this.txtLength7.Name = "txtLength7";
-            this.txtLength7.Size = new System.Drawing.Size(61, 21);
-            this.txtLength7.TabIndex = 64;
-            // 
-            // txtNum7
-            // 
-            this.txtNum7.Location = new System.Drawing.Point(107, 209);
-            this.txtNum7.MaxLength = 25;
-            this.txtNum7.Name = "txtNum7";
-            this.txtNum7.Size = new System.Drawing.Size(61, 21);
-            this.txtNum7.TabIndex = 64;
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 61;
+            this.label4.Text = "上级编码：";
             // 
             // PlaceAdd
             // 
@@ -505,6 +515,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.lblPid);
             this.Controls.Add(this.cbEnd7);
             this.Controls.Add(this.cbEnd6);
@@ -581,5 +592,6 @@
         private System.Windows.Forms.TextBox txtWidth7;
         private System.Windows.Forms.TextBox txtLength7;
         private System.Windows.Forms.TextBox txtNum7;
+        private System.Windows.Forms.Label label4;
     }
 }

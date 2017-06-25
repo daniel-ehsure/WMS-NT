@@ -92,6 +92,12 @@
     <Compile Include="BasicMateriel\MaterielAdd.designer.cs">
       <DependentUpon>MaterielAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="BasicPlace\PlaceSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicPlace\PlaceSetForm.Designer.cs">
+      <DependentUpon>PlaceSetForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BasicWarehouse\WarehouseAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BasicMateriel\MaterielAdd.resx">
       <DependentUpon>MaterielAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicPlace\PlaceSetForm.resx">
+      <DependentUpon>PlaceSetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BasicWarehouse\WarehouseAdd.resx">
       <DependentUpon>WarehouseAdd.cs</DependentUpon>

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlaceModify));
             this.lblPid = new System.Windows.Forms.Label();
-            this.cbJx = new System.Windows.Forms.CheckBox();
+            this.cbInuse = new System.Windows.Forms.CheckBox();
             this.cbEnd = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -47,6 +47,11 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblId = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtLength = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtWidth = new System.Windows.Forms.TextBox();
+            this.lblChildren = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblPid
@@ -58,19 +63,19 @@
             this.lblPid.TabIndex = 75;
             this.lblPid.Text = "Id";
             // 
-            // cbJx
+            // cbInuse
             // 
-            this.cbJx.AutoSize = true;
-            this.cbJx.Location = new System.Drawing.Point(159, 128);
-            this.cbJx.Name = "cbJx";
-            this.cbJx.Size = new System.Drawing.Size(15, 14);
-            this.cbJx.TabIndex = 73;
-            this.cbJx.UseVisualStyleBackColor = true;
+            this.cbInuse.AutoSize = true;
+            this.cbInuse.Location = new System.Drawing.Point(159, 188);
+            this.cbInuse.Name = "cbInuse";
+            this.cbInuse.Size = new System.Drawing.Size(15, 14);
+            this.cbInuse.TabIndex = 73;
+            this.cbInuse.UseVisualStyleBackColor = true;
             // 
             // cbEnd
             // 
             this.cbEnd.AutoSize = true;
-            this.cbEnd.Location = new System.Drawing.Point(159, 102);
+            this.cbEnd.Location = new System.Drawing.Point(159, 162);
             this.cbEnd.Name = "cbEnd";
             this.cbEnd.Size = new System.Drawing.Size(15, 14);
             this.cbEnd.TabIndex = 74;
@@ -79,24 +84,24 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(33, 128);
+            this.label12.Location = new System.Drawing.Point(33, 188);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(65, 12);
             this.label12.TabIndex = 70;
-            this.label12.Text = "是否定检：";
+            this.label12.Text = "是否可用：";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(33, 102);
+            this.label11.Location = new System.Drawing.Point(33, 162);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.Size = new System.Drawing.Size(89, 12);
             this.label11.TabIndex = 69;
-            this.label11.Text = "是否末级：";
+            this.label11.Text = "最小控制单元：";
             // 
             // txtMemo
             // 
-            this.txtMemo.Location = new System.Drawing.Point(159, 153);
+            this.txtMemo.Location = new System.Drawing.Point(159, 213);
             this.txtMemo.MaxLength = 25;
             this.txtMemo.Multiline = true;
             this.txtMemo.Name = "txtMemo";
@@ -106,7 +111,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(33, 156);
+            this.label5.Location = new System.Drawing.Point(33, 216);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 12);
             this.label5.TabIndex = 72;
@@ -157,7 +162,7 @@
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.ImageIndex = 1;
             this.btnSave.ImageList = this.imageList1;
-            this.btnSave.Location = new System.Drawing.Point(159, 263);
+            this.btnSave.Location = new System.Drawing.Point(159, 323);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(70, 25);
             this.btnSave.TabIndex = 63;
@@ -181,7 +186,7 @@
             this.btnQuit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnQuit.ImageIndex = 0;
             this.btnQuit.ImageList = this.imageList1;
-            this.btnQuit.Location = new System.Drawing.Point(234, 263);
+            this.btnQuit.Location = new System.Drawing.Point(234, 323);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(70, 25);
             this.btnQuit.TabIndex = 64;
@@ -194,7 +199,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.BackColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(19, 249);
+            this.label6.Location = new System.Drawing.Point(19, 309);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(325, 1);
             this.label6.TabIndex = 65;
@@ -217,16 +222,61 @@
             this.lblId.TabIndex = 75;
             this.lblId.Text = "Id";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(33, 102);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 66;
+            this.label3.Text = "名称：";
+            // 
+            // txtLength
+            // 
+            this.txtLength.Location = new System.Drawing.Point(159, 99);
+            this.txtLength.MaxLength = 25;
+            this.txtLength.Name = "txtLength";
+            this.txtLength.Size = new System.Drawing.Size(150, 21);
+            this.txtLength.TabIndex = 62;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(33, 133);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 66;
+            this.label4.Text = "名称：";
+            // 
+            // txtWidth
+            // 
+            this.txtWidth.Location = new System.Drawing.Point(159, 130);
+            this.txtWidth.MaxLength = 25;
+            this.txtWidth.Name = "txtWidth";
+            this.txtWidth.Size = new System.Drawing.Size(150, 21);
+            this.txtWidth.TabIndex = 62;
+            // 
+            // lblChildren
+            // 
+            this.lblChildren.AutoSize = true;
+            this.lblChildren.Location = new System.Drawing.Point(33, 282);
+            this.lblChildren.Name = "lblChildren";
+            this.lblChildren.Size = new System.Drawing.Size(17, 12);
+            this.lblChildren.TabIndex = 76;
+            this.lblChildren.Text = "Id";
+            this.lblChildren.Visible = false;
+            // 
             // PlaceModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SkyBlue;
-            this.ClientSize = new System.Drawing.Size(362, 301);
+            this.ClientSize = new System.Drawing.Size(362, 361);
             this.ControlBox = false;
+            this.Controls.Add(this.lblChildren);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.lblPid);
-            this.Controls.Add(this.cbJx);
+            this.Controls.Add(this.cbInuse);
             this.Controls.Add(this.cbEnd);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -235,6 +285,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lbl1);
+            this.Controls.Add(this.txtWidth);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtLength);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnSave);
@@ -252,7 +306,7 @@
         #endregion
 
         private System.Windows.Forms.Label lblPid;
-        private System.Windows.Forms.CheckBox cbJx;
+        private System.Windows.Forms.CheckBox cbInuse;
         private System.Windows.Forms.CheckBox cbEnd;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
@@ -268,6 +322,11 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblId;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtLength;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtWidth;
+        private System.Windows.Forms.Label lblChildren;
 
     }
 }

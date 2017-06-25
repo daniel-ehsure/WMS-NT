@@ -27,9 +27,9 @@ namespace BLL
         /// <param name="name"></param>
         /// <param name="meno"></param>
         /// <returns></returns>
-       public DataTable GetList(string pid, string name, string meno, int end)
+       public DataTable GetList(string pid, string name, string meno, int end, int grade)
        {
-           return dal.getList(pid, name, meno,end);
+           return dal.getList(pid, name, meno, end, grade);
        }
        /// <summary>
         /// 是否重名

@@ -44,7 +44,11 @@ namespace UI
                     this.lblPid.Text = mo.C_pre_id;
                     this.txtMemo.Text = mo.C_memo;
                     cbEnd.Checked = mo.I_end == 0 ? false : true;
-                    cbJx.Checked = mo.I_if_jx == 0 ? false : true;
+                    cbInuse.Checked = mo.I_inuse == 0 ? false : true;
+                    txtLength.Text = mo.I_length.ToString();
+                    txtWidth.Text = mo.I_width.ToString();
+                    txtMemo.Text = mo.C_memo;
+                    lblChildren.Text = mo.I_children.ToString();
                 }
             }
             catch (Exception)
@@ -61,9 +65,9 @@ namespace UI
         private void btnSave_Click(object sender, EventArgs e)
         {
 
-            if (bll.IsExit(lblPid.Text, txtName.Text.Trim(), id))
+            if (int.Parse(lblChildren.Text)>0 && cbEnd.Checked)
             {
-                MessageBox.Show("名称重复！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("存在下级，不能设置为最小单元！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -74,12 +78,14 @@ namespace UI
                 mo.C_name = txtName.Text.Trim();
                 mo.C_memo = txtMemo.Text.Trim();
                 mo.I_end = cbEnd.Checked ? 1 : 0;
-                mo.I_if_jx = cbJx.Checked ? 1 : 0;
+                mo.I_inuse = cbInuse.Checked ? 1 : 0;
+                mo.I_length = int.Parse(txtLength.Text.Trim());
+                mo.I_width = int.Parse(txtWidth.Text.Trim());
 
                 if (bll.Update(mo))
                 {
                     MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("修改物料类型成功！Id：" + lblId.Text);
+                    Log.saveLog("修改货位成功！Id：" + lblId.Text);
                     Close();
                 }
                 else

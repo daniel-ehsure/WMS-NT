@@ -42,14 +42,32 @@ namespace Model
             get { return i_grade; }
             set { i_grade = value; }
         }
-        private int i_if_jx;
+        private int i_length;
         /// <summary>
-        /// 是否检修
+        /// 长度
         /// </summary>
-        public int I_if_jx
+        public int I_length
         {
-            get { return i_if_jx; }
-            set { i_if_jx = value; }
+            get { return i_length; }
+            set { i_length = value; }
+        }
+        private int i_width;
+        /// <summary>
+        /// 宽度
+        /// </summary>
+        public int I_width
+        {
+            get { return i_width; }
+            set { i_width = value; }
+        }
+        private int i_inuse;
+        /// <summary>
+        /// 是否可用
+        /// </summary>
+        public int I_inuse
+        {
+            get { return i_inuse; }
+            set { i_inuse = value; }
         }
         private int i_end;
         /// <summary>
@@ -68,6 +86,16 @@ namespace Model
         {
             get { return c_memo; }
             set { c_memo = value; }
+        }
+
+        private int i_children;
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public int I_children
+        {
+            get { return i_children; }
+            set { i_children = value; }
         }
     }
 }

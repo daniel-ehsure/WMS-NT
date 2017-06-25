@@ -36,7 +36,7 @@ namespace UI
         {
             initTree();
             initNew(currentPlace.C_id);
-            setList(currentPlace.C_id, null, null, -1);
+            setList(currentPlace.C_id, null, null, -1, -1);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace UI
                 }
                 initNew(currentPlace.C_id);
                 isQuery = false;
-                setList(currentPlace.C_id, null, null, -1);
+                setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
             }
             catch (Exception)
             {
@@ -281,9 +281,9 @@ namespace UI
         /// <param name="name"></param>
         /// <param name="meno"></param>
         /// <param name="end"></param>
-        private void setList(string pid, string name, string meno, int end)
+        private void setList(string pid, string name, string meno, int end, int grade)
         {
-            this.dgv_Data.DataSource = bll.GetList(pid, name, meno, end);
+            this.dgv_Data.DataSource = bll.GetList(pid, name, meno, end, grade);
             getName();
         }
 
@@ -313,11 +313,11 @@ namespace UI
                 //{
                 //    end = 0;
                 //}
-                setList(null, name, meno, end);
+                setList(null, name, meno, end, 1);
             }
             else
             {
-                setList(currentPlace.C_id, null, null, -1);
+                setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
             }
         }
 
@@ -331,6 +331,8 @@ namespace UI
             dgv_Data.Columns[2].HeaderText = "货区";
             dgv_Data.Columns[3].HeaderText = "是否可用";
             dgv_Data.Columns[4].HeaderText = "是否最小控制单元";
+            dgv_Data.Columns[5].HeaderText = "级别";
+            dgv_Data.Columns[5].Visible = false;
         }
 
         /// <summary>
@@ -394,11 +396,18 @@ namespace UI
                 MessageBox.Show("没有要修改的记录!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
             if (dgv_Data.SelectedRows.Count > 1)
             {
                 MessageBox.Show("一次只能修改一个信息!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            if ((int)dgv_Data.SelectedRows[0].Cells[5].Value < 1)
+            {
+                MessageBox.Show("当前记录不能修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
             if (dgv_Data.SelectedRows.Count == 1)
             {
                 PlaceModify mod = new PlaceModify(Convert.ToString(dgv_Data.SelectedRows[0].Cells[0].Value));

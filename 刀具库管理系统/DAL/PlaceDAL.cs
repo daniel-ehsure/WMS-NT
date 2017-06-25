@@ -69,9 +69,18 @@ namespace DAL
         /// <param name="name"></param>
         /// <param name="MEMO"></param>
         /// <returns></returns>
-        public DataTable getList(string pid, string name, string memo, int end)
+        public DataTable getList(string pid, string name, string memo, int end, int grade)
         {
-            string sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END] FROM [T_JB_Place] where 1=1 ";
+            string sql;
+            if (grade < 0)
+            {
+                return new DataTable();
+            }
+            else
+            {
+                sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END], [I_GRADE] FROM [T_JB_Place] where 1=1 ";
+            }
+
             DataTable dt = new DataTable();
             try
             {
@@ -80,8 +89,16 @@ namespace DAL
                     Hashtable table = new Hashtable();
                     if (pid != null)
                     {
-                        sql += " and C_PRE_ID = @C_PRE_ID";
-                        table.Add("C_PRE_ID", pid);
+                        if (grade == 1)
+                        {
+                            sql += " and c_warehouse = @C_PRE_ID";
+                            table.Add("C_PRE_ID", pid);
+                        }
+                        else
+                        {
+                            sql += " and C_PRE_ID = @C_PRE_ID";
+                            table.Add("C_PRE_ID", pid);
+                        }
                     }
                     if (name != null)
                     {
@@ -466,21 +483,23 @@ namespace DAL
         /// <returns></returns>
         public T_JB_Place getById(string id)
         {
-            T_JB_Place area = null;
-            string sql = " SELECT * from  T_JB_Place where C_ID = '" + id + "'";
+            T_JB_Place place = null;
+            string sql = " SELECT *, (select count(*) from T_JB_Place where C_PRE_ID = '" + id + "') I_CHILDREN from  T_JB_Place where C_ID = '" + id + "'";
             try
             {
                 DataTable dt = dbHelper.GetDataSet(sql);
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    area = new T_JB_Place();
-                    area.C_id = dt.Rows[0]["C_ID"].ToString();
-                    area.C_name = dt.Rows[0]["C_NAME"].ToString();
-                    area.C_pre_id = DBNull.Value.Equals(dt.Rows[0]["C_PRE_ID"]) ? "0" : dt.Rows[0]["C_PRE_ID"].ToString();
-                    area.I_grade = DBNull.Value.Equals(dt.Rows[0]["I_GRADE"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_GRADE"]);
-                    area.I_end = DBNull.Value.Equals(dt.Rows[0]["I_END"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_END"]);
-                    area.I_end = DBNull.Value.Equals(dt.Rows[0]["I_END"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_END"]);
-                    area.C_memo = DBNull.Value.Equals(dt.Rows[0]["c_MEMO"]) ? string.Empty : dt.Rows[0]["c_MEMO"].ToString();
+                    place = new T_JB_Place();
+                    place.C_id = dt.Rows[0]["C_ID"].ToString();
+                    place.C_name = dt.Rows[0]["C_NAME"].ToString();
+                    place.C_pre_id = DBNull.Value.Equals(dt.Rows[0]["C_PRE_ID"]) ? "0" : dt.Rows[0]["C_PRE_ID"].ToString();
+                    place.I_length = DBNull.Value.Equals(dt.Rows[0]["I_LENGTH"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_LENGTH"]);
+                    place.I_width = DBNull.Value.Equals(dt.Rows[0]["I_WIDTH"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_WIDTH"]);
+                    place.I_inuse = DBNull.Value.Equals(dt.Rows[0]["I_INUSE"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_INUSE"]);
+                    place.I_end = DBNull.Value.Equals(dt.Rows[0]["I_END"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_END"]);
+                    place.I_children = DBNull.Value.Equals(dt.Rows[0]["I_CHILDREN"]) ? 0 : Convert.ToInt32(dt.Rows[0]["I_CHILDREN"]);
+                    place.C_memo = DBNull.Value.Equals(dt.Rows[0]["C_MEMO"]) ? string.Empty : dt.Rows[0]["C_MEMO"].ToString();
                 }
             }
             catch (Exception ex)
@@ -492,7 +511,7 @@ namespace DAL
             {
                 dbHelper.getConnection().Close();
             }
-            return area;
+            return place;
         }
 
         /// <summary>
@@ -550,12 +569,15 @@ namespace DAL
             try
             {
                 int count = 0;
-                string sql = "UPDATE T_JB_Place SET C_NAME=@C_NAME, I_END=@I_END, C_MEMO=@C_MEMO " +
+                string sql = "UPDATE T_JB_Place SET C_NAME=@C_NAME, I_END=@I_END, I_INUSE=@I_INUSE, I_LENGTH=@I_LENGTH, I_WIDTH=@I_WIDTH, C_MEMO=@C_MEMO " +
                              "WHERE C_ID=@C_ID ";
                 Hashtable table = new Hashtable();
                 table.Add("C_ID", dm_type.C_id);
                 table.Add("C_NAME", dm_type.C_name);
                 table.Add("I_END", dm_type.I_end);
+                table.Add("I_INUSE", dm_type.I_inuse);
+                table.Add("I_LENGTH", dm_type.I_length);
+                table.Add("I_WIDTH", dm_type.I_width);
                 table.Add("C_MEMO", dm_type.C_memo);
                 DbParameter[] parms = dbHelper.getParams(table);
 

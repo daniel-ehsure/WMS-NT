@@ -37,10 +37,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LayoutDAL.cs" />
+    <Compile Include="OperateInOutDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommonDAL.cs" />
     <Compile Include="MaterielTypeDAL.cs" />
     <Compile Include="MaterielDAL.cs" />
+    <Compile Include="RuningDoListDAL.cs" />
+    <Compile Include="StocksDAL.cs" />
     <Compile Include="WarehouseDAL.cs" />
     <Compile Include="PlaceAreaDAL.cs" />
     <Compile Include="UnitDAL.cs" />

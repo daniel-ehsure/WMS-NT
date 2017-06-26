@@ -116,6 +116,7 @@
     <Compile Include="BasicWarehouse\WarehouseModify.Designer.cs">
       <DependentUpon>WarehouseModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="InterfaceSelect.cs" />
     <Compile Include="JurisdictionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +152,18 @@
     </Compile>
     <Compile Include="ModPassword.designer.cs">
       <DependentUpon>ModPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OperateInForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperateInForm.Designer.cs">
+      <DependentUpon>OperateInForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OperateOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperateOutForm.Designer.cs">
+      <DependentUpon>OperateOutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,10 +221,25 @@
     <EmbeddedResource Include="ModPassword.resx">
       <DependentUpon>ModPassword.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OperateInForm.resx">
+      <DependentUpon>OperateInForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OperateOutForm.resx">
+      <DependentUpon>OperateOutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectMaterielForm.resx">
+      <DependentUpon>SelectMaterielForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectMaterielOutForm.resx">
+      <DependentUpon>SelectMaterielOutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectPlaceInForm.resx">
+      <DependentUpon>SelectPlaceInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StartForm.resx">
       <DependentUpon>StartForm.cs</DependentUpon>
@@ -262,6 +290,24 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SelectMaterielForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectMaterielForm.Designer.cs">
+      <DependentUpon>SelectMaterielForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectMaterielOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectMaterielOutForm.designer.cs">
+      <DependentUpon>SelectMaterielOutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectPlaceInForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectPlaceInForm.designer.cs">
+      <DependentUpon>SelectPlaceInForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StartForm.cs">
       <SubType>Form</SubType>

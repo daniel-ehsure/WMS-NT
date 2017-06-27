@@ -32,15 +32,29 @@ namespace UI
         }
         private void SelectPlace_Load(object sender, EventArgs e)
         {
-            setList(null, null, null);
+            #region combox
+            DataTable dt = new WarehouseBLL().GetList(null);
+            dt.Columns[0].ColumnName = "id";
+            dt.Columns[1].ColumnName = "name";
+            DataRow dr = dt.NewRow();
+            dr["id"] = "";
+            dr["name"] = "所有";
+            dt.Rows.InsertAt(dr, 0);
+
+            comboBox1.DataSource = dt;
+            comboBox1.DisplayMember = "name";
+            comboBox1.ValueMember = "id";
+            comboBox1.SelectedIndex = 0;
+            #endregion
+
+            setList(null, null);
         }
 
         //重置
         private void button5_Click(object sender, EventArgs e)
         {
             this.comboBox1.Text = "所有";
-            this.textBox1.Text = string.Empty;
-            this.textBox2.Text = string.Empty;
+            this.txtName.Text = string.Empty;
         }
         //查询
         private void button4_Click(object sender, EventArgs e)
@@ -80,13 +94,11 @@ namespace UI
         /// <param name="name"></param>
         /// <param name="single"></param>
         /// <param name="standerd"></param>
-        public void setList(string jia, string lie, string ceng)
+        public void setList(string wh, string name)
         {
             try
             {
-                //todo:why
-                //DataTable dt = bll.SelectPlaceList(jia, lie, ceng,inOutType);
-                DataTable dt = new DataTable();
+                DataTable dt = bll.GetList(wh, name, null,1, 1);
                 dgv_Data.DataSource = dt;
                 dgv_Data.Columns[0].HeaderText = "编码";
                 dgv_Data.Columns[0].ReadOnly = true;
@@ -94,27 +106,12 @@ namespace UI
                 dgv_Data.Columns[1].HeaderText = "名称";
                 dgv_Data.Columns[1].ReadOnly = true;
                 dgv_Data.Columns[1].Width = 250;
-
-                dgv_Data.Columns[2].HeaderText = "是否可用";
-                dgv_Data.Columns[2].ReadOnly = true;
-                dgv_Data.Columns[2].Width = 150;
                 dgv_Data.Columns[2].Visible = false;
-
                 dgv_Data.Columns[3].HeaderText = "是否可用";
                 dgv_Data.Columns[3].ReadOnly = true;
                 dgv_Data.Columns[3].Width = 150;
-
-                dgv_Data.Columns[4].HeaderText = "长度(毫米)";
-                dgv_Data.Columns[4].ReadOnly = true;
-                dgv_Data.Columns[4].Width = 150;
-                dgv_Data.Columns[5].HeaderText = "宽度(毫米)";
-                dgv_Data.Columns[5].ReadOnly = true;
-                dgv_Data.Columns[5].Width = 150;
-                dgv_Data.Columns[5].HeaderText = "占用列数";
-                dgv_Data.Columns[5].ReadOnly = true;
-                dgv_Data.Columns[5].Width = 150;
-
-
+                dgv_Data.Columns[4].Visible = false;
+                dgv_Data.Columns[5].Visible = false;
             }
             catch (Exception)
             {
@@ -132,29 +129,23 @@ namespace UI
         /// </summary>
         private void querylist()
         {
-            string jia = null;
-            string lie = null;
-            string ceng = null;           
+            string wh = null;
+            string name = null;
 
             if (this.comboBox1.Text != null && !(string.Empty.Equals(this.comboBox1.Text.Trim())))
             {
                 if (!("所有".Equals(comboBox1.Text.Trim())))
                 {
-                    jia = comboBox1.Text.Trim();
+                    wh = comboBox1.SelectedValue.ToString();
                 }
             }
-            if (this.textBox2.Text != null && !(string.Empty.Equals(this.textBox2.Text.Trim())))
+            if (this.txtName.Text != null && !(string.Empty.Equals(this.txtName.Text.Trim())))
             {
-                lie = textBox2.Text.Trim();
-            }
-            if (this.textBox1.Text != null && !(string.Empty.Equals(this.textBox1.Text.Trim())))
-            {
-                ceng = textBox1.Text.Trim();
+                name = txtName.Text.Trim();
             }
 
-            setList(jia, lie, ceng);
+            setList(wh, name);
         }
-
 
         private void setParent()
         {
@@ -174,9 +165,29 @@ namespace UI
             }
         }
 
-       
-       
-
-      
+        /// <summary>
+        /// 格式化列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgv_Data_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 2)
+            {
+                e.FormattingApplied = true;
+                DataGridViewRow row = dgv_Data.Rows[e.RowIndex];
+                if (row != null)
+                {
+                    if (e.Value.Equals(1))
+                    {
+                        e.Value = "是";
+                    }
+                    else
+                    {
+                        e.Value = "否";
+                    }
+                }
+            }
+        }
     }
 }

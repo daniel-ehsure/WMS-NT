@@ -478,7 +478,7 @@ namespace DAL
                         table3.Add("DEC_COUNT", dt.Rows[i][3]);
                         table3.Add("D_END_TIME", dt.Rows[i][6]);
                         table3.Add("C_Tray", dt.Rows[i][5]);
-                        table3.Add("I_uselie", uselie);
+                        //table3.Add("I_uselie", uselie);
                         DbParameter[] parms3 = dbHelper.getParams(table3);
                         com.Parameters.Clear();
                         com.Parameters.AddRange(parms3);

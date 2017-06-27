@@ -443,7 +443,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PlaceForm";
-            this.Text = "物料类别维护";
+            this.Text = "货位管理";
             this.Load += new System.EventHandler(this.PlaceForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

@@ -41,25 +41,25 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnShouGong = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblTray = new System.Windows.Forms.Label();
             this.txtInMeno = new System.Windows.Forms.TextBox();
             this.dtpIndate = new System.Windows.Forms.DateTimePicker();
             this.label21 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
             this.lblInPlace = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             this.txtInPlace = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblTypeName = new System.Windows.Forms.Label();
+            this.btnScan = new System.Windows.Forms.Button();
             this.lblInMateriel = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
-            this.lblCount = new System.Windows.Forms.Label();
             this.txtCount = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.txtStand = new System.Windows.Forms.TextBox();
+            this.lblCount = new System.Windows.Forms.Label();
             this.lblMaterielName = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.txtMaterielName = new System.Windows.Forms.TextBox();
@@ -67,7 +67,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgv_Data = new System.Windows.Forms.DataGridView();
-            this.btnScan = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -130,7 +129,7 @@
             this.button1.ImageIndex = 5;
             this.button1.ImageList = this.imageList2;
             this.button1.Location = new System.Drawing.Point(819, 10);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 65;
@@ -194,52 +193,35 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblTray);
             this.groupBox1.Controls.Add(this.txtInMeno);
             this.groupBox1.Controls.Add(this.dtpIndate);
             this.groupBox1.Controls.Add(this.label21);
             this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Controls.Add(this.button7);
-            this.groupBox1.Controls.Add(this.lblInPlace);
-            this.groupBox1.Controls.Add(this.txtInPlace);
-            this.groupBox1.Controls.Add(this.label22);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(920, 84);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(920, 57);
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "入库单信息";
             // 
-            // lblTray
-            // 
-            this.lblTray.AutoSize = true;
-            this.lblTray.ForeColor = System.Drawing.Color.Red;
-            this.lblTray.Location = new System.Drawing.Point(417, 27);
-            this.lblTray.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblTray.Name = "lblTray";
-            this.lblTray.Size = new System.Drawing.Size(11, 12);
-            this.lblTray.TabIndex = 66;
-            this.lblTray.Text = "*";
-            this.lblTray.Visible = false;
-            // 
             // txtInMeno
             // 
-            this.txtInMeno.Location = new System.Drawing.Point(89, 54);
-            this.txtInMeno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtInMeno.Location = new System.Drawing.Point(305, 23);
+            this.txtInMeno.Margin = new System.Windows.Forms.Padding(2);
             this.txtInMeno.MaxLength = 100;
             this.txtInMeno.Name = "txtInMeno";
-            this.txtInMeno.Size = new System.Drawing.Size(512, 21);
+            this.txtInMeno.Size = new System.Drawing.Size(374, 21);
             this.txtInMeno.TabIndex = 26;
             this.txtInMeno.TabStop = false;
             // 
             // dtpIndate
             // 
             this.dtpIndate.Location = new System.Drawing.Point(89, 22);
-            this.dtpIndate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtpIndate.Margin = new System.Windows.Forms.Padding(2);
             this.dtpIndate.Name = "dtpIndate";
             this.dtpIndate.Size = new System.Drawing.Size(107, 21);
             this.dtpIndate.TabIndex = 118;
@@ -247,7 +229,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(28, 57);
+            this.label21.Location = new System.Drawing.Point(244, 26);
             this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(59, 12);
@@ -264,9 +246,21 @@
             this.label15.TabIndex = 117;
             this.label15.Text = "入库时间：";
             // 
+            // lblInPlace
+            // 
+            this.lblInPlace.AutoSize = true;
+            this.lblInPlace.ForeColor = System.Drawing.Color.Red;
+            this.lblInPlace.Location = new System.Drawing.Point(232, 55);
+            this.lblInPlace.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblInPlace.Name = "lblInPlace";
+            this.lblInPlace.Size = new System.Drawing.Size(11, 12);
+            this.lblInPlace.TabIndex = 66;
+            this.lblInPlace.Text = "*";
+            this.lblInPlace.Visible = false;
+            // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(578, 22);
+            this.button7.Location = new System.Drawing.Point(393, 50);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(22, 20);
             this.button7.TabIndex = 13;
@@ -275,30 +269,19 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // lblInPlace
-            // 
-            this.lblInPlace.AutoSize = true;
-            this.lblInPlace.ForeColor = System.Drawing.Color.Red;
-            this.lblInPlace.Location = new System.Drawing.Point(602, 27);
-            this.lblInPlace.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblInPlace.Name = "lblInPlace";
-            this.lblInPlace.Size = new System.Drawing.Size(11, 12);
-            this.lblInPlace.TabIndex = 30;
-            this.lblInPlace.Text = "*";
-            this.lblInPlace.Visible = false;
-            // 
             // txtInPlace
             // 
-            this.txtInPlace.Location = new System.Drawing.Point(490, 22);
-            this.txtInPlace.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtInPlace.Location = new System.Drawing.Point(305, 50);
+            this.txtInPlace.Margin = new System.Windows.Forms.Padding(2);
             this.txtInPlace.Name = "txtInPlace";
+            this.txtInPlace.ReadOnly = true;
             this.txtInPlace.Size = new System.Drawing.Size(89, 21);
             this.txtInPlace.TabIndex = 112;
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(430, 26);
+            this.label22.Location = new System.Drawing.Point(245, 54);
             this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(65, 12);
@@ -308,7 +291,7 @@
             // label8
             // 
             this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Location = new System.Drawing.Point(8, 92);
+            this.label8.Location = new System.Drawing.Point(8, 65);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(920, 8);
@@ -316,26 +299,30 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnScan);
             this.groupBox2.Controls.Add(this.lblTypeName);
+            this.groupBox2.Controls.Add(this.lblInPlace);
+            this.groupBox2.Controls.Add(this.btnScan);
             this.groupBox2.Controls.Add(this.lblInMateriel);
             this.groupBox2.Controls.Add(this.btnOK);
-            this.groupBox2.Controls.Add(this.lblCount);
             this.groupBox2.Controls.Add(this.txtCount);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.txtStand);
+            this.groupBox2.Controls.Add(this.lblCount);
             this.groupBox2.Controls.Add(this.lblMaterielName);
+            this.groupBox2.Controls.Add(this.button7);
             this.groupBox2.Controls.Add(this.label26);
+            this.groupBox2.Controls.Add(this.txtInPlace);
+            this.groupBox2.Controls.Add(this.label22);
             this.groupBox2.Controls.Add(this.txtMaterielName);
             this.groupBox2.Controls.Add(this.label28);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.groupBox2.Location = new System.Drawing.Point(8, 100);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Location = new System.Drawing.Point(8, 73);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(920, 50);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(920, 87);
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "明细信息";
@@ -343,7 +330,7 @@
             // lblTypeName
             // 
             this.lblTypeName.AutoSize = true;
-            this.lblTypeName.Location = new System.Drawing.Point(777, 24);
+            this.lblTypeName.Location = new System.Drawing.Point(487, 50);
             this.lblTypeName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTypeName.Name = "lblTypeName";
             this.lblTypeName.Size = new System.Drawing.Size(71, 12);
@@ -351,10 +338,24 @@
             this.lblTypeName.Text = "lblTypeName";
             this.lblTypeName.Visible = false;
             // 
+            // btnScan
+            // 
+            this.btnScan.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnScan.ImageIndex = 0;
+            this.btnScan.ImageList = this.imageList2;
+            this.btnScan.Location = new System.Drawing.Point(615, 17);
+            this.btnScan.Name = "btnScan";
+            this.btnScan.Size = new System.Drawing.Size(64, 22);
+            this.btnScan.TabIndex = 115;
+            this.btnScan.Text = "扫码";
+            this.btnScan.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnScan.UseVisualStyleBackColor = true;
+            this.btnScan.Click += new System.EventHandler(this.btnOK_Click);
+            // 
             // lblInMateriel
             // 
             this.lblInMateriel.AutoSize = true;
-            this.lblInMateriel.Location = new System.Drawing.Point(692, 24);
+            this.lblInMateriel.Location = new System.Drawing.Point(487, 22);
             this.lblInMateriel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblInMateriel.Name = "lblInMateriel";
             this.lblInMateriel.Size = new System.Drawing.Size(83, 12);
@@ -367,7 +368,7 @@
             this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOK.ImageIndex = 0;
             this.btnOK.ImageList = this.imageList1;
-            this.btnOK.Location = new System.Drawing.Point(610, 19);
+            this.btnOK.Location = new System.Drawing.Point(615, 48);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(64, 22);
             this.btnOK.TabIndex = 115;
@@ -376,22 +377,10 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // lblCount
-            // 
-            this.lblCount.AutoSize = true;
-            this.lblCount.ForeColor = System.Drawing.Color.Red;
-            this.lblCount.Location = new System.Drawing.Point(417, 24);
-            this.lblCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(11, 12);
-            this.lblCount.TabIndex = 31;
-            this.lblCount.Text = "*";
-            this.lblCount.Visible = false;
-            // 
             // txtCount
             // 
-            this.txtCount.Location = new System.Drawing.Point(285, 19);
-            this.txtCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCount.Location = new System.Drawing.Point(89, 50);
+            this.txtCount.Margin = new System.Windows.Forms.Padding(2);
             this.txtCount.MaxLength = 6;
             this.txtCount.Name = "txtCount";
             this.txtCount.Size = new System.Drawing.Size(130, 21);
@@ -401,7 +390,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(230, 22);
+            this.label16.Location = new System.Drawing.Point(24, 53);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 12);
@@ -421,19 +410,31 @@
             // 
             // txtStand
             // 
-            this.txtStand.Location = new System.Drawing.Point(490, 19);
-            this.txtStand.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtStand.Location = new System.Drawing.Point(305, 20);
+            this.txtStand.Margin = new System.Windows.Forms.Padding(2);
             this.txtStand.Name = "txtStand";
             this.txtStand.ReadOnly = true;
             this.txtStand.Size = new System.Drawing.Size(111, 21);
             this.txtStand.TabIndex = 18;
             this.txtStand.TabStop = false;
             // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.ForeColor = System.Drawing.Color.Red;
+            this.lblCount.Location = new System.Drawing.Point(9, 53);
+            this.lblCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(11, 12);
+            this.lblCount.TabIndex = 29;
+            this.lblCount.Text = "*";
+            this.lblCount.Visible = false;
+            // 
             // lblMaterielName
             // 
             this.lblMaterielName.AutoSize = true;
             this.lblMaterielName.ForeColor = System.Drawing.Color.Red;
-            this.lblMaterielName.Location = new System.Drawing.Point(217, 24);
+            this.lblMaterielName.Location = new System.Drawing.Point(9, 23);
             this.lblMaterielName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMaterielName.Name = "lblMaterielName";
             this.lblMaterielName.Size = new System.Drawing.Size(11, 12);
@@ -444,7 +445,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(430, 22);
+            this.label26.Location = new System.Drawing.Point(245, 23);
             this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(65, 12);
@@ -454,8 +455,9 @@
             // txtMaterielName
             // 
             this.txtMaterielName.Location = new System.Drawing.Point(89, 19);
-            this.txtMaterielName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMaterielName.Margin = new System.Windows.Forms.Padding(2);
             this.txtMaterielName.Name = "txtMaterielName";
+            this.txtMaterielName.ReadOnly = true;
             this.txtMaterielName.Size = new System.Drawing.Size(107, 21);
             this.txtMaterielName.TabIndex = 111;
             // 
@@ -467,12 +469,12 @@
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(65, 12);
             this.label28.TabIndex = 8;
-            this.label28.Text = "板材名称：";
+            this.label28.Text = "物料名称：";
             // 
             // label5
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label5.Location = new System.Drawing.Point(8, 150);
+            this.label5.Location = new System.Drawing.Point(8, 160);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(920, 8);
@@ -483,10 +485,10 @@
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.dgv_Data);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(8, 158);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Location = new System.Drawing.Point(8, 168);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(920, 207);
+            this.panel2.Size = new System.Drawing.Size(920, 197);
             this.panel2.TabIndex = 31;
             // 
             // dgv_Data
@@ -505,19 +507,9 @@
             this.dgv_Data.RowHeadersVisible = false;
             this.dgv_Data.RowTemplate.Height = 23;
             this.dgv_Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Data.Size = new System.Drawing.Size(916, 203);
+            this.dgv_Data.Size = new System.Drawing.Size(916, 193);
             this.dgv_Data.TabIndex = 65;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
-            // 
-            // btnScan
-            // 
-            this.btnScan.Location = new System.Drawing.Point(845, 19);
-            this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(75, 23);
-            this.btnScan.TabIndex = 124;
-            this.btnScan.Text = "扫码";
-            this.btnScan.UseVisualStyleBackColor = true;
-            this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
             // 
             // OperateInForm
             // 
@@ -536,7 +528,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "OperateInForm";
             this.ShowInTaskbar = false;
             this.Text = "入库管理";
@@ -568,12 +560,10 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Label lblInPlace;
         private System.Windows.Forms.TextBox txtInPlace;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.TextBox txtCount;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button button3;
@@ -586,11 +576,12 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.DataGridView dgv_Data;
-        private System.Windows.Forms.Label lblTray;
+        private System.Windows.Forms.Label lblInPlace;
         private System.Windows.Forms.Label lblInMateriel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Label lblTypeName;
         private System.Windows.Forms.Button btnScan;
+        private System.Windows.Forms.Label lblCount;
     }
 }

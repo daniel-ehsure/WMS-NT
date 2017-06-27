@@ -25,7 +25,7 @@ namespace UI
 
         private void OperateInForm_Load(object sender, EventArgs e)
         {
-            initData();
+             initData();
 
             //todo:判断是否有联机任务
             if (bll.HasDoList())
@@ -116,19 +116,19 @@ namespace UI
             else
             {
 
-                    if (dbll.SaveDolist(dt, txtInMeno.Text, 2))
-                    {
-                        MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        setMain(true);
-                        initMain();
-                        initSub();
-                        dt.Rows.Clear();
-                    }
-                    else
-                    {
-                        MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                
+                if (dbll.SaveDolist(dt, txtInMeno.Text, 2))
+                {
+                    MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    setMain(true);
+                    initMain();
+                    initSub();
+                    dt.Rows.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
             }
         }
 
@@ -144,7 +144,7 @@ namespace UI
             dr[5] = "";
             dr[6] = dtpIndate.Value.ToString("yyyy-MM-dd");
             dr[7] = Global.longid;
-            dr[8] = lblTypeName.Text;
+            dr[8] = lblInPlace.Text;
             bool flag = false;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -208,74 +208,83 @@ namespace UI
                 flag = false;
             }
 
-
-            if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
+            if (flag)
             {
-                flag = false;
-                this.lblInPlace.Visible = true;
-            }
-            else
-            {
-                this.lblInPlace.Visible = false;
-                if (bll.isPlaceInuse(txtInPlace.Text.Trim()))
+                if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
                 {
-                    this.lblInPlace.Visible = true;
                     flag = false;
+                    this.lblInPlace.Visible = true;
                 }
                 else
                 {
                     this.lblInPlace.Visible = false;
-                }
-            }
-
-            if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
-            {
-                flag = false;
-                this.lblCount.Visible = true;
-            }
-            else
-            {
-                this.lblCount.Visible = false;
-                try
-                {
-                    int count = Convert.ToInt32(txtCount.Text.Trim());
-                    if (count <= 0)
+                    if (bll.isPlaceInuse(txtInPlace.Text.Trim()))
                     {
+                        this.lblInPlace.Visible = true;
                         flag = false;
-                        this.lblCount.Visible = true;
                     }
                     else
                     {
-                        this.lblCount.Visible = false;
+                        this.lblInPlace.Visible = false;
                     }
                 }
-                catch (Exception)
+            }
+
+            if (flag)
+            {
+                if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
                 {
                     flag = false;
                     this.lblCount.Visible = true;
                 }
-            }
-            if (txtMaterielName.Text == null || string.Empty.Equals(txtMaterielName.Text))
-            {
-                flag = false;
-                this.lblMaterielName.Visible = true;
-            }
-            else
-            {
-                this.lblMaterielName.Visible = false;
-                T_JB_Materiel materiel = bll.getMaterielByIdOrName(txtMaterielName.Text.Trim());
-                if (materiel == null)
+                else
                 {
-                    this.lblMaterielName.Visible = true;
+                    this.lblCount.Visible = false;
+                    try
+                    {
+                        int count = Convert.ToInt32(txtCount.Text.Trim());
+                        if (count <= 0)
+                        {
+                            flag = false;
+                            this.lblCount.Visible = true;
+                        }
+                        else
+                        {
+                            this.lblCount.Visible = false;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        flag = false;
+                        this.lblCount.Visible = true;
+                    }
+                }
+            }
+
+            if (flag)
+            {
+                if (txtMaterielName.Text == null || string.Empty.Equals(txtMaterielName.Text))
+                {
                     flag = false;
+                    this.lblMaterielName.Visible = true;
                 }
                 else
                 {
                     this.lblMaterielName.Visible = false;
-                    txtMaterielName.Text = materiel.C_name;
-                    lblInMateriel.Text = materiel.C_id;
-                    txtStand.Text = materiel.C_standerd;
-                    lblTypeName.Text = materiel.C_typeName;
+                    T_JB_Materiel materiel = mbll.getMaterielById(lblInMateriel.Text);
+                    if (materiel == null)
+                    {
+                        this.lblMaterielName.Visible = true;
+                        flag = false;
+                    }
+                    else
+                    {
+                        this.lblMaterielName.Visible = false;
+                        txtMaterielName.Text = materiel.C_name;
+                        lblInMateriel.Text = materiel.C_id;
+                        txtStand.Text = materiel.C_standerd;
+                        lblInPlace.Text = materiel.C_typeName;
+                    }
                 }
             }
 

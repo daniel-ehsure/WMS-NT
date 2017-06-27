@@ -54,6 +54,16 @@ namespace BLL
            return dal.saveDolist(dt, meno, station, controlType);
        }
 
-
+       /// <summary>
+       /// 保存联机队列
+       /// </summary>
+       /// <param name="dt"></param>
+       /// <param name="meno"></param>
+       /// <param name="station"></param>
+       /// <returns></returns>
+       public bool SaveDolist(DataTable dt, string meno, int controlType)
+       {
+           return true;
+       }
     }
 }

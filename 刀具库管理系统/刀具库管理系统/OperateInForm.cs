@@ -16,7 +16,7 @@ namespace UI
         OperateInOutBLL bll = new OperateInOutBLL();
         PlaceAreaBLL sbll = new PlaceAreaBLL();
         RuningDoListBLL dbll = new RuningDoListBLL();
-      //  T_JB_MaterielBLL mbll = new T_JB_MaterielBLL();
+        MaterielBLL mbll = new MaterielBLL();
         DataTable dt;
         public OperateInForm()
         {
@@ -25,25 +25,14 @@ namespace UI
 
         private void OperateInForm_Load(object sender, EventArgs e)
         {
-            #region 工位
-            DataTable dtstat = sbll.GetList(null);
-            DataView dataViewt = dtstat.DefaultView;
-            dataViewt.Sort = "C_ID asc";
-            DataTable dtt = dataViewt.ToTable();
-
-            DataRow dr = dtt.NewRow();
-            dr["c_id"] = string.Empty;
-            dr["c_name"] = string.Empty;
-
-            dtt.Rows.InsertAt(dr, 0);
-
-
-            this.cmbStation.DataSource = dtt;
-            this.cmbStation.DisplayMember = "c_name";
-            this.cmbStation.ValueMember = "c_id";
-            this.cmbStation.SelectedIndex = 0;
-            #endregion
             initData();
+
+            //todo:判断是否有联机任务
+            if (bll.HasDoList())
+            {
+                MessageBox.Show("Test");
+                btnScan.Enabled = false;
+            }
         }
 
         //出库数量只能输入数字,小数点,回车和退格
@@ -65,6 +54,7 @@ namespace UI
                 initSub();
             }
         }
+
         /// <summary>
         /// 关闭
         /// </summary>
@@ -85,7 +75,7 @@ namespace UI
             }
             else
             {
-                if (bll.handIn(dt, txtInMeno.Text, cmbStation.SelectedValue.ToString()))
+                if (bll.HandIn(dt, txtInMeno.Text, InOutType.MATERIEL_IN))
                 {
                     MessageBox.Show("入库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     setMain(true);
@@ -107,6 +97,7 @@ namespace UI
             select.ShowDialog();
             txtCount.Focus();
         }
+
         //选择货位
         private void button7_Click(object sender, EventArgs e)
         {
@@ -124,13 +115,8 @@ namespace UI
             }
             else
             {
-                if (cmbStation.SelectedValue == null || string.Empty.Equals(cmbStation.SelectedValue))
-                {
-                    MessageBox.Show("请选择入库使用的工位!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    if (dbll.saveDolist(dt, txtInMeno.Text, cmbStation.SelectedValue.ToString(), 2))
+
+                    if (dbll.SaveDolist(dt, txtInMeno.Text, 2))
                     {
                         MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         setMain(true);
@@ -142,7 +128,7 @@ namespace UI
                     {
                         MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }
+                
             }
         }
 
@@ -155,7 +141,7 @@ namespace UI
             dr[2] = txtStand.Text;
             dr[3] = txtCount.Text.Trim();
             dr[4] = txtInPlace.Text.Trim();
-            dr[5] = txtTray.Text.Trim();
+            dr[5] = "";
             dr[6] = dtpIndate.Value.ToString("yyyy-MM-dd");
             dr[7] = Global.longid;
             dr[8] = lblTypeName.Text;
@@ -167,7 +153,7 @@ namespace UI
                 {
                     flag = true;
                     int old = Convert.ToInt32(dt.Rows[i][3]);
-                    int total = old+ Convert.ToInt32(txtCount.Text.Trim());
+                    int total = old + Convert.ToInt32(txtCount.Text.Trim());
                     dt.Rows[i][3] = total.ToString();
                     break;
                 }
@@ -182,7 +168,7 @@ namespace UI
 
         private void initData()
         {
-           dt  = new DataTable();
+            dt = new DataTable();
 
             for (int i = 0; i < 9; i++)
             {
@@ -194,14 +180,14 @@ namespace UI
             }
 
 
-            
+
             this.dgv_Data.DataSource = dt;
             getName();
         }
 
         private void getName()
         {
-            dgv_Data.Columns[0].HeaderText ="物料编码";
+            dgv_Data.Columns[0].HeaderText = "物料编码";
             dgv_Data.Columns[1].HeaderText = "物料名称";
             dgv_Data.Columns[2].HeaderText = "规格型号";
             dgv_Data.Columns[3].HeaderText = "数量";
@@ -216,47 +202,13 @@ namespace UI
         private bool checkInput()
         {
             bool flag = true;
-            if(Convert.ToDateTime(dtpIndate.Value.ToShortDateString())>Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+            if (Convert.ToDateTime(dtpIndate.Value.ToShortDateString()) > Convert.ToDateTime(DateTime.Now.ToShortDateString()))
             {
                 MessageBox.Show("入库日期不能大于当前日期!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 flag = false;
             }
-            if (txtTray.Text == null || string.Empty.Equals(txtTray.Text))
-            {
-                flag = false;
-                this.lblTray.Visible = true;
-            }
-            else
-            {
-                //this.lblTray.Visible = false;
-                //if (!(txtTray.Text.ToUpper().StartsWith("T")))
-                //{
-                //    flag = false;
-                //    this.lblTray.Visible = true;
-                //}
-                //else
-                //{
-                //    if (sbll.isTrayExit(txtTray.Text.Trim()))
-                //    {
-                //        this.lblTray.Visible = false;
-                //        if (bll.isTrayInuse(txtTray.Text.Trim()))
-                //        {
-                //            this.lblTray.Visible = true;
-                //            flag = false;
-                //        }
-                //        else
-                //        {
-                //            this.lblTray.Visible = false;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        this.lblTray.Visible = true;
-                //        flag = false;
-                //    }
 
-                //}
-            }
+
             if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
             {
                 flag = false;
@@ -275,6 +227,7 @@ namespace UI
                     this.lblInPlace.Visible = false;
                 }
             }
+
             if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
             {
                 flag = false;
@@ -299,7 +252,7 @@ namespace UI
                 catch (Exception)
                 {
                     flag = false;
-                    this.lblCount.Visible = true;                    
+                    this.lblCount.Visible = true;
                 }
             }
             if (txtMaterielName.Text == null || string.Empty.Equals(txtMaterielName.Text))
@@ -332,17 +285,14 @@ namespace UI
         private void setMain(bool flag)
         {
             dtpIndate.Enabled = flag;
-            txtTray.Enabled = flag;
             txtInPlace.Enabled = flag;
             button7.Enabled = flag;
             txtInMeno.Enabled = flag;
-            this.cmbStation.Enabled = flag;
         }
         private void initMain()
         {
-            txtTray.Text = string.Empty;
             txtInPlace.Text = string.Empty;
-            txtInMeno.Text = string.Empty;       
+            txtInMeno.Text = string.Empty;
         }
 
         private void initSub()
@@ -368,7 +318,7 @@ namespace UI
                 }
                 if (i < dt.Rows.Count)
                 {
-                   dt.Rows.Remove(dt.Rows[i]);
+                    dt.Rows.Remove(dt.Rows[i]);
                 }
                 if (dt.Rows.Count <= 0)
                 {
@@ -416,9 +366,30 @@ namespace UI
 
         #endregion
 
-      
+        /// <summary>
+        /// 扫码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnScan_Click(object sender, EventArgs e)
+        {
+            //todo:扫码相关
+            string scanResult = string.Empty;
+
+            //根据扫码结果，判断物料是否存在
+            T_JB_Materiel materiel = mbll.getMaterielById(scanResult);
+            if (materiel == null)
+            {
+                //todo:弹出窗口添加
+            }
+            else
+            {
+                //find last 货区
+            }
 
 
+            //显示物料信息，显示货位（可手动选），输入数量
 
+        }
     }
 }

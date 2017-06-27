@@ -392,8 +392,9 @@ namespace DAL
         /// </summary>
         /// <param name="user">货位信息</param>
         /// <returns></returns>
-        public bool handIn(DataTable dt, string mainMeno,string station)
+        public bool HandIn(DataTable dt, string mainMeno, InOutType type)
         {
+            DateTime dtNow = DateTime.Now;
             int result = 0;
             DbConnection conn = dbHelper.getConnection();
             try
@@ -418,21 +419,25 @@ namespace DAL
                 string c_id = string.Empty;
                 int count = 0;
 
-                sql = "SELECT max(c_id) FROM   T_OPERATE_INOUT_MAIN where C_CRK_LEIBIE =2";
+                sql = "SELECT MAX(c_id) FROM T_OPERATE_INOUT_MAIN where datediff(day,[D_TIME],getdate()) = 0 AND C_CRK_LEIBIE = '" + (int)type + "'";
 
                 com.CommandText = sql;
                 object obj = com.ExecuteScalar();
-                dec_id = Convert.IsDBNull(obj) ? 1000 : Convert.ToInt64(obj);
-                c_id = (dec_id + 1).ToString();
+                dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(9));
+                c_id = "IM" + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
+
                 if (dt.Rows.Count > 0)
                 {
-                    sql = "INSERT INTO [T_OPERATE_INOUT_MAIN]([C_ID], [D_RQ], [C_CRK_LEIBIE],  [C_CZY], [C_MENO]) VALUES(@C_ID, @D_RQ, '2',  @C_CZY,  @C_MENO)";
+                    sql = "INSERT INTO [T_OPERATE_INOUT_MAIN]([C_ID], [D_RQ], [C_CRK_LEIBIE],  [C_CZY], [C_MENO], [D_TIME]) VALUES(@C_ID, @D_RQ, @C_CRK_LEIBIE,  @C_CZY,  @C_MENO, @D_TIME)";
                     com.CommandText = sql;
                     Hashtable table = new Hashtable();
 
                     table.Add("C_ID", c_id);
                     table.Add("D_RQ", dt.Rows[0][6]);
                     table.Add("C_CZY", dt.Rows[0][7]);
+                    table.Add("C_CRK_LEIBIE", (int)type);
+                    table.Add("D_TIME", dtNow);
+
                     if (mainMeno == null || string.Empty.Equals(mainMeno.Trim()))
                     {
                         table.Add("C_MENO", DBNull.Value);
@@ -449,14 +454,6 @@ namespace DAL
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        int uselie = 1;
-                        sql = " select I_TAKE from T_JB_PLACE where C_ID = '" + dt.Rows[i][4] + "' ";
-
-                        com.CommandText = sql;
-                        object obj2 = com.ExecuteScalar();
-                        uselie = Convert.IsDBNull(obj2) ? 1 : Convert.ToInt32(obj2);
-
-
                         sql = "INSERT INTO [T_OPERATE_INOUT_SUB]([C_ID], [C_CRK_LEIBIE],[C_MATERIEL], [C_PLACE], [C_Tray], [DEC_COUNT],  [C_PLACE_OLD],[I_TYPE],[C_STATION]) " +
                              "  VALUES(@C_ID,2, @C_MATERIEL, @C_PLACE, @C_Tray, @DEC_COUNT, @C_PLACE_OLD,0,@C_STATION)";
                         com.CommandText = sql;
@@ -467,7 +464,7 @@ namespace DAL
                         table2.Add("C_Tray", dt.Rows[i][5]);
                         table2.Add("DEC_COUNT", dt.Rows[i][3]);
                         table2.Add("C_PLACE_OLD", dt.Rows[i][4]);
-                        table2.Add("C_STATION", station);
+                        //table2.Add("C_STATION", station);
                         DbParameter[] parms2 = dbHelper.getParams(table2);
                         com.Parameters.Clear();
                         com.Parameters.AddRange(parms2);
@@ -486,13 +483,9 @@ namespace DAL
                         com.Parameters.Clear();
                         com.Parameters.AddRange(parms3);
                         result = com.ExecuteNonQuery();
-
                     }
-
-
-                  
-
                 }
+
                 tran.Commit();
                 if (result > 0)
                 {

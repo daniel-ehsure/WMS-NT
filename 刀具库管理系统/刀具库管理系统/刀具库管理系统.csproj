@@ -116,6 +116,7 @@
     <Compile Include="BasicWarehouse\WarehouseModify.Designer.cs">
       <DependentUpon>WarehouseModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common.cs" />
     <Compile Include="InterfaceSelect.cs" />
     <Compile Include="JurisdictionForm.cs">
       <SubType>Form</SubType>

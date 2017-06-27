@@ -59,6 +59,10 @@
       <Project>{6C9CE3EC-3702-4F26-8D33-EC2059925AC5}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{7151A572-1463-49AB-9088-C5CDF1109420}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

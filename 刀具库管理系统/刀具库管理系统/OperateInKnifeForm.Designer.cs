@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class OperateInForm
+    partial class OperateInKnifeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperateInForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperateInKnifeForm));
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -455,7 +455,7 @@
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(65, 12);
             this.label28.TabIndex = 8;
-            this.label28.Text = "物料名称：";
+            this.label28.Text = "刀具名称：";
             // 
             // label5
             // 
@@ -497,7 +497,7 @@
             this.dgv_Data.TabIndex = 65;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
-            // OperateInForm
+            // OperateInKnifeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -515,10 +515,10 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "OperateInForm";
+            this.Name = "OperateInKnifeForm";
             this.ShowInTaskbar = false;
-            this.Text = "入库管理";
-            this.Load += new System.EventHandler(this.OperateInForm_Load);
+            this.Text = "刀具入库管理";
+            this.Load += new System.EventHandler(this.OperateInKnifeForm_Load);
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

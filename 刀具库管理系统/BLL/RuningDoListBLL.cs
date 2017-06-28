@@ -4,6 +4,7 @@ using System.Text;
 using DAL;
 using Model;
 using System.Data;
+using Util;
 
 namespace BLL
 {
@@ -61,9 +62,9 @@ namespace BLL
        /// <param name="meno"></param>
        /// <param name="station"></param>
        /// <returns></returns>
-       public bool SaveDolist(DataTable dt, string meno, int controlType)
+       public bool SaveDolist(DataTable dt, string meno, InOutType type)
        {
-           return true;
+           return dal.SaveDolist(dt, meno, type);
        }
     }
 }

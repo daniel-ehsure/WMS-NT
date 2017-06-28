@@ -137,6 +137,57 @@ namespace DAL
         }
 
         /// <summary>
+        /// 根据仓库和名称获得货位（最小控制单元）
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public DataTable getListByWN(string warehouseId, string name)
+        {
+            string sql;
+
+            sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END], [I_GRADE] FROM [T_JB_Place] where I_END=1 ";
+
+            DataTable dt = new DataTable();
+            try
+            {
+                if (warehouseId != null || name != null)
+                {
+                    Hashtable table = new Hashtable();
+                    if (warehouseId != null)
+                    {
+                        sql += " and C_ID like @warehouseId";
+                        table.Add("warehouseId", warehouseId + "%");
+                    }
+
+                    if (name != null)
+                    {
+                        sql += " and C_NAME like @C_NAME";
+                        table.Add("C_NAME", "%" + name + "%");
+                    }
+
+                    sql += " order by convert(numeric,c_id) asc";
+                    DbParameter[] parms = dbHelper.getParams(table);
+                    dt = dbHelper.GetDataSet(sql, parms);
+                }
+                else
+                {
+                    sql += " order by convert(numeric,c_id) asc";
+                    dt = dbHelper.GetDataSet(sql);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+            return dt;
+        }
+
+        /// <summary>
         /// 是否重名
         /// </summary>
         /// <param name="tableName"></param>

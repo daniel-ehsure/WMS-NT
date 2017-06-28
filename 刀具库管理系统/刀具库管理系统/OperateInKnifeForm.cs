@@ -11,21 +11,21 @@ using Util;
 
 namespace UI
 {
-    public partial class OperateInForm : Form, InterfaceSelect
+    public partial class OperateInKnifeForm : Form, InterfaceSelect
     {
         OperateInOutBLL bll = new OperateInOutBLL();
         PlaceAreaBLL sbll = new PlaceAreaBLL();
         RuningDoListBLL dbll = new RuningDoListBLL();
         MaterielBLL mbll = new MaterielBLL();
         DataTable dt;
-        InOutType inOutType = InOutType.MATERIEL_IN;
+        InOutType inOutType = InOutType.KNIFE_IN;
 
-        public OperateInForm()
+        public OperateInKnifeForm()
         {
             InitializeComponent();
         }
 
-        private void OperateInForm_Load(object sender, EventArgs e)
+        private void OperateInKnifeForm_Load(object sender, EventArgs e)
         {
              initData();
 

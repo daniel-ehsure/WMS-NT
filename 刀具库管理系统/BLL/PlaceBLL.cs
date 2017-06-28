@@ -31,6 +31,17 @@ namespace BLL
        {
            return dal.getList(pid, name, meno, end, grade);
        }
+
+       /// <summary>
+       /// 根据仓库和名称获得货位（最小控制单元）
+       /// </summary>
+       /// <param name="tableName"></param>
+       /// <returns></returns>
+       public DataTable getListByWN(string warehouseId, string name)
+       {
+           return dal.getListByWN(warehouseId, name);
+       }
+
        /// <summary>
         /// 是否重名
         /// </summary>

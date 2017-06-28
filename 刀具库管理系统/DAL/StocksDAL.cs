@@ -21,7 +21,7 @@ namespace DAL
         {
             string sql = @"select * from (
                             select a.C_MATERIEL_ID,b.C_NAME,c.C_NAME as C_TYPENAME,b.C_STANDARD,a.C_PLACE,a.DEC_COUNT,
-                            a.DEC_COUNT -isnull( d.usecount,0) as canuse,a.C_Tray
+                            a.DEC_COUNT -isnull( d.usecount,0) as canuse
                             from T_OPERATE_STOCKS a 
                             left join T_JB_MATERIEL b on a.C_MATERIEL_ID = b.C_ID
                             left join T_JB_TYPE c on b.C_TYPE = c.C_ID

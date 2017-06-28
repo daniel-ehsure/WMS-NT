@@ -98,7 +98,7 @@ namespace UI
         {
             try
             {
-                DataTable dt = bll.GetList(wh, name, null,1, 1);
+                DataTable dt = bll.getListByWN(wh, name);
                 dgv_Data.DataSource = dt;
                 dgv_Data.Columns[0].HeaderText = "编码";
                 dgv_Data.Columns[0].ReadOnly = true;

@@ -278,6 +278,9 @@
     <EmbeddedResource Include="BasicPlace\PlaceModify.resx">
       <DependentUpon>PlaceModify.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OperateInKnifeForm.resx">
+      <DependentUpon>OperateInKnifeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -381,6 +384,12 @@
     </Compile>
     <Compile Include="BasicPlace\PlaceModify.Designer.cs">
       <DependentUpon>PlaceModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OperateInKnifeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperateInKnifeForm.Designer.cs">
+      <DependentUpon>OperateInKnifeForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

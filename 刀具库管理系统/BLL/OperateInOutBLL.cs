@@ -83,8 +83,6 @@ namespace BLL
         /// <returns></returns>
         public bool HandIn(DataTable dt, string mainMeno, InOutType type)
         {
-            //todo:
-
             return dal.HandIn(dt, mainMeno, type);
         }
 

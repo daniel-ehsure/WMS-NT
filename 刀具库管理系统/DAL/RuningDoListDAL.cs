@@ -826,5 +826,92 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// 联机入库
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="meno"></param>
+        /// <param name="station"></param>
+        /// <returns></returns>
+        public bool SaveDolist(DataTable dt, string meno, InOutType type)
+        {
+            int result = 0;
+
+            DbConnection conn = dbHelper.getConnection();
+            try
+            {
+                conn.Open();
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                conn.Close();
+                throw ex;
+            }
+            DbTransaction tran = conn.BeginTransaction();
+            DbCommand com = conn.CreateCommand();
+            string sql = string.Empty;
+
+            try
+            {
+                com.Transaction = tran;
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID],  [I_INOUT], [D_RQ], [C_MATERIEL], [C_MATERIEL_NAME], [C_TYPE_NAME], 
+                            [C_PLACE], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MENO], [I_BACK])
+                            VALUES(@Dec_ID, @I_INOUT, @D_RQ, @C_MATERIEL, @C_MATERIEL_NAME, @C_TYPE_NAME, @C_PLACE, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MENO, @I_BACK)";
+                    com.CommandText = sql;
+
+                    Hashtable table2 = new Hashtable();
+                    table2.Add("Dec_ID", i+1);
+                    table2.Add("I_INOUT", (int)type);
+                    table2.Add("D_RQ", Convert.ToDateTime(dt.Rows[i][5]).ToString("yyyy-MM-dd"));
+                    table2.Add("C_MATERIEL", dt.Rows[i][0]);
+                    table2.Add("C_MATERIEL_NAME", dt.Rows[i][1]);
+                    table2.Add("C_TYPE_NAME", dt.Rows[i][7]);
+                    table2.Add("C_PLACE", dt.Rows[i][4]);
+                    table2.Add("DEC_COUNT", dt.Rows[i][3]);
+                    table2.Add("C_CZY", dt.Rows[i][6]);
+                    table2.Add("I_RUN", 1);
+                    table2.Add("D_AddRQ", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
+                    if (meno == null || string.Empty.Equals(meno.Trim()))
+                    {
+                        table2.Add("C_MENO", DBNull.Value);
+                    }
+                    else
+                    {
+                        table2.Add("C_MENO", meno);
+                    }
+                    table2.Add("I_BACK", 0);
+                    DbParameter[] parms2 = dbHelper.getParams(table2);
+                    com.Parameters.Clear();
+                    com.Parameters.AddRange(parms2);
+                    result = com.ExecuteNonQuery();
+                }
+
+                tran.Commit();
+
+                if (result > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                tran.Rollback();
+                conn.Close();
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

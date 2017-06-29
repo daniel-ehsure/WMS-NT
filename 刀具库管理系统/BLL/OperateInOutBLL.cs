@@ -91,9 +91,9 @@ namespace BLL
         /// </summary>
         /// <param name="user">货位信息</param>
         /// <returns></returns>
-        public bool handOut(DataTable dt, string mainMeno, string station)
+        public bool handOut(DataTable dt, string mainMeno, InOutType type)
         {
-            return dal.handOut(dt, mainMeno, station);
+            return dal.handOut(dt, mainMeno, type);
         }
 
         public DataTable getAllOutPlace(int inout)

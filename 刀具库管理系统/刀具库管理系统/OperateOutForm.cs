@@ -17,6 +17,8 @@ namespace UI
         PlaceAreaBLL sbll = new PlaceAreaBLL();
         RuningDoListBLL dbll = new RuningDoListBLL();
         DataTable dt;
+        InOutType inOutType = InOutType.MATERIEL_OUT;
+
         public OperateOutForm()
         {
             InitializeComponent();
@@ -83,7 +85,7 @@ namespace UI
             }
             else
             {
-                if (bll.handOut(dt, txtInMeno.Text,cmbStation.SelectedValue.ToString()))
+                if (bll.handOut(dt, txtInMeno.Text, inOutType))
                 {
                     MessageBox.Show("出库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     setMain(true);

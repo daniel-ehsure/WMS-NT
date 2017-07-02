@@ -66,6 +66,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgv_Data = new System.Windows.Forms.DataGridView();
+            this.lblPlace = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -294,6 +295,7 @@
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.txtStand);
+            this.groupBox2.Controls.Add(this.lblPlace);
             this.groupBox2.Controls.Add(this.lblCount);
             this.groupBox2.Controls.Add(this.lblMaterielName);
             this.groupBox2.Controls.Add(this.button7);
@@ -497,6 +499,18 @@
             this.dgv_Data.TabIndex = 65;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
+            // lblPlace
+            // 
+            this.lblPlace.AutoSize = true;
+            this.lblPlace.ForeColor = System.Drawing.Color.Red;
+            this.lblPlace.Location = new System.Drawing.Point(230, 54);
+            this.lblPlace.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPlace.Name = "lblPlace";
+            this.lblPlace.Size = new System.Drawing.Size(11, 12);
+            this.lblPlace.TabIndex = 29;
+            this.lblPlace.Text = "*";
+            this.lblPlace.Visible = false;
+            // 
             // OperateInForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -568,5 +582,6 @@
         private System.Windows.Forms.Label lblTypeName;
         private System.Windows.Forms.Button btnScan;
         private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.Label lblPlace;
     }
 }

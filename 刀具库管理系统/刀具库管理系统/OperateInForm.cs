@@ -225,19 +225,15 @@ namespace UI
                 if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
                 {
                     flag = false;
-                    this.lblTypeName.Visible = true;
+                    this.lblPlace.Visible = true;
                 }
                 else
                 {
-                    this.lblTypeName.Visible = false;
+                    this.lblPlace.Visible = false;
                     if (bll.isPlaceInuse(txtInPlace.Text.Trim()))
                     {
-                        this.lblTypeName.Visible = true;
+                        MessageBox.Show("该货位已经被使用!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         flag = false;
-                    }
-                    else
-                    {
-                        this.lblTypeName.Visible = false;
                     }
                 }
             }

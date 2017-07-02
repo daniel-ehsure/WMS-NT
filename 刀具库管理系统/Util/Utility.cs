@@ -535,7 +535,7 @@ namespace Util
             string sql = string.Empty;
             switch (tableName.ToLower())
             {
-                case "t_dm_adjust": sql = "SELECT count(*)  FROM T_OPERATE_CHECK_ADJUST WHERE T_OPERATE_CHECK_ADJUST.C_MENO = @id";
+                case "t_dm_adjust": sql = "SELECT count(*)  FROM T_OPERATE_CHECK_ADJUST WHERE T_OPERATE_CHECK_ADJUST.C_MEMO = @id";
                     list.Add(sql);
                     break;
                 case "t_dm_caizhi": sql = "SELECT count(*)  FROM t_operate_stocks WHERE  t_operate_stocks.c_unit = @id";

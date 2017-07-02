@@ -733,9 +733,9 @@ namespace DAL
                     }
 
                     sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID],  [I_INOUT], [D_RQ], [C_STATION], [C_MATERIEL], [C_MATERIEL_NAME], [C_TYPE_NAME], 
-                            [C_PLACE], [I_UseLie], [C_Tray], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MENO], [C_PLACE_source], [I_UseLie_source],[I_BACK])
+                            [C_PLACE], [I_UseLie], [C_Tray], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MEMO], [C_PLACE_source], [I_UseLie_source],[I_BACK])
                             VALUES(@Dec_ID, @I_INOUT, @D_RQ, @C_STATION, @C_MATERIEL, @C_MATERIEL_NAME, @C_TYPE_NAME, @C_PLACE, @I_UseLie, 
-                            @C_Tray, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MENO, @C_PLACE_source, @I_UseLie_source,@I_BACK)";
+                            @C_Tray, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MEMO, @C_PLACE_source, @I_UseLie_source,@I_BACK)";
                     com.CommandText = sql;
                     dec_id  = dec_id+1;
                     c_id = (dec_id).ToString();
@@ -756,11 +756,11 @@ namespace DAL
                     table2.Add("D_AddRQ", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
                     if (meno == null || string.Empty.Equals(meno.Trim()))
                     {
-                        table2.Add("C_MENO", DBNull.Value);
+                        table2.Add("C_MEMO", DBNull.Value);
                     }
                     else
                     {
-                        table2.Add("C_MENO", meno);
+                        table2.Add("C_MEMO", meno);
                     }
                     table2.Add("C_PLACE_source", sorecePlace);
                     table2.Add("I_UseLie_source", take);
@@ -859,8 +859,8 @@ namespace DAL
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID],  [I_INOUT], [D_RQ], [C_MATERIEL], [C_MATERIEL_NAME], [C_TYPE_NAME], 
-                            [C_PLACE], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MENO], [I_BACK])
-                            VALUES(@Dec_ID, @I_INOUT, @D_RQ, @C_MATERIEL, @C_MATERIEL_NAME, @C_TYPE_NAME, @C_PLACE, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MENO, @I_BACK)";
+                            [C_PLACE], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MEMO], [I_BACK])
+                            VALUES(@Dec_ID, @I_INOUT, @D_RQ, @C_MATERIEL, @C_MATERIEL_NAME, @C_TYPE_NAME, @C_PLACE, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MEMO, @I_BACK)";
                     com.CommandText = sql;
 
                     Hashtable table2 = new Hashtable();
@@ -877,11 +877,11 @@ namespace DAL
                     table2.Add("D_AddRQ", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
                     if (meno == null || string.Empty.Equals(meno.Trim()))
                     {
-                        table2.Add("C_MENO", DBNull.Value);
+                        table2.Add("C_MEMO", DBNull.Value);
                     }
                     else
                     {
-                        table2.Add("C_MENO", meno);
+                        table2.Add("C_MEMO", meno);
                     }
                     table2.Add("I_BACK", 0);
                     DbParameter[] parms2 = dbHelper.getParams(table2);

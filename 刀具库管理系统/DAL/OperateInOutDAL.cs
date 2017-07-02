@@ -182,30 +182,25 @@ namespace DAL
        /// <param name="endDate"></param>
        /// <param name="inout"></param>
        /// <returns></returns>
-        public DataTable getList(DateTime startDate, DateTime endDate, string planid,int inout,string mid)
+        public DataTable getList(DateTime startDate, DateTime endDate, string inOutId,int inout,string mid)
         {
-            string sql = @"select * from ( select b.C_OPPOSITE_NO,case a.C_CRK_LEIBIE when 11  then '生产出库' when 12 then '板材出库' 
-                            when 13 then '产品出库' when 14 then '空托盘出库' when 21 then '报工入库' when 22 then '板材入库' 
-                            when 23 then '成品入库' when 24 then '空托盘入库' when 61 then '手工出库'  
-                            when 62 then '手工入库' else '出库' end as c_inout,a.C_MATERIEL,
-                             c.c_name,a.DEC_COUNT,a.c_people_id,d.c_name as c_procedure,a.C_PLACE,a.C_Tray,f.c_name as c_station,CONVERT(varchar(12) ,  b.D_RQ, 111 ) as D_RQ
+            string sql = @"select * from ( select a.C_ID,case a.C_CRK_LEIBIE when 1  then '物料出库' when 2 then '物料入库' 
+                            when 3 then '刀具出库' when 4 then '刀具入库' else '出库' end as c_inout,a.C_MATERIEL,
+                             c.c_name,a.DEC_COUNT,a.C_PLACE,CONVERT(varchar(12) ,  b.D_RQ, 111 ) as D_RQ
                              from T_OPERATE_INOUT_SUB a 
                             left join T_OPERATE_INOUT_MAIN b on a.C_ID = b.C_ID and a.C_CRK_LEIBIE =b.C_CRK_LEIBIE
-                            left join T_JB_COMPONENT c on a.C_MATERIEL = c.C_ID
-                            left join T_JB_STATION f on a.C_STATION = f.C_ID
-                            left join T_JB_PROCEDURE d on a.c_Procedure = d.C_ID ";
-           // sql += " where a.C_CRK_LEIBIE  = " + inout + " and  a.C_MATERIEL in ( select C_MATERIEL from T_JB_MATERIEL_USER where JIAOSE = @JIAOSE  )";
-            if (inout == 1)
+                            left join T_JB_Materiel c on a.C_MATERIEL = c.C_ID ";
+            if (inout == 2)
             {
-                sql += " where a.C_CRK_LEIBIE  <20 or  a.C_CRK_LEIBIE =61 ";
+                sql += " where (a.C_CRK_LEIBIE  = 2 or  a.C_CRK_LEIBIE = 4) ";
             }
             else
             {
-                sql += " where a.C_CRK_LEIBIE  >20 and  a.C_CRK_LEIBIE <>61 ";
+                sql += " where (a.C_CRK_LEIBIE  = 1 and  a.C_CRK_LEIBIE = 3) ";
             }
              if (mid != null && !(string.Empty.Equals(mid)))
                {
-                   sql += " and a.C_MATERIEL = '"+mid+"'";
+                   sql += " and a.C_MATERIEL like '%"+mid+"%'";
                 
                }
              sql += "   ) h where 1=1";
@@ -214,13 +209,6 @@ namespace DAL
             {
 
                 Hashtable table = new Hashtable();
-                //table.Add("JIAOSE", userid);
-                //if (materiel != null && !(string.Empty.Equals(materiel)))
-                //{
-                //    sql += " and (a.C_MATERIEL like @materiel or c.C_NAME like  @materiel )";
-
-                //    table.Add("materiel", "%" + materiel + "%");
-                //}
                 
                 if (startDate != Global.minValue && endDate != Global.minValue)
                 {
@@ -230,11 +218,11 @@ namespace DAL
                     table.Add("startDate", startDate);
                     table.Add("endDate", endDate);
                 }
-                if (!(string.IsNullOrEmpty(planid)))
+                if (!(string.IsNullOrEmpty(inOutId)))
                 {
-                    sql += " and  C_OPPOSITE_NO = @planid";
+                    sql += " and  C_ID like @C_ID";
 
-                    table.Add("planid", planid);
+                    table.Add("C_ID", "%" + inOutId + "%");
                 }
 
                 sql += " order by D_RQ desc";
@@ -435,8 +423,8 @@ namespace DAL
                     Hashtable table = new Hashtable();
 
                     table.Add("C_ID", c_id);
-                    table.Add("D_RQ", dt.Rows[0][6]);
-                    table.Add("C_CZY", dt.Rows[0][7]);
+                    table.Add("D_RQ", dt.Rows[0][5]);
+                    table.Add("C_CZY", dt.Rows[0][6]);
                     table.Add("C_CRK_LEIBIE", (int)type);
                     table.Add("D_TIME", dtNow);
 
@@ -461,7 +449,7 @@ namespace DAL
                         com.CommandText = sql;
                         Hashtable table2 = new Hashtable();
                         table2.Add("C_ID", c_id);
-                        table.Add("C_CRK_LEIBIE", (int)type);
+                        table2.Add("C_CRK_LEIBIE", (int)type);
                         table2.Add("C_MATERIEL", dt.Rows[i][0]);
                         table2.Add("C_PLACE", dt.Rows[i][4]);
                         table2.Add("DEC_COUNT", dt.Rows[i][3]);
@@ -477,7 +465,7 @@ namespace DAL
                         table3.Add("C_MATERIEL_ID", dt.Rows[i][0]);
                         table3.Add("C_PLACE", dt.Rows[i][4]);
                         table3.Add("DEC_COUNT", dt.Rows[i][3]);
-                        table3.Add("D_END_TIME", dt.Rows[i][6]);
+                        table3.Add("D_END_TIME", dt.Rows[i][5]);
 
                         DbParameter[] parms3 = dbHelper.getParams(table3);
                         com.Parameters.Clear();

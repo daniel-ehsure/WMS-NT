@@ -236,6 +236,12 @@
     <EmbeddedResource Include="QuerryOperateInForm.resx">
       <DependentUpon>QuerryOperateInForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="QuerryStocksForm.resx">
+      <DependentUpon>QuerryStocksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuerryStocksPlaceForm.resx">
+      <DependentUpon>QuerryStocksPlaceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SelectMaterielForm.resx">
       <DependentUpon>SelectMaterielForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -306,6 +312,18 @@
     </Compile>
     <Compile Include="QuerryOperateInForm.designer.cs">
       <DependentUpon>QuerryOperateInForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QuerryStocksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuerryStocksForm.designer.cs">
+      <DependentUpon>QuerryStocksForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QuerryStocksPlaceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuerryStocksPlaceForm.designer.cs">
+      <DependentUpon>QuerryStocksPlaceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SelectMaterielForm.cs">
       <SubType>Form</SubType>

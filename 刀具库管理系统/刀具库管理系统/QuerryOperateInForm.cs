@@ -104,7 +104,7 @@ namespace UI
         {
             DataTable temp = new DataTable();
            
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 7; i++)
             {
                 DataColumn column = new DataColumn();
                 column.DataType = System.Type.GetType("System.String");

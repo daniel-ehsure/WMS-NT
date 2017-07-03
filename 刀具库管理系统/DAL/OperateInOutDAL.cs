@@ -196,7 +196,7 @@ namespace DAL
             }
             else
             {
-                sql += " where (a.C_CRK_LEIBIE  = 1 and  a.C_CRK_LEIBIE = 3) ";
+                sql += " where (a.C_CRK_LEIBIE  = 1 or  a.C_CRK_LEIBIE = 3) ";
             }
              if (mid != null && !(string.Empty.Equals(mid)))
                {
@@ -466,6 +466,7 @@ namespace DAL
                         table3.Add("C_PLACE", dt.Rows[i][4]);
                         table3.Add("DEC_COUNT", dt.Rows[i][3]);
                         table3.Add("D_END_TIME", dt.Rows[i][5]);
+                        table3.Add("C_DH", c_id);
 
                         DbParameter[] parms3 = dbHelper.getParams(table3);
                         com.Parameters.Clear();
@@ -544,8 +545,8 @@ namespace DAL
                     Hashtable table = new Hashtable();
 
                     table.Add("C_ID", c_id);
-                    table.Add("D_RQ", dt.Rows[0][6]);
-                    table.Add("C_CZY", dt.Rows[0][7]);
+                    table.Add("D_RQ", dt.Rows[0][5]);
+                    table.Add("C_CZY", dt.Rows[0][6]);
                     table.Add("C_CRK_LEIBIE", (int)type);
                     table.Add("D_TIME", dtNow);
 
@@ -570,7 +571,7 @@ namespace DAL
                         com.CommandText = sql;
                         Hashtable table2 = new Hashtable();
                         table2.Add("C_ID", c_id);
-                        table.Add("C_CRK_LEIBIE", (int)type);
+                        table2.Add("C_CRK_LEIBIE", (int)type);
                         table2.Add("C_MATERIEL", dt.Rows[i][0]);
                         table2.Add("C_PLACE", dt.Rows[i][4]);
                         table2.Add("DEC_COUNT", dt.Rows[i][3]);

@@ -10,56 +10,46 @@ using Util;
 
 namespace UI
 {
-    public partial class QuerryOperateOutForm : Form,InterfaceSelect     
+    public partial class QuerryStocksForm : Form, InterfaceSelect     
     {
-        OperateInOutBLL bll = new OperateInOutBLL();
-        int isFinished = -1;
-        public QuerryOperateOutForm()
+        StocksBLL bll = new StocksBLL();
+        public QuerryStocksForm()
         {
             InitializeComponent();
         }
 
-        private void QuerryOperateOutForm_Load(object sender, EventArgs e)
+        private void QuerryStocksForm_Load(object sender, EventArgs e)
         {
-            this.dateTimePicker1.Value = DateTime.Now.AddDays(-7);
-            this.dateTimePicker2.Value = DateTime.Now;
             initData();
             getName();
         }
+        //出库数量只能输入数字,小数点,回车和退格
+        private void txtNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar < 48 || e.KeyChar > 57) && (e.KeyChar != 8) && (e.KeyChar != 13))
+            {
+                e.Handled = true;
+            }
+        }
+
         //查询
         private void button1_Click(object sender, EventArgs e)
         {
-            DateTime beGinTime = Convert.ToDateTime(this.dateTimePicker1.Value.ToShortDateString());
-            DateTime endTime = Convert.ToDateTime(this.dateTimePicker2.Value.ToShortDateString());
-
-            if (beGinTime > endTime)
+            string jia = string.Empty;
+            string lie = txtLie.Text.Trim();
+            string ceng = txtCeng.Text.Trim();
+            if (!("所有").Equals(this.cmbJia.Text.Trim()))
             {
-                MessageBox.Show("开始时间不能大于结束时间", "注意", MessageBoxButtons.OK);
+                jia = cmbJia.Text;
+            }
+            this.dataGridView1.DataSource = bll.queryStocksList(this.txtInName.Text, jia, lie, ceng,textBox1.Text);
+            getName();
+            if (this.dataGridView1.RowCount == 0)
+            {
+                MessageBox.Show("很遗憾,没有查找到你想要的信息.请核对后重新输入", "注意", MessageBoxButtons.OK);
                 clearDataGridView();
             }
-            else
-            {
-                this.dataGridView1.DataSource = bll.getList( beGinTime, endTime,txtInName.Text.Trim(), 1,this.textBox1.Text);
-                getName();
-                if (this.dataGridView1.RowCount == 0)
-                {
-                    MessageBox.Show("很遗憾,没有查找到你想要的信息.请核对后重新输入", "注意", MessageBoxButtons.OK);
-                    clearDataGridView();
-                }
-            }
         }
-        //选择物料
-        private void btnInName_Click(object sender, EventArgs e)
-        {
-            SelectMaterielForm select = new SelectMaterielForm(this);
-            select.ShowDialog();
-        }
-        //关闭
-        private void button3_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
 
         //导出
         private void button2_Click(object sender, EventArgs e)
@@ -82,20 +72,17 @@ namespace UI
                 MessageBox.Show("没有可以导出的数据!");
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        //选择物料
+        private void btnInName_Click(object sender, EventArgs e)
+        {
+            SelectMaterielForm select = new SelectMaterielForm(this);
+            select.ShowDialog();
+        }
+        //关闭
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
 
 
@@ -103,8 +90,8 @@ namespace UI
         private void initData()
         {
             DataTable temp = new DataTable();
-           
-            for (int i = 0; i < 7; i++)
+
+            for (int i = 0; i < 6; i++)
             {
                 DataColumn column = new DataColumn();
                 column.DataType = System.Type.GetType("System.String");
@@ -121,15 +108,13 @@ namespace UI
         /// </summary>
         private void getName()
         {
-            dataGridView1.Columns[0].HeaderText = "订单号";
-            dataGridView1.Columns[1].HeaderText = "出库类别";
-            dataGridView1.Columns[2].HeaderText = "物料编码";
-            dataGridView1.Columns[3].HeaderText = "物料名称";
-            dataGridView1.Columns[4].HeaderText = "数量";
-            dataGridView1.Columns[5].HeaderText = "货位";
-            dataGridView1.Columns[6].HeaderText = "出库日期";
+            this.dataGridView1.Columns[0].HeaderText = "订单号";
+            this.dataGridView1.Columns[1].HeaderText = "图号";
+            this.dataGridView1.Columns[2].HeaderText = "名称";
+            this.dataGridView1.Columns[3].HeaderText = "数量";
+            this.dataGridView1.Columns[4].HeaderText = "货位";
+            this.dataGridView1.Columns[5].HeaderText = "最后入库日期";
 
-           
         }
 
         /// <summary>
@@ -140,7 +125,6 @@ namespace UI
             this.dataGridView1.DataSource = "";
         }
 
-      
 
 
         #region InterfaceSelect 成员

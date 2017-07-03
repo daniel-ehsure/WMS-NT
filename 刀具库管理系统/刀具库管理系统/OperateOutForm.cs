@@ -156,10 +156,9 @@ namespace UI
             dr[2] = txtStand.Text;
             dr[3] = txtCount.Text.Trim();
             dr[4] = txtInPlace.Text.Trim();
-            dr[5] = txtTray.Text.Trim();
-            dr[6] = dtpIndate.Value.ToString("yyyy-MM-dd");
-            dr[7] = Global.longid;
-            dr[8] = lblTypeName.Text;
+            dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
+            dr[6] = Global.longid;
+            dr[7] = lblTypeName.Text;
             bool flag = false;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -208,11 +207,10 @@ namespace UI
             dgv_Data.Columns[2].HeaderText = "规格型号";
             dgv_Data.Columns[3].HeaderText = "数量";
             dgv_Data.Columns[4].HeaderText = "货位";
-            dgv_Data.Columns[5].HeaderText = "托盘号";
-            dgv_Data.Columns[6].HeaderText = "出库日期";
-            dgv_Data.Columns[7].HeaderText = "操作员";
+            dgv_Data.Columns[5].HeaderText = "出库日期";
+            dgv_Data.Columns[6].HeaderText = "操作员";
+            dgv_Data.Columns[6].Visible = false;
             dgv_Data.Columns[7].Visible = false;
-            dgv_Data.Columns[8].Visible = false;
         }
 
         private bool checkInput()
@@ -222,24 +220,6 @@ namespace UI
             {
                 MessageBox.Show("出库日期不能大于当前日期!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 flag = false;
-            }
-            if (txtTray.Text == null || string.Empty.Equals(txtTray.Text))
-            {
-                flag = false;
-                this.lblTray.Visible = true;
-            }
-            else
-            {
-                this.lblTray.Visible = false;
-                //if (!(txtTray.Text.ToUpper().StartsWith("T")))
-                //{
-                //    flag = false;
-                //    this.lblTray.Visible = true;
-                //}
-                //else
-                //{
-                //    this.lblTray.Visible = false;                   
-                //}
             }
             if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
             {
@@ -317,7 +297,6 @@ namespace UI
             lblInMateriel.Text = string.Empty;
             txtCount.Text = string.Empty;
             txtStand.Text = string.Empty;
-            txtTray.Text = string.Empty;
             txtInPlace.Text = string.Empty;
             lblMax.Text = string.Empty;
         }
@@ -380,7 +359,6 @@ namespace UI
             this.txtInPlace.Text = pid;
             this.txtCount.Text = count.ToString();
             this.lblMax.Text = count.ToString();
-            this.txtTray.Text = tray;
             this.lblTypeName.Text = typeName;
         }
 

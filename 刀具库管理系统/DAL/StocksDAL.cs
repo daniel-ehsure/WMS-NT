@@ -14,7 +14,7 @@ namespace DAL
     {
        private DBHelper dbHelper = new SQLDBHelper();
         /// <summary>
-        /// 获得全部库存信息
+        /// 获得出入库信息
         /// </summary>
         /// <returns></returns>
        public DataTable getStocksList(string materiel,string materieName, string place, string stand,string userid)
@@ -24,11 +24,11 @@ namespace DAL
                             a.DEC_COUNT -isnull( d.usecount,0) as canuse
                             from T_OPERATE_STOCKS a 
                             left join T_JB_MATERIEL b on a.C_MATERIEL_ID = b.C_ID
-                            left join T_JB_TYPE c on b.C_TYPE = c.C_ID
+                            left join T_JB_MATERIELTYPE c on b.C_TYPE = c.C_ID
                             left join  (select  isnull( DEC_COUNT,0) as usecount ,C_MATERIEL,C_PLACE from T_Runing_Dolist where I_INOUT = 1) d  on  d.C_MATERIEL = a.C_MATERIEL_ID
                             and d.C_PLACE = a.C_PLACE
                             ) g
-                        where g.canuse >0 and g.C_PLACE not in (select C_PLACE from T_Runing_Dolist) and g.C_MATERIEL_ID in ( select C_MATERIEL from T_JB_MATERIEL_USER where JIAOSE = @JIAOSE  )  ";
+                        where g.canuse >0 and g.C_PLACE not in (select C_PLACE from T_Runing_Dolist) and g.C_MATERIEL_ID in ( select C_MATERIEL from T_JB_MATERIEL_USER where C_JIAOSE = @JIAOSE  )  ";
             DataTable dt = new DataTable();
             try
             {
@@ -87,24 +87,21 @@ namespace DAL
 
 
        /// <summary>
-       /// 获得全部货位信息
+       /// 获得库存
        /// </summary>
        /// <returns></returns>
        public DataTable queryStocksList(string planid, string jia, string lie, string ceng,string mid)
        {
-           string sql = @" select a.C_DH ,a.C_MATERIEL_ID,b.c_name,a.DEC_COUNT,a.C_Tray,a.C_PLACE,a.c_people_id,d.c_name,a.D_END_TIME
+           string sql = @" select a.C_DH, a.C_MATERIEL_ID,b.c_name,a.DEC_COUNT,a.C_PLACE,a.D_END_TIME
                             from T_OPERATE_STOCKS a
-                            left join T_JB_COMPONENT b on a.C_MATERIEL_ID = b.c_id 
-                            left join T_JB_PROCEDURE d on a.c_Procedure = d.C_ID where 1=1";
-                   //     where  g.C_MATERIEL_ID in ( select C_MATERIEL from T_JB_MATERIEL_USER where JIAOSE = @JIAOSE  )";
-
+                            left join T_JB_MATERIEL b on a.C_MATERIEL_ID = b.c_id ";
 
            DataTable dt = new DataTable();
+
            try
            {
-
                Hashtable table = new Hashtable();
-               //table.Add("JIAOSE", userid);
+
                if (planid != null && !(string.Empty.Equals(planid)))
                {
                    sql += " and a.C_DH = @planid";
@@ -148,8 +145,6 @@ namespace DAL
                {
                    dt = dbHelper.GetDataSet(sql);
                }
-
-
            }
            catch (Exception ex)
            {
@@ -161,8 +156,8 @@ namespace DAL
                dbHelper.getConnection().Close();
            }
            return dt;
-
        }
+
        /// <summary>
        /// 货位是否有货
        /// </summary>

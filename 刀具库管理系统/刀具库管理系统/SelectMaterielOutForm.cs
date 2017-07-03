@@ -128,7 +128,6 @@ namespace UI
                 dgv_Data.Columns[4].HeaderText = "货位";
                 dgv_Data.Columns[5].HeaderText = "库存数量";
                 dgv_Data.Columns[6].HeaderText = "可用数量";
-                dgv_Data.Columns[7].HeaderText = "托盘编码";
             }
             catch (Exception)
             {
@@ -146,11 +145,10 @@ namespace UI
                 string name = this.dgv_Data.Rows[index].Cells[1].Value.ToString();              
                 string standard = this.dgv_Data.Rows[index].Cells[3].Value.ToString(); 
                 string pid = this.dgv_Data.Rows[index].Cells[4].Value.ToString();
-                string tray = this.dgv_Data.Rows[index].Cells[7].Value.ToString();
                 int count = Convert.ToInt32(this.dgv_Data.Rows[index].Cells[6].Value);
                 string typeName = this.dgv_Data.Rows[index].Cells[2].Value.ToString();
 
-                parent.setMaterielAndPlace(name, id, standard, pid, tray, count, typeName);
+                parent.setMaterielAndPlace(name, id, standard, pid, null, count, typeName);
                 this.Close();
             }
         }

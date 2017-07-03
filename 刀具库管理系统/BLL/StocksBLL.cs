@@ -22,9 +22,9 @@ namespace BLL
        /// 获得全部货位信息
        /// </summary>
        /// <returns></returns>
-        public DataTable queryStocksList(string planid, string jia, string lie, string ceng,string mid)
+        public DataTable queryStocksList(string id, string warehouse, string place, string mid)
         {
-            return dal.queryStocksList(planid, jia, lie, ceng,mid);
+            return dal.queryStocksList(id, warehouse, place, mid);
         }
         /// <summary>
        /// 货位是否有货

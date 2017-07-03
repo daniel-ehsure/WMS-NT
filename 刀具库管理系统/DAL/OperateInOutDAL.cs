@@ -459,7 +459,7 @@ namespace DAL
                         com.Parameters.AddRange(parms2);
                         com.ExecuteNonQuery();
 
-                        sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME)";
+                        sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_DH])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME, @C_DH)";
                         com.CommandText = sql;
                         Hashtable table3 = new Hashtable();
                         table3.Add("C_MATERIEL_ID", dt.Rows[i][0]);

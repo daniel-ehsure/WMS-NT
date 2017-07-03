@@ -36,15 +36,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtMateriel = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cmbJia = new System.Windows.Forms.ComboBox();
-            this.txtCeng = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtLie = new System.Windows.Forms.TextBox();
+            this.cmbWarehouse = new System.Windows.Forms.ComboBox();
+            this.txtPlace = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtInName = new System.Windows.Forms.TextBox();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
@@ -105,15 +103,13 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.txtMateriel);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.cmbJia);
-            this.panel1.Controls.Add(this.txtCeng);
-            this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.txtLie);
+            this.panel1.Controls.Add(this.cmbWarehouse);
+            this.panel1.Controls.Add(this.txtPlace);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.txtInName);
+            this.panel1.Controls.Add(this.txtId);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
@@ -124,74 +120,51 @@
             this.panel1.Size = new System.Drawing.Size(920, 40);
             this.panel1.TabIndex = 59;
             // 
-            // textBox1
+            // txtMateriel
             // 
-            this.textBox1.Location = new System.Drawing.Point(500, 10);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(124, 21);
-            this.textBox1.TabIndex = 135;
+            this.txtMateriel.Location = new System.Drawing.Point(500, 12);
+            this.txtMateriel.Margin = new System.Windows.Forms.Padding(2);
+            this.txtMateriel.Name = "txtMateriel";
+            this.txtMateriel.Size = new System.Drawing.Size(124, 21);
+            this.txtMateriel.TabIndex = 135;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(464, 15);
+            this.label7.Location = new System.Drawing.Point(431, 15);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 12);
+            this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 134;
-            this.label7.Text = "图号：";
+            this.label7.Text = "物料编码：";
             // 
-            // cmbJia
+            // cmbWarehouse
             // 
-            this.cmbJia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbJia.FormattingEnabled = true;
-            this.cmbJia.Items.AddRange(new object[] {
-            "所有",
-            "01",
-            "02"});
-            this.cmbJia.Location = new System.Drawing.Point(188, 10);
-            this.cmbJia.Name = "cmbJia";
-            this.cmbJia.Size = new System.Drawing.Size(65, 20);
-            this.cmbJia.TabIndex = 135;
+            this.cmbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWarehouse.FormattingEnabled = true;
+            this.cmbWarehouse.Location = new System.Drawing.Point(188, 10);
+            this.cmbWarehouse.Name = "cmbWarehouse";
+            this.cmbWarehouse.Size = new System.Drawing.Size(65, 20);
+            this.cmbWarehouse.TabIndex = 135;
             // 
-            // txtCeng
+            // txtPlace
             // 
-            this.txtCeng.Location = new System.Drawing.Point(396, 10);
-            this.txtCeng.Margin = new System.Windows.Forms.Padding(2);
-            this.txtCeng.MaxLength = 2;
-            this.txtCeng.Name = "txtCeng";
-            this.txtCeng.Size = new System.Drawing.Size(65, 21);
-            this.txtCeng.TabIndex = 134;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(359, 15);
-            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 12);
-            this.label11.TabIndex = 133;
-            this.label11.Text = "层号：";
-            // 
-            // txtLie
-            // 
-            this.txtLie.Location = new System.Drawing.Point(291, 10);
-            this.txtLie.Margin = new System.Windows.Forms.Padding(2);
-            this.txtLie.MaxLength = 2;
-            this.txtLie.Name = "txtLie";
-            this.txtLie.Size = new System.Drawing.Size(65, 21);
-            this.txtLie.TabIndex = 132;
+            this.txtPlace.Location = new System.Drawing.Point(324, 12);
+            this.txtPlace.Margin = new System.Windows.Forms.Padding(2);
+            this.txtPlace.MaxLength = 2;
+            this.txtPlace.Name = "txtPlace";
+            this.txtPlace.Size = new System.Drawing.Size(102, 21);
+            this.txtPlace.TabIndex = 132;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(255, 15);
+            this.label6.Location = new System.Drawing.Point(258, 15);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
+            this.label6.Size = new System.Drawing.Size(65, 12);
             this.label6.TabIndex = 131;
-            this.label6.Text = "列号：";
+            this.label6.Text = "货位编码：";
             // 
             // label8
             // 
@@ -203,13 +176,13 @@
             this.label8.TabIndex = 130;
             this.label8.Text = "库号：";
             // 
-            // txtInName
+            // txtId
             // 
-            this.txtInName.Location = new System.Drawing.Point(44, 10);
-            this.txtInName.Margin = new System.Windows.Forms.Padding(2);
-            this.txtInName.Name = "txtInName";
-            this.txtInName.Size = new System.Drawing.Size(105, 21);
-            this.txtInName.TabIndex = 129;
+            this.txtId.Location = new System.Drawing.Point(44, 10);
+            this.txtId.Margin = new System.Windows.Forms.Padding(2);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(105, 21);
+            this.txtId.TabIndex = 129;
             // 
             // label10
             // 
@@ -219,7 +192,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(41, 12);
             this.label10.TabIndex = 128;
-            this.label10.Text = "订单：";
+            this.label10.Text = "单号：";
             // 
             // button3
             // 
@@ -348,15 +321,13 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.ComboBox cmbJia;
-        private System.Windows.Forms.TextBox txtCeng;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtLie;
+        private System.Windows.Forms.ComboBox cmbWarehouse;
+        private System.Windows.Forms.TextBox txtPlace;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtInName;
+        private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtMateriel;
         private System.Windows.Forms.Label label7;
     }
 }

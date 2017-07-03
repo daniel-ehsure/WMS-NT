@@ -35,14 +35,13 @@ namespace UI
         //查询
         private void button1_Click(object sender, EventArgs e)
         {
-            string jia = string.Empty;
-            string lie = txtLie.Text.Trim();
-            string ceng = txtCeng.Text.Trim();
-            if (!("所有").Equals(this.cmbJia.Text.Trim()))
+            string warehouse = string.Empty;
+            string place = txtPlace.Text.Trim();
+            if (!("所有").Equals(this.cmbWarehouse.Text.Trim()))
             {
-                jia = cmbJia.Text;
+                warehouse = cmbWarehouse.SelectedValue.ToString();
             }
-            this.dataGridView1.DataSource = bll.queryStocksList(this.txtInName.Text, jia, lie, ceng,textBox1.Text);
+            this.dataGridView1.DataSource = bll.queryStocksList(this.txtId.Text.Trim(), warehouse, place, txtMateriel.Text.Trim());
             getName();
             if (this.dataGridView1.RowCount == 0)
             {
@@ -72,23 +71,28 @@ namespace UI
                 MessageBox.Show("没有可以导出的数据!");
             }
         }
-        //选择物料
-        private void btnInName_Click(object sender, EventArgs e)
-        {
-            SelectMaterielForm select = new SelectMaterielForm(this);
-            select.ShowDialog();
-        }
+
         //关闭
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-
-
-
         private void initData()
         {
+            DataTable dt = new WarehouseBLL().GetList(null);
+            dt.Columns[0].ColumnName = "id";
+            dt.Columns[1].ColumnName = "name";
+            DataRow dr = dt.NewRow();
+            dr["id"] = "";
+            dr["name"] = "所有";
+            dt.Rows.InsertAt(dr, 0);
+
+            cmbWarehouse.DataSource = dt;
+            cmbWarehouse.DisplayMember = "name";
+            cmbWarehouse.ValueMember = "id";
+            cmbWarehouse.SelectedIndex = 0;
+
             DataTable temp = new DataTable();
 
             for (int i = 0; i < 6; i++)
@@ -109,8 +113,8 @@ namespace UI
         private void getName()
         {
             this.dataGridView1.Columns[0].HeaderText = "订单号";
-            this.dataGridView1.Columns[1].HeaderText = "图号";
-            this.dataGridView1.Columns[2].HeaderText = "名称";
+            this.dataGridView1.Columns[1].HeaderText = "物料编码";
+            this.dataGridView1.Columns[2].HeaderText = "物料名称";
             this.dataGridView1.Columns[3].HeaderText = "数量";
             this.dataGridView1.Columns[4].HeaderText = "货位";
             this.dataGridView1.Columns[5].HeaderText = "最后入库日期";
@@ -140,7 +144,7 @@ namespace UI
 
         public void setMateriel(string name, string id, string standard)
         {
-            this.txtInName.Text = name;
+            this.txtId.Text = name;
         }
 
         public void setMaterielAndPlace(string mname, string mid, string standard, string pid, string tray, int count, string typeName)

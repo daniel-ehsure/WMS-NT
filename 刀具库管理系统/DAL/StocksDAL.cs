@@ -90,11 +90,11 @@ namespace DAL
        /// 获得库存
        /// </summary>
        /// <returns></returns>
-       public DataTable queryStocksList(string planid, string jia, string lie, string ceng,string mid)
+       public DataTable queryStocksList(string id, string warehouse, string place, string mid)
        {
            string sql = @" select a.C_DH, a.C_MATERIEL_ID,b.c_name,a.DEC_COUNT,a.C_PLACE,a.D_END_TIME
                             from T_OPERATE_STOCKS a
-                            left join T_JB_MATERIEL b on a.C_MATERIEL_ID = b.c_id ";
+                            left join T_JB_MATERIEL b on a.C_MATERIEL_ID = b.c_id where 1=1 ";
 
            DataTable dt = new DataTable();
 
@@ -102,38 +102,30 @@ namespace DAL
            {
                Hashtable table = new Hashtable();
 
-               if (planid != null && !(string.Empty.Equals(planid)))
+               if (id != null && !(string.Empty.Equals(id)))
                {
-                   sql += " and a.C_DH = @planid";
+                   sql += " and a.C_DH like @planid";
 
-                   table.Add("planid",  planid );
+                   table.Add("planid",  "%" + id + "%" );
                }
 
-
-               if (jia != null && !(string.Empty.Equals(jia)))
+               if (warehouse != null && !(string.Empty.Equals(warehouse)))
                {
-                   sql += " and a.C_PLACE like @jia";
+                   sql += " and a.C_PLACE like @warehouse";
 
-                   table.Add("jia", jia + "____");
+                   table.Add("warehouse", warehouse + "%");
                }
-               if (lie != null && !(string.Empty.Equals(lie)))
+               if (place != null && !(string.Empty.Equals(place)))
                {
-                   sql += " and a.C_PLACE like @lie";
+                   sql += " and a.C_PLACE like @place";
 
-                   table.Add("lie", "__" + lie + "__");
+                   table.Add("place", "%" + place + "%");
                }
-               if (ceng != null && !(string.Empty.Equals(ceng)))
-               {
-                   sql += " and a.C_PLACE like @ceng";
-
-                   table.Add("ceng", "____" + ceng);
-               }
-
                if (mid != null && !(string.Empty.Equals(mid)))
                {
-                   sql += " and a.C_MATERIEL_ID = @mid";
+                   sql += " and a.C_MATERIEL_ID like @mid";
 
-                   table.Add("mid", mid);
+                   table.Add("mid", "%" + mid + "%");
                }
 
                if (table.Count > 0)

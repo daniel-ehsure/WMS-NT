@@ -39,7 +39,7 @@ namespace UI
             }
             else
             {
-                this.dataGridView1.DataSource = bll.getList(beGinTime, endTime, txtInName.Text.Trim(), 1,this.textBox1.Text);
+                this.dataGridView1.DataSource = bll.getList( beGinTime, endTime,txtInName.Text.Trim(), 1,this.textBox1.Text);
                 getName();
                 if (this.dataGridView1.RowCount == 0)
                 {
@@ -103,7 +103,7 @@ namespace UI
         private void initData()
         {
             DataTable temp = new DataTable();
-
+           
             for (int i = 0; i < 11; i++)
             {
                 DataColumn column = new DataColumn();
@@ -123,18 +123,14 @@ namespace UI
         {
             dataGridView1.Columns[0].HeaderText = "订单号";
             dataGridView1.Columns[1].HeaderText = "入库类别";
-            dataGridView1.Columns[2].HeaderText = "图号";
-            dataGridView1.Columns[3].HeaderText = "名称";
+            dataGridView1.Columns[2].HeaderText = "物料编码";
+            dataGridView1.Columns[3].HeaderText = "物料名称";
             dataGridView1.Columns[4].HeaderText = "数量";
-            dataGridView1.Columns[5].HeaderText = "加工人员";
-            dataGridView1.Columns[6].HeaderText = "工序";
-            dataGridView1.Columns[7].HeaderText = "货位";
-            dataGridView1.Columns[8].HeaderText = "托盘";
-            dataGridView1.Columns[9].HeaderText = "工位";
-            dataGridView1.Columns[10].HeaderText = "入库日期";
+            dataGridView1.Columns[5].HeaderText = "货位";
+            dataGridView1.Columns[6].HeaderText = "入库日期";
 
+           
         }
-
 
         /// <summary>
         /// 清空 dataGridView
@@ -144,7 +140,7 @@ namespace UI
             this.dataGridView1.DataSource = "";
         }
 
-
+      
 
 
         #region InterfaceSelect 成员
@@ -179,7 +175,6 @@ namespace UI
 
         #endregion
 
-       
-     
+
     }
 }

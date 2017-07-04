@@ -41,9 +41,7 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnShouGong = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmbStation = new System.Windows.Forms.ComboBox();
             this.txtInMeno = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.dtpIndate = new System.Windows.Forms.DateTimePicker();
             this.label21 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -130,7 +128,7 @@
             this.button1.ImageIndex = 5;
             this.button1.ImageList = this.imageList2;
             this.button1.Location = new System.Drawing.Point(819, 10);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 65;
@@ -194,56 +192,35 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cmbStation);
             this.groupBox1.Controls.Add(this.txtInMeno);
-            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.dtpIndate);
             this.groupBox1.Controls.Add(this.label21);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(920, 59);
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "入库单信息";
             // 
-            // cmbStation
-            // 
-            this.cmbStation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStation.FormattingEnabled = true;
-            this.cmbStation.Location = new System.Drawing.Point(669, 22);
-            this.cmbStation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.cmbStation.Name = "cmbStation";
-            this.cmbStation.Size = new System.Drawing.Size(92, 20);
-            this.cmbStation.TabIndex = 122;
-            // 
             // txtInMeno
             // 
             this.txtInMeno.Location = new System.Drawing.Point(285, 22);
-            this.txtInMeno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtInMeno.Margin = new System.Windows.Forms.Padding(2);
             this.txtInMeno.MaxLength = 100;
             this.txtInMeno.Name = "txtInMeno";
             this.txtInMeno.Size = new System.Drawing.Size(316, 21);
             this.txtInMeno.TabIndex = 26;
             this.txtInMeno.TabStop = false;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(615, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 12);
-            this.label6.TabIndex = 121;
-            this.label6.Text = "工   位：";
-            // 
             // dtpIndate
             // 
             this.dtpIndate.Location = new System.Drawing.Point(89, 22);
-            this.dtpIndate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtpIndate.Margin = new System.Windows.Forms.Padding(2);
             this.dtpIndate.Name = "dtpIndate";
             this.dtpIndate.Size = new System.Drawing.Size(107, 21);
             this.dtpIndate.TabIndex = 118;
@@ -283,7 +260,7 @@
             // txtInPlace
             // 
             this.txtInPlace.Location = new System.Drawing.Point(285, 55);
-            this.txtInPlace.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtInPlace.Margin = new System.Windows.Forms.Padding(2);
             this.txtInPlace.Name = "txtInPlace";
             this.txtInPlace.ReadOnly = true;
             this.txtInPlace.Size = new System.Drawing.Size(130, 21);
@@ -329,9 +306,9 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBox2.Location = new System.Drawing.Point(8, 75);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(920, 93);
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
@@ -399,7 +376,7 @@
             // txtCount
             // 
             this.txtCount.Location = new System.Drawing.Point(285, 19);
-            this.txtCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCount.Margin = new System.Windows.Forms.Padding(2);
             this.txtCount.MaxLength = 6;
             this.txtCount.Name = "txtCount";
             this.txtCount.Size = new System.Drawing.Size(130, 21);
@@ -429,8 +406,8 @@
             // 
             // txtStand
             // 
-            this.txtStand.Location = new System.Drawing.Point(490, 19);
-            this.txtStand.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtStand.Location = new System.Drawing.Point(89, 57);
+            this.txtStand.Margin = new System.Windows.Forms.Padding(2);
             this.txtStand.Name = "txtStand";
             this.txtStand.ReadOnly = true;
             this.txtStand.Size = new System.Drawing.Size(111, 21);
@@ -452,7 +429,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(430, 22);
+            this.label26.Location = new System.Drawing.Point(24, 60);
             this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(65, 12);
@@ -462,7 +439,7 @@
             // txtMaterielName
             // 
             this.txtMaterielName.Location = new System.Drawing.Point(89, 19);
-            this.txtMaterielName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMaterielName.Margin = new System.Windows.Forms.Padding(2);
             this.txtMaterielName.Name = "txtMaterielName";
             this.txtMaterielName.ReadOnly = true;
             this.txtMaterielName.Size = new System.Drawing.Size(107, 21);
@@ -493,7 +470,7 @@
             this.panel2.Controls.Add(this.dgv_Data);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(8, 176);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(920, 189);
             this.panel2.TabIndex = 31;
@@ -535,7 +512,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "OperateOutForm";
             this.ShowInTaskbar = false;
             this.Text = "出库管理";
@@ -588,8 +565,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Label lblMax;
-        private System.Windows.Forms.ComboBox cmbStation;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblTypeName;
     }
 }

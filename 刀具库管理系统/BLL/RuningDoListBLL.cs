@@ -50,9 +50,9 @@ namespace BLL
         /// <param name="meno"></param>
         /// <param name="station"></param>
         /// <returns></returns>
-       public bool saveDolist(DataTable dt, string meno, string station,int controlType)
+       public bool saveDolist(DataTable dt, string meno, int controlType)
        {
-           return dal.saveDolist(dt, meno, station, controlType);
+           return dal.saveDolist(dt, meno, controlType);
        }
 
        /// <summary>

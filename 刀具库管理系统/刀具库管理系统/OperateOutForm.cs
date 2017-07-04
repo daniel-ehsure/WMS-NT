@@ -26,23 +26,6 @@ namespace UI
 
         private void OperateInForm_Load(object sender, EventArgs e)
         {
-            #region 工位
-            DataTable dtstat = sbll.GetList(null);
-            DataView dataViewt = dtstat.DefaultView;
-            dataViewt.Sort = "C_ID asc";
-            DataTable dtt = dataViewt.ToTable();
-
-            DataRow dr = dtt.NewRow();
-            dr["c_id"] = string.Empty;
-            dr["c_name"] = string.Empty;
-
-            dtt.Rows.InsertAt(dr, 0);
-
-            this.cmbStation.DataSource = dtt;
-            this.cmbStation.DisplayMember = "c_name";
-            this.cmbStation.ValueMember = "c_id";
-            this.cmbStation.SelectedIndex = 0;
-            #endregion
             initData();
         }
 
@@ -103,7 +86,7 @@ namespace UI
         //选择物料
         private void button3_Click(object sender, EventArgs e)
         {
-            SelectMaterielOutForm select = new SelectMaterielOutForm(this,dt);
+            SelectMaterielOutForm select = new SelectMaterielOutForm(this, dt);
             select.ShowDialog();
             txtCount.Focus();
         }
@@ -124,24 +107,17 @@ namespace UI
             }
             else
             {
-                if (cmbStation.SelectedValue == null || string.Empty.Equals(cmbStation.SelectedValue))
+                if (dbll.saveDolist(dt, txtInMeno.Text, 1))
                 {
-                    MessageBox.Show("请选择出库使用的工位!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    setMain(true);
+                    initMain();
+                    initSub();
+                    dt.Rows.Clear();
                 }
                 else
                 {
-                    if (dbll.saveDolist(dt, txtInMeno.Text, cmbStation.SelectedValue.ToString(), 1))
-                    {
-                        MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        setMain(true);
-                        initMain();
-                        initSub();
-                        dt.Rows.Clear();
-                    }
-                    else
-                    {
-                        MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -168,7 +144,7 @@ namespace UI
                 {
                     flag = true;
                     int old = Convert.ToInt32(dt.Rows[i][3]);
-                    int total = old+ Convert.ToInt32(txtCount.Text.Trim());
+                    int total = old + Convert.ToInt32(txtCount.Text.Trim());
                     dt.Rows[i][3] = total.ToString();
                     break;
                 }
@@ -183,7 +159,7 @@ namespace UI
 
         private void initData()
         {
-           dt  = new DataTable();
+            dt = new DataTable();
 
             for (int i = 0; i < 9; i++)
             {
@@ -195,14 +171,14 @@ namespace UI
             }
 
 
-            
+
             this.dgv_Data.DataSource = dt;
             getName();
         }
 
         private void getName()
         {
-            dgv_Data.Columns[0].HeaderText ="物料编码";
+            dgv_Data.Columns[0].HeaderText = "物料编码";
             dgv_Data.Columns[1].HeaderText = "物料名称";
             dgv_Data.Columns[2].HeaderText = "规格型号";
             dgv_Data.Columns[3].HeaderText = "数量";
@@ -216,7 +192,7 @@ namespace UI
         private bool checkInput()
         {
             bool flag = true;
-            if(Convert.ToDateTime(dtpIndate.Value.ToShortDateString())>Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+            if (Convert.ToDateTime(dtpIndate.Value.ToShortDateString()) > Convert.ToDateTime(DateTime.Now.ToShortDateString()))
             {
                 MessageBox.Show("出库日期不能大于当前日期!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 flag = false;
@@ -228,7 +204,7 @@ namespace UI
             }
             else
             {
-                this.lblInPlace.Visible = false;                
+                this.lblInPlace.Visible = false;
             }
             if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
             {
@@ -264,7 +240,7 @@ namespace UI
                 catch (Exception)
                 {
                     flag = false;
-                    this.lblCount.Visible = true;                    
+                    this.lblCount.Visible = true;
                 }
             }
             if (txtMaterielName.Text == null || string.Empty.Equals(txtMaterielName.Text))
@@ -274,7 +250,7 @@ namespace UI
             }
             else
             {
-                this.lblMaterielName.Visible = false;               
+                this.lblMaterielName.Visible = false;
             }
 
             return flag;
@@ -282,13 +258,12 @@ namespace UI
 
         private void setMain(bool flag)
         {
-            dtpIndate.Enabled = flag;  
+            dtpIndate.Enabled = flag;
             txtInMeno.Enabled = flag;
-            cmbStation.Enabled = flag;
         }
         private void initMain()
-        {           
-            txtInMeno.Text = string.Empty;       
+        {
+            txtInMeno.Text = string.Empty;
         }
 
         private void initSub()
@@ -316,7 +291,7 @@ namespace UI
                 }
                 if (i < dt.Rows.Count)
                 {
-                   dt.Rows.Remove(dt.Rows[i]);
+                    dt.Rows.Remove(dt.Rows[i]);
                 }
                 if (dt.Rows.Count <= 0)
                 {
@@ -369,9 +344,9 @@ namespace UI
 
         #endregion
 
-       
-       
 
-       
+
+
+
     }
 }

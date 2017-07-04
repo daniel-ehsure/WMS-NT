@@ -11,7 +11,7 @@ namespace Util
     /// 这个类主要负责记录日志
     /// </summary>
     public class Log
-    {//todo:uv 创建一个记录操作的日志，写入表中
+    {
         private DBHelper dbHelper = new SQLDBHelper();
         public Log()
         {

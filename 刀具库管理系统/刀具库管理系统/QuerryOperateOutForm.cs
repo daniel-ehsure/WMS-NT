@@ -13,7 +13,7 @@ namespace UI
     public partial class QuerryOperateOutForm : Form,InterfaceSelect     
     {
         OperateInOutBLL bll = new OperateInOutBLL();
-        int isFinished = -1;
+
         public QuerryOperateOutForm()
         {
             InitializeComponent();

@@ -664,20 +664,16 @@ namespace DAL
         }
 
         /// <summary>
-        /// 联机入库
+        /// 联机出库
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="meno"></param>
         /// <param name="station"></param>
         /// <returns></returns>
-        public bool saveDolist(DataTable dt, string meno, string station,int controlType)
-        {
+        public bool saveDolist(DataTable dt, string meno, int controlType)
+        {//todo:controlType 出入库标志和联机出库的一些规则
             int result = 0;
-            int i_run = 0;
-            if (controlType == 1|| controlType==2)
-            {
-                i_run = 1;
-            }
+
             DbConnection conn = dbHelper.getConnection();
             try
             {
@@ -696,10 +692,8 @@ namespace DAL
             {
                 com.Transaction = tran;
 
-
                 long dec_id = 0;
                 string c_id = string.Empty;
-                int count = 0;
 
                 sql = "SELECT max(Dec_ID) FROM   T_Runing_Dolist ";
 
@@ -709,50 +703,24 @@ namespace DAL
                
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-
-                    sql = "select [I_TAKE] from [T_JB_PLACE] where C_ID = '" + dt.Rows[i][4] + "' ";
-
-                    com.CommandText = sql;
-
-                    object takeTemp = com.ExecuteScalar();
-                    int take = 1;
-                    if (takeTemp != null && !(DBNull.Value.Equals(takeTemp)))
-                    {
-                        take = Convert.ToInt32(takeTemp);
-                    }
-
-                    sql = "select C_PLACE from T_JB_STATION_PLACE where C_STATION_ID = '" + station + "' ";
-
-                    com.CommandText = sql;
-
-                    object stationTemp = com.ExecuteScalar();
-                    string sorecePlace = string.Empty;
-                    if (stationTemp != null && !(DBNull.Value.Equals(stationTemp)))
-                    {
-                        sorecePlace = Convert.ToString(stationTemp);
-                    }
-
-                    sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID],  [I_INOUT], [D_RQ], [C_STATION], [C_MATERIEL], [C_MATERIEL_NAME], [C_TYPE_NAME], 
-                            [C_PLACE], [I_UseLie], [C_Tray], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MEMO], [C_PLACE_source], [I_UseLie_source],[I_BACK])
-                            VALUES(@Dec_ID, @I_INOUT, @D_RQ, @C_STATION, @C_MATERIEL, @C_MATERIEL_NAME, @C_TYPE_NAME, @C_PLACE, @I_UseLie, 
-                            @C_Tray, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MEMO, @C_PLACE_source, @I_UseLie_source,@I_BACK)";
+                    sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID],  [I_INOUT], [D_RQ], [C_MATERIEL], [C_MATERIEL_NAME], [C_TYPE_NAME], 
+                            [C_PLACE],  [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MEMO])
+                            VALUES(@Dec_ID, @I_INOUT, @D_RQ, @C_MATERIEL, @C_MATERIEL_NAME, @C_TYPE_NAME, @C_PLACE, 
+                            @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MEMO)";
                     com.CommandText = sql;
                     dec_id  = dec_id+1;
                     c_id = (dec_id).ToString();
                     Hashtable table2 = new Hashtable();
                     table2.Add("Dec_ID", c_id);
                     table2.Add("I_INOUT",controlType );
-                    table2.Add("D_RQ", Convert.ToDateTime( dt.Rows[i][6]).ToString("yyyy-MM-dd"));
-                    table2.Add("C_STATION", station);
+                    table2.Add("D_RQ", Convert.ToDateTime( dt.Rows[i][5]).ToString("yyyy-MM-dd"));
                     table2.Add("C_MATERIEL", dt.Rows[i][0]);
                     table2.Add("C_MATERIEL_NAME", dt.Rows[i][1]);
-                    table2.Add("C_TYPE_NAME", dt.Rows[i][8]);
+                    table2.Add("C_TYPE_NAME", dt.Rows[i][7]);
                     table2.Add("C_PLACE", dt.Rows[i][4]);
-                    table2.Add("I_UseLie", take);
-                    table2.Add("C_Tray", dt.Rows[i][5]);
                     table2.Add("DEC_COUNT", dt.Rows[i][3]);
-                    table2.Add("C_CZY", dt.Rows[i][7]);
-                    table2.Add("I_RUN", i_run);                   
+                    table2.Add("C_CZY", dt.Rows[i][6]);
+                    table2.Add("I_RUN", 1);                   
                     table2.Add("D_AddRQ", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
                     if (meno == null || string.Empty.Equals(meno.Trim()))
                     {
@@ -762,8 +730,6 @@ namespace DAL
                     {
                         table2.Add("C_MEMO", meno);
                     }
-                    table2.Add("C_PLACE_source", sorecePlace);
-                    table2.Add("I_UseLie_source", take);
                     table2.Add("I_BACK", 0);
                     DbParameter[] parms2 = dbHelper.getParams(table2);
                     com.Parameters.Clear();

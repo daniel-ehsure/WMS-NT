@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class OperateOutForm
+    partial class OperateOutKnifeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperateOutForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperateOutKnifeForm));
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,7 +45,6 @@
             this.dtpIndate = new System.Windows.Forms.DateTimePicker();
             this.label21 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.lblInPlace = new System.Windows.Forms.Label();
             this.txtInPlace = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -54,9 +53,6 @@
             this.lblMax = new System.Windows.Forms.Label();
             this.lblInMateriel = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
-            this.lblCount = new System.Windows.Forms.Label();
-            this.txtCount = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.txtStand = new System.Windows.Forms.TextBox();
             this.lblMaterielName = new System.Windows.Forms.Label();
@@ -245,21 +241,9 @@
             this.label15.TabIndex = 117;
             this.label15.Text = "出库时间：";
             // 
-            // lblInPlace
-            // 
-            this.lblInPlace.AutoSize = true;
-            this.lblInPlace.ForeColor = System.Drawing.Color.Red;
-            this.lblInPlace.Location = new System.Drawing.Point(417, 60);
-            this.lblInPlace.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblInPlace.Name = "lblInPlace";
-            this.lblInPlace.Size = new System.Drawing.Size(11, 12);
-            this.lblInPlace.TabIndex = 30;
-            this.lblInPlace.Text = "*";
-            this.lblInPlace.Visible = false;
-            // 
             // txtInPlace
             // 
-            this.txtInPlace.Location = new System.Drawing.Point(285, 55);
+            this.txtInPlace.Location = new System.Drawing.Point(86, 58);
             this.txtInPlace.Margin = new System.Windows.Forms.Padding(2);
             this.txtInPlace.Name = "txtInPlace";
             this.txtInPlace.ReadOnly = true;
@@ -269,7 +253,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(230, 58);
+            this.label22.Location = new System.Drawing.Point(23, 61);
             this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(59, 12);
@@ -291,11 +275,7 @@
             this.groupBox2.Controls.Add(this.lblMax);
             this.groupBox2.Controls.Add(this.lblInMateriel);
             this.groupBox2.Controls.Add(this.btnOK);
-            this.groupBox2.Controls.Add(this.lblCount);
-            this.groupBox2.Controls.Add(this.txtCount);
-            this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.lblInPlace);
             this.groupBox2.Controls.Add(this.txtStand);
             this.groupBox2.Controls.Add(this.txtInPlace);
             this.groupBox2.Controls.Add(this.lblMaterielName);
@@ -361,38 +341,6 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // lblCount
-            // 
-            this.lblCount.AutoSize = true;
-            this.lblCount.ForeColor = System.Drawing.Color.Red;
-            this.lblCount.Location = new System.Drawing.Point(417, 24);
-            this.lblCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(11, 12);
-            this.lblCount.TabIndex = 31;
-            this.lblCount.Text = "*";
-            this.lblCount.Visible = false;
-            // 
-            // txtCount
-            // 
-            this.txtCount.Location = new System.Drawing.Point(285, 19);
-            this.txtCount.Margin = new System.Windows.Forms.Padding(2);
-            this.txtCount.MaxLength = 6;
-            this.txtCount.Name = "txtCount";
-            this.txtCount.Size = new System.Drawing.Size(130, 21);
-            this.txtCount.TabIndex = 114;
-            this.txtCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumber_KeyPress);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(230, 22);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(59, 12);
-            this.label16.TabIndex = 14;
-            this.label16.Text = "数   量：";
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(194, 19);
@@ -406,7 +354,7 @@
             // 
             // txtStand
             // 
-            this.txtStand.Location = new System.Drawing.Point(89, 57);
+            this.txtStand.Location = new System.Drawing.Point(304, 24);
             this.txtStand.Margin = new System.Windows.Forms.Padding(2);
             this.txtStand.Name = "txtStand";
             this.txtStand.ReadOnly = true;
@@ -429,7 +377,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(24, 60);
+            this.label26.Location = new System.Drawing.Point(239, 27);
             this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(65, 12);
@@ -495,7 +443,7 @@
             this.dgv_Data.TabIndex = 65;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
-            // OperateOutForm
+            // OperateOutKnifeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -513,9 +461,9 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "OperateOutForm";
+            this.Name = "OperateOutKnifeForm";
             this.ShowInTaskbar = false;
-            this.Text = "出库管理";
+            this.Text = "刀具出库管理";
             this.Load += new System.EventHandler(this.OperateInForm_Load);
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -543,14 +491,10 @@
         private System.Windows.Forms.DateTimePicker dtpIndate;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label lblInPlace;
         private System.Windows.Forms.TextBox txtInPlace;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label lblCount;
-        private System.Windows.Forms.TextBox txtCount;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox txtStand;
         private System.Windows.Forms.Label lblMaterielName;

@@ -54,11 +54,8 @@
             this.btnScan = new System.Windows.Forms.Button();
             this.lblInMateriel = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
-            this.txtCount = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.txtStand = new System.Windows.Forms.TextBox();
-            this.lblCount = new System.Windows.Forms.Label();
             this.lblMaterielName = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.txtMaterielName = new System.Windows.Forms.TextBox();
@@ -66,6 +63,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgv_Data = new System.Windows.Forms.DataGridView();
+            this.lblPlace = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -247,7 +245,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(393, 50);
+            this.button7.Location = new System.Drawing.Point(177, 50);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(22, 20);
             this.button7.TabIndex = 13;
@@ -258,7 +256,7 @@
             // 
             // txtInPlace
             // 
-            this.txtInPlace.Location = new System.Drawing.Point(305, 50);
+            this.txtInPlace.Location = new System.Drawing.Point(89, 50);
             this.txtInPlace.Margin = new System.Windows.Forms.Padding(2);
             this.txtInPlace.Name = "txtInPlace";
             this.txtInPlace.ReadOnly = true;
@@ -268,7 +266,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(245, 54);
+            this.label22.Location = new System.Drawing.Point(24, 54);
             this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(65, 12);
@@ -286,15 +284,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblPlace);
             this.groupBox2.Controls.Add(this.lblTypeName);
             this.groupBox2.Controls.Add(this.btnScan);
             this.groupBox2.Controls.Add(this.lblInMateriel);
             this.groupBox2.Controls.Add(this.btnOK);
-            this.groupBox2.Controls.Add(this.txtCount);
-            this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.txtStand);
-            this.groupBox2.Controls.Add(this.lblCount);
             this.groupBox2.Controls.Add(this.lblMaterielName);
             this.groupBox2.Controls.Add(this.button7);
             this.groupBox2.Controls.Add(this.label26);
@@ -363,26 +359,6 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // txtCount
-            // 
-            this.txtCount.Location = new System.Drawing.Point(89, 50);
-            this.txtCount.Margin = new System.Windows.Forms.Padding(2);
-            this.txtCount.MaxLength = 6;
-            this.txtCount.Name = "txtCount";
-            this.txtCount.Size = new System.Drawing.Size(130, 21);
-            this.txtCount.TabIndex = 114;
-            this.txtCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumber_KeyPress);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(24, 53);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(59, 12);
-            this.label16.TabIndex = 14;
-            this.label16.Text = "数   量：";
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(194, 19);
@@ -403,18 +379,6 @@
             this.txtStand.Size = new System.Drawing.Size(111, 21);
             this.txtStand.TabIndex = 18;
             this.txtStand.TabStop = false;
-            // 
-            // lblCount
-            // 
-            this.lblCount.AutoSize = true;
-            this.lblCount.ForeColor = System.Drawing.Color.Red;
-            this.lblCount.Location = new System.Drawing.Point(9, 53);
-            this.lblCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(11, 12);
-            this.lblCount.TabIndex = 29;
-            this.lblCount.Text = "*";
-            this.lblCount.Visible = false;
             // 
             // lblMaterielName
             // 
@@ -497,6 +461,18 @@
             this.dgv_Data.TabIndex = 65;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
+            // lblPlace
+            // 
+            this.lblPlace.AutoSize = true;
+            this.lblPlace.ForeColor = System.Drawing.Color.Red;
+            this.lblPlace.Location = new System.Drawing.Point(9, 54);
+            this.lblPlace.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPlace.Name = "lblPlace";
+            this.lblPlace.Size = new System.Drawing.Size(11, 12);
+            this.lblPlace.TabIndex = 124;
+            this.lblPlace.Text = "*";
+            this.lblPlace.Visible = false;
+            // 
             // OperateInKnifeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -550,8 +526,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox txtCount;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox txtStand;
         private System.Windows.Forms.Label lblMaterielName;
@@ -567,6 +541,6 @@
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Label lblTypeName;
         private System.Windows.Forms.Button btnScan;
-        private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.Label lblPlace;
     }
 }

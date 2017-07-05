@@ -305,8 +305,36 @@ namespace DAL
         /// <returns></returns>
         public bool IsUse(string id)
         {
-            //todo:完善方法
-            return false;
+            try
+            {
+                string sql = "";
+                sql = " select count(*) from T_JB_PLACE where C_WAREHOUSE = @id ";
+
+                Hashtable table = new Hashtable();
+                table.Add("id", id);
+
+                DbParameter[] parms = dbHelper.getParams(table);
+                object obj = dbHelper.GetScalar(sql, parms);
+                int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
+
+                if (count1 > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
         }
     }
 }

@@ -1349,5 +1349,41 @@ namespace DAL
             return dt;
         }
         #endregion
+
+        /// <summary>
+        /// 是否有联机任务
+        /// </summary>
+        /// <returns></returns>
+        public bool HasDoList()
+        {//todo:有待验证
+            return false;
+
+            try
+            {
+                string sql = " select count(*) from T_Runing_Dolist";
+
+                object obj2 = dbHelper.GetScalar(sql);
+                int count = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
+
+                if (count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+        }
     }
 }

@@ -446,23 +446,37 @@ namespace DAL
         /// <returns></returns>
         public bool isInUse(string id)
         {
-            return false;
-            //todo:有库存、或在出入库列表
             try
             {
-                int count = 0;
                 string sql = "";
-                sql = " select count(*) from T_JB_MATERIEL where C_TYPE = @id ";
+                sql = " select count(*) from T_OPERATE_STOCKS where C_PLACE = @id ";
 
                 Hashtable table = new Hashtable();
                 table.Add("id", id);
 
                 DbParameter[] parms = dbHelper.getParams(table);
                 object obj = dbHelper.GetScalar(sql, parms);
-                count = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
+                int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
 
+                sql = " select count(*) from T_Runing_Dolist where C_PLACE = @id ";
 
-                if (count > 0)
+                Hashtable table2 = new Hashtable();
+                table2.Add("id", id);
+
+                DbParameter[] parms2 = dbHelper.getParams(table2);
+                object obj2 = dbHelper.GetScalar(sql, parms2);
+                int count2 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
+
+                sql = " select count(*) from T_OPERATE_INOUT_SUB where C_PLACE = @id ";
+
+                Hashtable table4 = new Hashtable();
+                table4.Add("id", id);
+
+                DbParameter[] parms4 = dbHelper.getParams(table4);
+                object obj4 = dbHelper.GetScalar(sql, parms4);
+                int count4 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj4);
+
+                if (count1 > 0 || count2 > 0 || count4 > 0)
                 {
                     return true;
                 }
@@ -470,6 +484,7 @@ namespace DAL
                 {
                     return false;
                 }
+
             }
             catch (Exception ex)
             {

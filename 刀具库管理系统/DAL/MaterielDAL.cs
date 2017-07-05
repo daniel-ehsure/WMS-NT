@@ -305,77 +305,67 @@ namespace DAL
       /// <param name="id"></param>
       /// <returns></returns>
       public bool isInUse(string id,string userid)
-      {//todo:
-          //try
-          //{
-            
-          //    string sql = "";
-          //    sql = " select count(*) from T_OPERATE_STOCKS where C_MATERIEL_ID = @id ";
+      {
+          try
+          {
 
-          //    Hashtable table = new Hashtable();
-          //    table.Add("id", id);
+              string sql = "";
+              sql = " select count(*) from T_OPERATE_STOCKS where C_MATERIEL_ID = @id ";
 
-          //    DbParameter[] parms = dbHelper.getParams(table);
-          //    object obj = dbHelper.GetScalar(sql, parms);
-          //   int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
+              Hashtable table = new Hashtable();
+              table.Add("id", id);
 
-          //   sql = " select count(*) from T_Runing_Dolist where C_MATERIEL = @id ";
+              DbParameter[] parms = dbHelper.getParams(table);
+              object obj = dbHelper.GetScalar(sql, parms);
+              int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
 
-          //   Hashtable table2 = new Hashtable();
-          //   table2.Add("id", id);
+              sql = " select count(*) from T_Runing_Dolist where C_MATERIEL = @id ";
 
-          //   DbParameter[] parms2 = dbHelper.getParams(table2);
-          //   object obj2 = dbHelper.GetScalar(sql, parms2);
-          //   int count2 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
+              Hashtable table2 = new Hashtable();
+              table2.Add("id", id);
 
-          //   sql = " select count(*) from T_JB_LAYOUT where C_MATERIEL = @id OR C_MATERIEL_FINISH = @id";
+              DbParameter[] parms2 = dbHelper.getParams(table2);
+              object obj2 = dbHelper.GetScalar(sql, parms2);
+              int count2 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
 
-          //   Hashtable table3 = new Hashtable();
-          //   table3.Add("id", id);
+              sql = " select count(*) from T_OPERATE_INOUT_SUB where C_MATERIEL = @id ";
 
-          //   DbParameter[] parms3 = dbHelper.getParams(table3);
-          //   object obj3 = dbHelper.GetScalar(sql, parms3);
-          //   int count3 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj3);
+              Hashtable table4 = new Hashtable();
+              table4.Add("id", id);
 
-          //   sql = " select count(*) from T_OPERATE_INOUT_SUB where C_MATERIEL = @id ";
+              DbParameter[] parms4 = dbHelper.getParams(table4);
+              object obj4 = dbHelper.GetScalar(sql, parms4);
+              int count4 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj4);
 
-          //   Hashtable table4 = new Hashtable();
-          //   table4.Add("id", id);
+              sql = " select count(*) from T_JB_MATERIEL_USER where C_MATERIEL = @id and C_JIAOSE <> @userid ";
 
-          //   DbParameter[] parms4 = dbHelper.getParams(table4);
-          //   object obj4= dbHelper.GetScalar(sql, parms4);
-          //   int count4 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj4);
+              Hashtable table5 = new Hashtable();
+              table5.Add("id", id);
+              table5.Add("userid", userid);
 
-          //   sql = " select count(*) from T_JB_MATERIEL_USER where C_MATERIEL = @id and C_JIAOSE <> @userid ";
+              DbParameter[] parms5 = dbHelper.getParams(table5);
+              object obj5 = dbHelper.GetScalar(sql, parms5);
+              int count5 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj5);
 
-          //   Hashtable table5 = new Hashtable();
-          //   table5.Add("id", id);
-          //   table5.Add("userid", userid);
+              if (count1 > 0 || count2 > 0 || count4 > 0 || count5 > 0)
+              {
+                  return true;
+              }
+              else
+              {
+                  return false;
+              }
 
-          //   DbParameter[] parms5 = dbHelper.getParams(table5);
-          //   object obj5 = dbHelper.GetScalar(sql, parms5);
-          //   int count5 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj5);
-
-          //   if (count1 > 0 || count2 > 0 || count3 > 0 || count4 > 0 || count5 > 0)
-          //   {
-          //       return true;
-          //   }
-          //   else
-          //   {
-          //       return false;
-          //   }
-              
-          //}
-          //catch (Exception ex)
-          //{
-          //    Log.write(ex.Message + "\r\n" + ex.StackTrace);
-          //    throw ex;
-          //}
-          //finally
-          //{
-          //    dbHelper.getConnection().Close();
-          //}
-          return false;
+          }
+          catch (Exception ex)
+          {
+              Log.write(ex.Message + "\r\n" + ex.StackTrace);
+              throw ex;
+          }
+          finally
+          {
+              dbHelper.getConnection().Close();
+          }
       }
 
 

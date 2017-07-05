@@ -98,7 +98,6 @@ namespace UI
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            //todo:级别判断，7级或最小控制单元不能添加
             if (currentPlace.I_grade < 0)
             {
                 MessageBox.Show("不能在当前级别下添加！");

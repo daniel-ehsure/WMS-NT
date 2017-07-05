@@ -594,7 +594,8 @@ namespace BLL
         /// <returns></returns>
         public bool HasDoList()
         {
-            return false;
+            return dal.HasDoList();
+            
         }
     }
 }

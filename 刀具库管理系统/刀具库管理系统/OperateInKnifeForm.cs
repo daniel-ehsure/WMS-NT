@@ -29,7 +29,6 @@ namespace UI
         {
             initData();
 
-            //todo:判断是否有联机任务
             if (bll.HasDoList())
             {
                 MessageBox.Show("Test");
@@ -353,7 +352,7 @@ namespace UI
             T_JB_Materiel materiel = mbll.getMaterielById(scanResult);
             if (materiel == null)
             {
-                //todo:弹出窗口添加
+                //弹出窗口添加
             }
             else
             {

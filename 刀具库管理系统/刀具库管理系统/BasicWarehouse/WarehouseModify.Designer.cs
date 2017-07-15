@@ -39,7 +39,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnQuit = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.txtType = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCom = new System.Windows.Forms.TextBox();
@@ -59,6 +58,7 @@
             this.cbAuto = new System.Windows.Forms.CheckBox();
             this.cbIn = new System.Windows.Forms.CheckBox();
             this.cbOut = new System.Windows.Forms.CheckBox();
+            this.cmbType = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lbl1
@@ -156,14 +156,6 @@
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // txtType
-            // 
-            this.txtType.Location = new System.Drawing.Point(158, 73);
-            this.txtType.MaxLength = 25;
-            this.txtType.Name = "txtType";
-            this.txtType.Size = new System.Drawing.Size(150, 21);
-            this.txtType.TabIndex = 58;
             // 
             // label2
             // 
@@ -330,6 +322,15 @@
             this.cbOut.TabIndex = 60;
             this.cbOut.UseVisualStyleBackColor = true;
             // 
+            // cmbType
+            // 
+            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Location = new System.Drawing.Point(158, 73);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(150, 20);
+            this.cmbType.TabIndex = 74;
+            // 
             // WarehouseModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -337,6 +338,7 @@
             this.BackColor = System.Drawing.Color.SkyBlue;
             this.ClientSize = new System.Drawing.Size(362, 398);
             this.ControlBox = false;
+            this.Controls.Add(this.cmbType);
             this.Controls.Add(this.cbOut);
             this.Controls.Add(this.cbIn);
             this.Controls.Add(this.cbAuto);
@@ -355,7 +357,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtCom);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtType);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lbl1);
             this.Controls.Add(this.txtName);
@@ -385,7 +386,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblId;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtType;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCom;
@@ -405,5 +405,6 @@
         private System.Windows.Forms.CheckBox cbAuto;
         private System.Windows.Forms.CheckBox cbIn;
         private System.Windows.Forms.CheckBox cbOut;
+        private System.Windows.Forms.ComboBox cmbType;
     }
 }

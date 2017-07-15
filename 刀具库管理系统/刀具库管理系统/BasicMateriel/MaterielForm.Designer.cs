@@ -48,10 +48,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.cmbArea = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -185,10 +181,10 @@
             // 
             this.panel2.Controls.Add(this.dgv_Data);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(2, 159);
+            this.panel2.Location = new System.Drawing.Point(2, 130);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(787, 238);
+            this.panel2.Size = new System.Drawing.Size(787, 267);
             this.panel2.TabIndex = 3;
             // 
             // dgv_Data
@@ -205,14 +201,14 @@
             this.dgv_Data.RowHeadersVisible = false;
             this.dgv_Data.RowTemplate.Height = 23;
             this.dgv_Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Data.Size = new System.Drawing.Size(787, 238);
+            this.dgv_Data.Size = new System.Drawing.Size(787, 267);
             this.dgv_Data.TabIndex = 63;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
             // label13
             // 
             this.label13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label13.Location = new System.Drawing.Point(2, 151);
+            this.label13.Location = new System.Drawing.Point(2, 122);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(787, 8);
@@ -222,7 +218,7 @@
             // 
             this.label14.BackColor = System.Drawing.Color.Green;
             this.label14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label14.Location = new System.Drawing.Point(2, 149);
+            this.label14.Location = new System.Drawing.Point(2, 120);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(787, 2);
@@ -233,10 +229,6 @@
             // 
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.checkBox2);
             this.panel1.Controls.Add(this.cmbArea);
             this.panel1.Controls.Add(this.label6);
@@ -254,7 +246,7 @@
             this.panel1.Location = new System.Drawing.Point(2, 16);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(787, 133);
+            this.panel1.Size = new System.Drawing.Size(787, 104);
             this.panel1.TabIndex = 0;
             // 
             // textBox2
@@ -275,44 +267,6 @@
             this.label9.Size = new System.Drawing.Size(65, 12);
             this.label9.TabIndex = 79;
             this.label9.Text = "编    码：";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(198, 93);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.MaxLength = 100;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(91, 21);
-            this.textBox1.TabIndex = 78;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(159, 96);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
-            this.label8.TabIndex = 77;
-            this.label8.Text = "图号：";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(64, 65);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(91, 20);
-            this.comboBox1.TabIndex = 76;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 69);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 12);
-            this.label7.TabIndex = 75;
-            this.label7.Text = "是否成品：";
             // 
             // checkBox2
             // 
@@ -380,7 +334,7 @@
             // 
             // txtStand
             // 
-            this.txtStand.Location = new System.Drawing.Point(64, 93);
+            this.txtStand.Location = new System.Drawing.Point(64, 63);
             this.txtStand.Margin = new System.Windows.Forms.Padding(2);
             this.txtStand.MaxLength = 100;
             this.txtStand.Name = "txtStand";
@@ -390,7 +344,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 96);
+            this.label16.Location = new System.Drawing.Point(6, 66);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(65, 12);
@@ -539,10 +493,6 @@
         private System.Windows.Forms.ComboBox cmbArea;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label9;
 

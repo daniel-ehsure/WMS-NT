@@ -92,6 +92,18 @@
     <Compile Include="BasicMateriel\MaterielAdd.designer.cs">
       <DependentUpon>MaterielAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="BasicMateriel\KnifeAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMateriel\KnifeAdd.designer.cs">
+      <DependentUpon>KnifeAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicMateriel\KnifeModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicMateriel\KnifeModify.designer.cs">
+      <DependentUpon>KnifeModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="BasicPlace\PlaceSetForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +206,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BasicMateriel\MaterielAdd.resx">
       <DependentUpon>MaterielAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMateriel\KnifeAdd.resx">
+      <DependentUpon>KnifeAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicMateriel\KnifeModify.resx">
+      <DependentUpon>KnifeModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BasicPlace\PlaceSetForm.resx">
       <DependentUpon>PlaceSetForm.cs</DependentUpon>

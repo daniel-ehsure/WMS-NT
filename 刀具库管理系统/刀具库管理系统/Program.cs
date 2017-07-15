@@ -13,10 +13,18 @@ namespace UI
         [STAThread]
         static void Main()
         {
-            Log.saveLog("系统启动！");
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            try
+            {
+                Log.saveLog("系统启动！");
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("系统异常，请联系管理员！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Log.write(ex.Message);
+            }
         }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="T_DM_UNIT.cs" />
     <Compile Include="T_JB_EMPLOYEE.cs" />
     <Compile Include="T_JB_PLACE.cs" />
+    <Compile Include="T_JB_WH_TYPE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

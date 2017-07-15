@@ -14,6 +14,7 @@ namespace UI
     public partial class WarehouseModify : Form
     {
         WarehouseBLL bll = new WarehouseBLL();
+        WHTypeBLL bllType = new WHTypeBLL();
         string id;
 
         public WarehouseModify(string id)
@@ -21,6 +22,15 @@ namespace UI
             InitializeComponent();
 
             this.id = id;
+
+            #region 初始化 类型
+            DataTable dt = bllType.GetList(null);
+            DataView dataView = dt.DefaultView;
+            dataView.Sort = "C_ID asc";
+            cmbType.DataSource = dataView.ToTable();
+            cmbType.DisplayMember = "C_NAME";
+            cmbType.ValueMember = "C_ID";
+            #endregion
 
             Init();
 
@@ -47,7 +57,7 @@ namespace UI
                     txtWritePort.Text = mo.C_WRITE_PORT;
                     txtReadPort.Text = mo.C_READ_PORT;
                     txtIpAddress.Text = mo.C_IP_ADDRESS;
-                    txtType.Text = mo.C_TYPE;
+                    cmbType.SelectedValue = mo.C_TYPE;
                     cbAuto.Checked = mo.I_AUTO == 0 ? false : true;
                     cbIn.Checked = mo.I_IN_MOBILE == 0 ? false : true;
                     cbOut.Checked = mo.I_OUT_MOBILE == 0 ? false : true;
@@ -83,7 +93,7 @@ namespace UI
                 mo.C_WRITE_PORT = txtWritePort.Text.Trim();
                 mo.C_READ_PORT = txtReadPort.Text.Trim();
                 mo.C_IP_ADDRESS = txtIpAddress.Text.Trim();
-                mo.C_TYPE = txtType.Text.Trim();
+                mo.C_TYPE = cmbType.SelectedValue.ToString();
                 mo.I_AUTO = cbAuto.Checked ? 1 : 0;
                 mo.I_IN_MOBILE = cbIn.Checked ? 1 : 0;
                 mo.I_OUT_MOBILE = cbOut.Checked ? 1 : 0;

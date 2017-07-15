@@ -11,7 +11,7 @@ using Util;
 
 namespace UI
 {
-    public partial class MaterielAdd : Form
+    public partial class KnifeModify : Form
     {
         MaterielBLL bll = new MaterielBLL();
         string id = string.Empty;
@@ -20,11 +20,11 @@ namespace UI
         PlaceAreaBLL abll = new PlaceAreaBLL();
         string mTypeId;
 
-        public MaterielAdd()
+        public KnifeModify()
         {
             InitializeComponent();
         }
-        public MaterielAdd(string id, string mTypeId)
+        public KnifeModify(string id, string mTypeId)
         {
             InitializeComponent();
             this.id = id;
@@ -53,8 +53,33 @@ namespace UI
             cmbArea.DataSource = dataViewt.ToTable();
             cmbArea.DisplayMember = "C_NAME";
             cmbArea.ValueMember = "C_ID";
-            cmbArea.SelectedValue = "0002";
             #endregion
+
+            txtId.ReadOnly = true;
+            materiel = bll.getMaterielById(id);
+            if (materiel == null)
+            {
+                MessageBox.Show("获取物料信息失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Close();
+            }
+            else
+            {
+                this.txtId.Text = materiel.C_id;
+                this.txtName.Text = materiel.C_name;
+                this.cmbType.SelectedValue = materiel.C_type;
+                this.txtStandard.Text = materiel.C_standerd;
+                this.txtMT.Text = materiel.I_thick.ToString();
+                this.txtLT.Text = materiel.I_length.ToString();
+                this.txtWT.Text = materiel.I_width.ToString();
+                this.cmbArea.SelectedValue = materiel.C_area;
+
+                this.txtMeno.Text = materiel.C_memo;
+                this.txtDim1.Text = materiel.Dec_dimension1.ToString();
+                this.txtDim2.Text = materiel.Dec_dimension2.ToString();
+                this.txtDim3.Text = materiel.Dec_dimension3.ToString();
+                this.txtAngle.Text = materiel.Dec_angle.ToString();
+                this.txtRL.Text = materiel.C_regrinding_length;
+            }
         }
 
         //出库数量只能输入数字,小数点,回车和退格
@@ -72,10 +97,9 @@ namespace UI
             {
                 if (checkInput())
                 {
-                    #region 增加
-                    if (bll.isExit(txtName.Text.Trim(), cmbType.SelectedValue.ToString()))
+                    if (bll.isExit(txtName.Text.Trim(), cmbType.SelectedValue.ToString(), txtId.Text.Trim()))
                     {
-                        MessageBox.Show("物料名称重复！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("物料名称已经存在！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         lblName.Visible = true;
                     }
                     else
@@ -85,50 +109,33 @@ namespace UI
                         temp.C_id = txtId.Text.Trim();
                         temp.C_name = txtName.Text.Trim();
                         temp.C_type = cmbType.SelectedValue.ToString();
-                        temp.I_single = 0;
                         temp.C_standerd = txtStandard.Text.Trim();
-                        temp.I_length = string.Empty.Equals(txtLength.Text.Trim()) ? 0 : Convert.ToDecimal(txtLength.Text.Trim());
-                        temp.I_width = string.Empty.Equals(txtWidth.Text.Trim()) ? 0 : Convert.ToDecimal(txtWidth.Text.Trim());
-                        temp.I_thick = string.Empty.Equals(txtThick.Text.Trim()) ? 0 : Convert.ToDecimal(txtThick.Text.Trim());
+                        temp.I_length = string.Empty.Equals(txtLT.Text.Trim()) ? 0 : Convert.ToDecimal(txtLT.Text.Trim());
+                        temp.I_width = string.Empty.Equals(txtWT.Text.Trim()) ? 0 : Convert.ToDecimal(txtWT.Text.Trim());
+                        temp.I_thick = string.Empty.Equals(txtMT.Text.Trim()) ? 0 : Convert.ToDecimal(txtMT.Text.Trim());
                         temp.C_area = cmbArea.SelectedValue.ToString();
-                        temp.I_finish = 0;
 
-                        if (this.checkBox1.Checked)
-                        {
-                            temp.I_finish = 1;
-                        }
                         temp.C_memo = txtMeno.Text.Trim();
 
+                        temp.Dec_dimension1 = string.Empty.Equals(txtDim1.Text.Trim()) ? 0 : Convert.ToDecimal(txtDim1.Text.Trim());
+                        temp.Dec_dimension2 = string.Empty.Equals(txtDim2.Text.Trim()) ? 0 : Convert.ToDecimal(txtDim2.Text.Trim());
+                        temp.Dec_dimension3 = string.Empty.Equals(txtDim3.Text.Trim()) ? 0 : Convert.ToDecimal(txtDim3.Text.Trim());
+                        temp.Dec_angle = string.Empty.Equals(txtAngle.Text.Trim()) ? 0 : Convert.ToDecimal(txtAngle.Text.Trim());
 
-                        temp.C_piccode = this.textBox1.Text.Trim();
-                        temp.I_layOutCount = string.Empty.Equals(textBox2.Text.Trim()) ? 0 : Convert.ToInt32(textBox2.Text.Trim());
-                        temp.C_surface = this.textBox3.Text.Trim();
-                        temp.C_Science = this.textBox4.Text.Trim();
-                        temp.Dec_area = string.Empty.Equals(textBox5.Text.Trim()) ? 0 : Convert.ToDecimal(textBox5.Text.Trim());
-                        temp.Dec_weight = string.Empty.Equals(textBox7.Text.Trim()) ? 0 : Convert.ToDecimal(textBox7.Text.Trim());
-                        temp.I_buy = 0;
-                        if (this.checkBox2.Checked)
+                        temp.C_regrinding_length = txtRL.Text.Trim();
+
+
+                        if (bll.update(temp))
                         {
-                            temp.I_buy = 1;
-                        }
-
-                        temp.Dec_production = string.Empty.Equals(textBox6.Text.Trim()) ? 0 : Convert.ToDecimal(textBox6.Text.Trim());
-
-
-
-                        if (bll.save(temp, Global.longid))
-                        {
-                            MessageBox.Show("物料保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            reset();
+                            MessageBox.Show("物料信息更改成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
                         }
                         else
                         {
-                            MessageBox.Show("物料保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("物料信息更改失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
-                    #endregion
                 }
-
             }
             catch (Exception)
             {
@@ -180,6 +187,7 @@ namespace UI
                 this.lblArea.Visible = false;
             }
 
+
             return flag;
         }
 
@@ -188,19 +196,16 @@ namespace UI
             txtName.Text = string.Empty;
             lblName.Visible = false;
             txtStandard.Text = string.Empty;
-            txtThick.Text = string.Empty;
-            txtLength.Text = string.Empty;
-            txtWidth.Text = string.Empty;
+            txtMT.Text = string.Empty;
+            txtLT.Text = string.Empty;
+            txtWT.Text = string.Empty;
             txtMeno.Text = string.Empty;
             txtId.Text = string.Empty;
-            this.textBox1.Text = string.Empty;
-            this.textBox2.Text = string.Empty;
-            this.textBox3.Text = string.Empty;
-            this.textBox4.Text = string.Empty;
-            this.textBox5.Text = string.Empty;
-            this.textBox7.Text = string.Empty;
-            this.textBox6.Text = string.Empty;
-            this.checkBox2.Checked = false;
+            this.txtDim1.Text = string.Empty;
+            this.txtDim2.Text = string.Empty;
+            this.txtDim3.Text = string.Empty;
+            this.txtAngle.Text = string.Empty;
+            this.txtRL.Text = string.Empty;
         }
 
         private void button1_Click(object sender, EventArgs e)

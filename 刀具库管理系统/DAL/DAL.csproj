@@ -49,6 +49,7 @@
     <Compile Include="UnitDAL.cs" />
     <Compile Include="EmployeeDAL.cs" />
     <Compile Include="PlaceDAL.cs" />
+    <Compile Include="WHTypeDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBHelper\DBCore.csproj">

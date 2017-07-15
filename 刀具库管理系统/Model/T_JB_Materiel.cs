@@ -7,9 +7,10 @@ namespace Model
    public class T_JB_Materiel
     {
         private string c_id;
-       /// <summary>
-       /// 物料编码
-       /// </summary>
+        /// <summary>
+        /// 零件：物料编码
+        ///刀具： IDENT NO
+        /// </summary>
         public string C_id
         {
             get { return c_id; }
@@ -18,54 +19,58 @@ namespace Model
 
 
         private string c_name;
-       /// <summary>
-       /// 物料名称
-       /// </summary>
+        /// <summary>
+        /// 物料名称
+        /// </summary>
         public string C_name
         {
             get { return c_name; }
             set { c_name = value; }
         }
         private decimal i_thick;
-       /// <summary>
-       /// 物料厚度（毫米）
-       /// </summary>
+        /// <summary>
+        /// 零件：物料厚度（毫米）
+        ///刀具： MT
+        /// </summary>
         public decimal I_thick
         {
             get { return i_thick; }
             set { i_thick = value; }
         }
         private int i_single;
-       /// <summary>
-       /// 物料存取方式 0 整盘存取，1单件存取
-       /// </summary>
+        /// <summary>
+        /// 物料存取方式 0 整盘存取，1单件存取
+        /// </summary>
         public int I_single
         {
             get { return i_single; }
             set { i_single = value; }
         }
         private string c_standerd;
-       /// <summary>
-       /// 规格型号
-       /// </summary>
+        /// <summary>
+        /// 零件：规格型号
+        ///刀具： TYPE
+        /// </summary>
         public string C_standerd
         {
             get { return c_standerd; }
             set { c_standerd = value; }
         }
         private decimal i_length;
-       /// <summary>
-        /// 物料长度（毫米）
-       /// </summary>
+        /// <summary>
+        /// 零件：物料长度（毫米）
+        /// 刀具：LT
+        /// </summary>
         public decimal I_length
         {
             get { return i_length; }
             set { i_length = value; }
         }
         private decimal i_width;
-       /// <summary>
-        /// 物料宽度（毫米）
-       /// </summary>
+        /// <summary>
+        /// 零件：物料宽度（毫米）
+        /// 刀具：WT
+        /// </summary>
         public decimal I_width
         {
             get { return i_width; }
@@ -73,27 +78,27 @@ namespace Model
         }
 
         private string c_type;
-       /// <summary>
-       /// 物料类型
-       /// </summary>
+        /// <summary>
+        /// 物料类型
+        /// </summary>
         public string C_type
         {
             get { return c_type; }
             set { c_type = value; }
         }
         private string c_typeName;
-       /// <summary>
-       /// 物料类型名称
-       /// </summary>
+        /// <summary>
+        /// 物料类型名称
+        /// </summary>
         public string C_typeName
         {
             get { return c_typeName; }
             set { c_typeName = value; }
         }
         private string c_area;
-       /// <summary>
-       /// 货区
-       /// </summary>
+        /// <summary>
+        /// 货区
+        /// </summary>
         public string C_area
         {
             get { return c_area; }
@@ -101,9 +106,9 @@ namespace Model
         }
 
         private int i_finish;
-       /// <summary>
-       /// 是否为成品
-       /// </summary>
+        /// <summary>
+        /// 是否为成品
+        /// </summary>
         public int I_finish
         {
             get { return i_finish; }
@@ -111,13 +116,64 @@ namespace Model
         }
 
         private string c_memo;
-       /// <summary>
-       /// 备注
-       /// </summary>
+        /// <summary>
+        /// 零件：备注
+        /// 刀具：备注
+        /// </summary>
         public string C_memo
         {
             get { return c_memo; }
             set { c_memo = value; }
+        }
+
+        private decimal dec_angle;
+        /// <summary>
+        /// 刀具：角度
+        /// </summary>
+        public decimal Dec_angle
+        {
+            get { return dec_angle; }
+            set { dec_angle = value; }
+        }
+
+        private decimal dec_dimension1;
+        /// <summary>
+        /// 刀具：尺寸1
+        /// </summary>
+        public decimal Dec_dimension1
+        {
+            get { return dec_dimension1; }
+            set { dec_dimension1 = value; }
+        }
+
+        private decimal dec_dimension2;
+        /// <summary>
+        /// 刀具：尺寸2
+        /// </summary>
+        public decimal Dec_dimension2
+        {
+            get { return dec_dimension2; }
+            set { dec_dimension2 = value; }
+        }
+
+        private decimal dec_dimension3;
+        /// <summary>
+        /// 刀具：尺寸3
+        /// </summary>
+        public decimal Dec_dimension3
+        {
+            get { return dec_dimension3; }
+            set { dec_dimension3 = value; }
+        }
+
+        private string c_regrinding_length;
+        /// <summary>
+        /// 刀具：磨长度
+        /// </summary>
+        public string C_regrinding_length
+        {
+            get { return c_regrinding_length; }
+            set { c_regrinding_length = value; }
         }
 
         private string c_piccode;

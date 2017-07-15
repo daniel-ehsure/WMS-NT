@@ -54,6 +54,22 @@ namespace Model
             }
         }
 
+        private String _c_TYPE_NAME = string.Empty;
+        /// <summary>
+        /// C_TYPE
+        /// </summary>
+        public String C_TYPE_NAME
+        {
+            get
+            {
+                return _c_TYPE_NAME;
+            }
+            set
+            {
+                _c_TYPE_NAME = value;
+            }
+        }
+
         private String _c_COM = "COM1";
         /// <summary>
         /// C_COM

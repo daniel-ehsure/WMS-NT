@@ -49,6 +49,7 @@
     <Compile Include="UnitBLL.cs" />
     <Compile Include="EmployeeBLL.cs" />
     <Compile Include="PlaceBLL.cs" />
+    <Compile Include="WHTypeBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

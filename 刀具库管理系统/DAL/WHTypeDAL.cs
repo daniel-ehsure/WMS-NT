@@ -10,9 +10,9 @@ using Util;
 
 namespace DAL
 {
-    public class WarehouseDAL : CommonDAL
+    public class WHTypeDAL : CommonDAL
     {
-        private string tableName = "T_JB_WAREHOUSE";
+        private string tableName = "T_JB_WH_TYPE";
 
         public string GetNextCode(int length)
         {
@@ -67,7 +67,7 @@ namespace DAL
         /// <returns></returns>
         public DataTable GetList(string name)
         {
-            string sql = "select a.C_ID,a.C_NAME,b.C_NAME,a.C_COM,a.C_BAUDRATE,a.C_IP_ADDRESS,a.C_PORT,a.C_WRITE_PORT,a.C_READ_PORT,a.I_AUTO,a.I_IN_MOBILE,a.I_OUT_MOBILE  from " + tableName + " a left join T_JB_WH_TYPE b on a.C_TYPE = B.C_ID where 1=1 ";
+            string sql = "select * from " + tableName + " where 1=1 ";
 
             DataTable dt = new DataTable();
             try
@@ -78,17 +78,17 @@ namespace DAL
 
                     if (name != null)
                     {
-                        sql += " and a.C_NAME like @C_NAME";
+                        sql += " and C_NAME like @C_NAME";
                         table.Add("C_NAME", "%" + name + "%");
                     }
 
-                    sql += " order by convert(numeric,a.c_id)";
+                    sql += " order by convert(numeric,c_id)";
                     DbParameter[] parms = dbHelper.getParams(table);
                     dt = dbHelper.GetDataSet(sql, parms);
                 }
                 else
                 {
-                    sql += " order by convert(numeric,a.c_id)";
+                    sql += " order by convert(numeric,c_id)";
                     dt = dbHelper.GetDataSet(sql);
                 }
             }
@@ -104,7 +104,7 @@ namespace DAL
             return dt;
         }
 
-        public bool Save(T_JB_WAREHOUSE mo)
+        public bool Save(T_JB_PLACEAREA mo)
         {
             try
             {
@@ -118,25 +118,16 @@ namespace DAL
 
                 sql =
                     "INSERT INTO " + "[" + tableName +
-                    "] ([C_ID],[C_NAME],[C_TYPE] ,[C_COM],[C_BAUDRATE],[C_IP_ADDRESS],[C_PORT],[C_WRITE_PORT],[C_READ_PORT],[I_AUTO],[I_IN_MOBILE],[I_OUT_MOBILE])" +
-                    "VALUES (@C_ID,@C_NAME,@C_TYPE,@C_COM,@C_BAUDRATE,@C_IP_ADDRESS,@C_PORT,@C_WRITE_PORT,@C_READ_PORT,@I_AUTO,@I_IN_MOBILE,@I_OUT_MOBILE)";
+                    "] ([C_ID],[C_NAME],[C_MEMO])" +
+                    "VALUES (@C_ID,@C_NAME,@C_MEMO)";
 
                 Hashtable table = new Hashtable();
 
-                mo.C_ID = (dec_id + 1).ToString().PadLeft(2, '0');
+                mo.C_ID = (dec_id + 1).ToString().PadLeft(4, '0');
 
                 table.Add("C_ID", mo.C_ID);
                 table.Add("C_NAME", mo.C_NAME);
-                table.Add("C_TYPE", mo.C_TYPE);
-                table.Add("C_COM", mo.C_COM);
-                table.Add("C_BAUDRATE", mo.C_BAUDRATE);
-                table.Add("C_IP_ADDRESS", mo.C_IP_ADDRESS);
-                table.Add("C_PORT", mo.C_PORT);
-                table.Add("C_WRITE_PORT", mo.C_WRITE_PORT);
-                table.Add("C_READ_PORT", mo.C_READ_PORT);
-                table.Add("I_AUTO", mo.I_AUTO);
-                table.Add("I_IN_MOBILE", mo.I_IN_MOBILE);
-                table.Add("I_OUT_MOBILE", mo.I_OUT_MOBILE);
+                table.Add("C_MEMO", mo.C_MEMO);
 
                 DbParameter[] parms = dbHelper.getParams(table);
 
@@ -161,39 +152,22 @@ namespace DAL
             }
         }
 
-        public bool Update(T_JB_WAREHOUSE mo)
+        public bool Update(T_JB_PLACEAREA mo)
         {
             try
             {
                 string sql =
                     "UPDATE  " + "[" + tableName +
                     "] SET [C_NAME] = @C_NAME, " +
-                    "[C_TYPE] = @C_TYPE, " +
-                    "[C_COM] = @C_COM, " +
-                    "[C_BAUDRATE] = @C_BAUDRATE, " +
-                    "[C_IP_ADDRESS] = @C_IP_ADDRESS, " +
-                    "[C_PORT] = @C_PORT, " +
-                    "[C_WRITE_PORT] = @C_WRITE_PORT, " +
-                    "[C_READ_PORT] = @C_READ_PORT, " +
-                    "[I_AUTO] = @I_AUTO, " +
-                    "[I_IN_MOBILE] = @I_IN_MOBILE, " +
-                    "[I_OUT_MOBILE] = @I_OUT_MOBILE " +
+                    "[C_MEMO] = @C_MEMO " +
                     "WHERE [C_ID] = @C_ID ";
 
                 Hashtable table = new Hashtable();
 
                 table.Add("C_ID", mo.C_ID);
                 table.Add("C_NAME", mo.C_NAME);
-                table.Add("C_TYPE", mo.C_TYPE);
-                table.Add("C_COM", mo.C_COM);
-                table.Add("C_BAUDRATE", mo.C_BAUDRATE);
-                table.Add("C_IP_ADDRESS", mo.C_IP_ADDRESS);
-                table.Add("C_PORT", mo.C_PORT);
-                table.Add("C_WRITE_PORT", mo.C_WRITE_PORT);
-                table.Add("C_READ_PORT", mo.C_READ_PORT);
-                table.Add("I_AUTO", mo.I_AUTO);
-                table.Add("I_IN_MOBILE", mo.I_IN_MOBILE);
-                table.Add("I_OUT_MOBILE", mo.I_OUT_MOBILE);
+                table.Add("C_MEMO", mo.C_MEMO);
+
 
                 DbParameter[] parms = dbHelper.getParams(table);
 
@@ -224,23 +198,14 @@ namespace DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T_JB_WAREHOUSE GetById(string id)
+        public T_JB_PLACEAREA GetById(string id)
         {
-            T_JB_WAREHOUSE mo = new T_JB_WAREHOUSE();
+            T_JB_PLACEAREA mo = new T_JB_PLACEAREA();
             DataRow dr = GetById(tableName, id);
 
             mo.C_ID = dr["C_ID"].ToString();
             mo.C_NAME = dr["C_NAME"].ToString();
-            mo.C_COM = dr["C_COM"].ToString();
-            mo.C_BAUDRATE = dr["C_BAUDRATE"].Equals(DBNull.Value) ? string.Empty : dr["C_BAUDRATE"].ToString();
-            mo.C_PORT = dr["C_PORT"].Equals(DBNull.Value) ? string.Empty : dr["C_PORT"].ToString();
-            mo.C_WRITE_PORT = dr["C_WRITE_PORT"].Equals(DBNull.Value) ? string.Empty : dr["C_WRITE_PORT"].ToString();
-            mo.C_READ_PORT = dr["C_READ_PORT"].Equals(DBNull.Value) ? string.Empty : dr["C_READ_PORT"].ToString();
-            mo.C_IP_ADDRESS = dr["C_IP_ADDRESS"].Equals(DBNull.Value) ? string.Empty : dr["C_IP_ADDRESS"].ToString();
-            mo.C_TYPE = dr["C_TYPE"].Equals(DBNull.Value) ? string.Empty : dr["C_TYPE"].ToString();
-            mo.I_AUTO = int.Parse(dr["I_AUTO"].ToString());
-            mo.I_IN_MOBILE = int.Parse(dr["I_IN_MOBILE"].ToString());
-            mo.I_OUT_MOBILE = int.Parse(dr["I_OUT_MOBILE"].ToString());
+            mo.C_MEMO = dr["C_MEMO"].ToString();
 
             return mo;
         }
@@ -258,8 +223,8 @@ namespace DAL
         /// <summary>
         /// 是否重名，不包括自己
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="name"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public bool IsExitNotSelf(string name, string id)
         {
@@ -305,36 +270,46 @@ namespace DAL
         /// <returns></returns>
         public bool IsUse(string id)
         {
-            try
-            {
-                string sql = "";
-                sql = " select count(*) from T_JB_PLACE where C_WAREHOUSE = @id ";
+          try
+          {
+              string sql = "";
+              sql = " select count(*) from T_JB_PLACE where C_AREA = @id ";
 
-                Hashtable table = new Hashtable();
-                table.Add("id", id);
+              Hashtable table = new Hashtable();
+              table.Add("id", id);
 
-                DbParameter[] parms = dbHelper.getParams(table);
-                object obj = dbHelper.GetScalar(sql, parms);
-                int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
+              DbParameter[] parms = dbHelper.getParams(table);
+              object obj = dbHelper.GetScalar(sql, parms);
+              int count1 = Convert.IsDBNull(obj) ? 0 : Convert.ToInt32(obj);
 
-                if (count1 > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.write(ex.Message + "\r\n" + ex.StackTrace);
-                throw ex;
-            }
-            finally
-            {
-                dbHelper.getConnection().Close();
-            }
+              sql = " select count(*) from T_JB_MATERIEL where C_AREA = @id ";
+
+              Hashtable table2 = new Hashtable();
+              table2.Add("id", id);
+
+              DbParameter[] parms2 = dbHelper.getParams(table2);
+              object obj2 = dbHelper.GetScalar(sql, parms2);
+              int count2 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
+
+              if (count1 > 0 || count2 > 0)
+              {
+                  return true;
+              }
+              else
+              {
+                  return false;
+              }
+
+          }
+          catch (Exception ex)
+          {
+              Log.write(ex.Message + "\r\n" + ex.StackTrace);
+              throw ex;
+          }
+          finally
+          {
+              dbHelper.getConnection().Close();
+          }
         }
     }
 }

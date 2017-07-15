@@ -50,27 +50,6 @@ namespace UI
             cmbArea.ValueMember = "C_ID";
             #endregion
 
-            #region 是否成品
-            DataTable dtf = new DataTable();
-            dtf.Columns.Add("id", System.Type.GetType("System.Int32"));
-            dtf.Columns.Add("name", System.Type.GetType("System.String"));
-            DataRow dr3 = dtf.NewRow();
-            dr3["id"] = -1;
-            dr3["name"] = "所有";
-            dtf.Rows.Add(dr3);
-            DataRow dr1 = dtf.NewRow();
-            dr1["id"] = 1;
-            dr1["name"] = "是";
-            dtf.Rows.Add(dr1);
-            DataRow dr2 = dtf.NewRow();
-            dr2["id"] = 0;
-            dr2["name"] = "否";
-            dtf.Rows.Add(dr2);
-            comboBox1.DataSource = dtf;
-            comboBox1.DisplayMember = "name";
-            comboBox1.ValueMember = "id";
-            comboBox1.SelectedIndex = 0;
-            #endregion
             initTree();
             initData();
             initNew();
@@ -117,8 +96,16 @@ namespace UI
         private void button1_Click(object sender, EventArgs e)
         {
             currentType = (T_JB_MaterielType)messages[currnetNode];
-            MaterielAdd mm = new MaterielAdd(null, currentType.C_id);
-            mm.ShowDialog();
+            if (currentType.C_id.Equals("0001"))
+            {//刀具
+                KnifeAdd mm = new KnifeAdd(null, currentType.C_id);
+                mm.ShowDialog();
+            }
+            else
+            {
+                MaterielAdd mm = new MaterielAdd(null, currentType.C_id);
+                mm.ShowDialog();
+            }
             querryList();
         }
         //关闭
@@ -276,30 +263,13 @@ namespace UI
             dgv_Data.Columns[4].HeaderText = "规格型号";
             dgv_Data.Columns[5].HeaderText = "货区编码";
             dgv_Data.Columns[6].HeaderText = "货区名称";
-            dgv_Data.Columns[7].HeaderText = "是否成品";
-            dgv_Data.Columns[7].Visible = false;
-            
-            dgv_Data.Columns[8].HeaderText = "图号";
-            dgv_Data.Columns[9].HeaderText = "单套用量";
-            dgv_Data.Columns[10].HeaderText = "表面处理";
-            dgv_Data.Columns[11].HeaderText = "材料";
-            dgv_Data.Columns[12].HeaderText = "面积";
-            dgv_Data.Columns[13].HeaderText = "重量";
-            dgv_Data.Columns[14].HeaderText = "外购";
-            dgv_Data.Columns[15].HeaderText = "生产量";
-            dgv_Data.Columns[16].HeaderText = "是否成品";
-
-            dgv_Data.Columns[17].HeaderText = "长度(mm)";
-            dgv_Data.Columns[18].HeaderText = "宽度(mm)";
-            dgv_Data.Columns[19].HeaderText = "高度(mm)";
-            dgv_Data.Columns[20].HeaderText = "备注";
+            dgv_Data.Columns[7].HeaderText = "备注";
         }
 
         private void initNew()
         {
             this.txtName.Text = string.Empty;
             this.cmbArea.SelectedIndex = 0;
-            this.comboBox1.SelectedIndex = 0;
             this.txtStand.Text = string.Empty;
             this.checkBox2.Checked = true;
 
@@ -323,10 +293,6 @@ namespace UI
             {
                 area = cmbArea.SelectedValue.ToString();
             }
-            if (this.textBox1.Text != null && !(string.Empty.Equals(textBox1.Text.Trim())))
-            {
-                tuhao = textBox1.Text;
-            }
             if (this.textBox2.Text != null && !(string.Empty.Equals(textBox2.Text.Trim())))
             {
                 cid = textBox2.Text;
@@ -344,7 +310,6 @@ namespace UI
                     type = currentType.C_id;
                 }
             }
-            finish = Convert.ToInt32(comboBox1.SelectedValue);
             if (this.txtStand.Text != null && !(string.Empty.Equals(txtStand.Text.Trim())))
             {
                 standerd = txtStand.Text;
@@ -372,8 +337,16 @@ namespace UI
             }
             if (dgv_Data.SelectedRows.Count == 1)
             {
-                MaterielModify mm = new MaterielModify(Convert.ToString(dgv_Data.SelectedRows[0].Cells[0].Value), Convert.ToString(dgv_Data.SelectedRows[0].Cells[2].Value));
-                mm.ShowDialog();
+                if (currentType.C_id.Equals("0001"))
+                {//刀具
+                    KnifeModify mm = new KnifeModify(Convert.ToString(dgv_Data.SelectedRows[0].Cells[0].Value), Convert.ToString(dgv_Data.SelectedRows[0].Cells[2].Value));
+                    mm.ShowDialog();
+                }
+                else
+                {
+                    MaterielModify mm = new MaterielModify(Convert.ToString(dgv_Data.SelectedRows[0].Cells[0].Value), Convert.ToString(dgv_Data.SelectedRows[0].Cells[2].Value));
+                    mm.ShowDialog();
+                }
                 querryList();
             }
         }

@@ -95,16 +95,12 @@ namespace DAL
       public DataTable getMaterielList(string name, string area, string type, int finish, string standerd, string userid,string tuhao,string cid)
       {
           string sql = " select a.C_ID,a.C_NAME,a.C_TYPE,b.C_NAME as C_TYPENAME,a.C_STANDARD,a.C_AREA,c.C_NAME as C_AREANAME," +
-                       " I_FINISH, [C_PICCODE], [I_LAYOUTCOUNT], [C_SURFACE], [C_SCIENCE], [DEC_AREA], [DEC_WEIGHT], " +
-                       " case I_BUY when 1 then '是' else '否' end as I_BUY, [DEC_production]," +
-                    " case I_FINISH when 1 then '是' else '否' end as C_FINISH,I_LENGTH,I_WIDTH,I_THICK,a.C_MEMO " +
-                    " from T_JB_MATERIEL a left join T_JB_MATERIELTYPE b on a.C_TYPE = b.C_ID left join t_jb_placeArea c on a.C_AREA = c.C_ID where a.C_ID in ( " +
-                    " select C_MATERIEL from T_JB_MATERIEL_USER where C_JIAOSE = @JIAOSE  ) ";
+                       " a.C_MEMO " +
+                    " from T_JB_MATERIEL a left join T_JB_MATERIELTYPE b on a.C_TYPE = b.C_ID left join t_jb_placeArea c on a.C_AREA = c.C_ID where 1 = 1";
           DataTable dt = new DataTable();
           try
           {
               Hashtable table = new Hashtable();
-              table.Add("JIAOSE", userid);
               if (tuhao != null)
               {
                   sql += " and a.C_PICCODE like @tuhao";
@@ -447,7 +443,8 @@ namespace DAL
           T_JB_Materiel materiel = null;
             string sql = " select a.C_ID,a.C_NAME,a.C_TYPE,b.C_NAME as C_TYPENAME,a.C_STANDARD,a.C_AREA,c.C_NAME as C_AREANAME,I_FINISH, "+
                     " case I_FINISH when 1 then '是' else '否' end as C_FINISH,I_LENGTH,I_WIDTH,I_THICK,a.C_MEMO, "+
-                    " a.C_PICCODE, a.I_LAYOUTCOUNT, a.C_SURFACE, a.C_SCIENCE, a.DEC_AREA, a.DEC_WEIGHT, a.I_BUY,DEC_production " +
+                    " a.C_PICCODE, a.I_LAYOUTCOUNT, a.C_SURFACE, a.C_SCIENCE, a.DEC_AREA, a.DEC_WEIGHT, a.I_BUY,DEC_production, "+
+                    " a.DEC_ANGLE, a.DEC_DIMENSION1, a.DEC_DIMENSION2,a.DEC_DIMENSION3,a.C_REGRINDING_LENGTH " +
                     " from T_JB_MATERIEL a left join T_JB_MATERIELTYPE b on a.C_TYPE = b.C_ID left join t_jb_placeArea c on a.C_AREA = c.C_ID  where a.C_ID = '" + id + "'";
           try
           {
@@ -491,14 +488,20 @@ namespace DAL
                   {
                       materiel.C_memo = dt.Rows[0]["C_MEMO"].ToString();
                   }
-                  materiel.C_piccode = dt.Rows[0]["C_PICCODE"].ToString();
+                  materiel.C_piccode = dt.Rows[0]["C_PICCODE"] == null || dt.Rows[0]["C_PICCODE"].Equals(DBNull.Value) ? string.Empty : dt.Rows[0]["C_PICCODE"].ToString();
                   materiel.I_layOutCount = Convert.ToInt32(dt.Rows[0]["I_LAYOUTCOUNT"]);
-                  materiel.C_surface = dt.Rows[0]["C_SURFACE"].ToString();
-                  materiel.C_Science = dt.Rows[0]["C_SCIENCE"].ToString();
+                  materiel.C_surface = dt.Rows[0]["C_SURFACE"] == null || dt.Rows[0]["C_SURFACE"].Equals(DBNull.Value) ? string.Empty : dt.Rows[0]["C_SURFACE"].ToString();
+                  materiel.C_Science = dt.Rows[0]["C_SCIENCE"] == null || dt.Rows[0]["C_SCIENCE"].Equals(DBNull.Value) ? string.Empty : dt.Rows[0]["C_SCIENCE"].ToString();
                   materiel.Dec_area = Convert.ToDecimal(dt.Rows[0]["DEC_AREA"]);
                   materiel.Dec_weight = Convert.ToDecimal(dt.Rows[0]["DEC_WEIGHT"]);
                   materiel.I_buy = Convert.ToInt32(dt.Rows[0]["I_BUY"]);
                   materiel.Dec_production = Convert.ToDecimal(dt.Rows[0]["DEC_production"]);
+
+                  materiel.Dec_angle = Convert.ToDecimal(dt.Rows[0]["DEC_ANGLE"]);
+                  materiel.Dec_dimension1 = Convert.ToDecimal(dt.Rows[0]["DEC_DIMENSION1"]);
+                  materiel.Dec_dimension2 = Convert.ToDecimal(dt.Rows[0]["DEC_DIMENSION2"]);
+                  materiel.Dec_dimension3 = Convert.ToDecimal(dt.Rows[0]["DEC_DIMENSION3"]);
+                  materiel.C_regrinding_length = dt.Rows[0]["C_REGRINDING_LENGTH"] == null || dt.Rows[0]["C_REGRINDING_LENGTH"].Equals(DBNull.Value) ? string.Empty : dt.Rows[0]["C_REGRINDING_LENGTH"].ToString();
               }
           }
           catch (Exception ex)
@@ -584,10 +587,12 @@ namespace DAL
               com.Transaction = tran;
 
               sql = "INSERT INTO [T_JB_MATERIEL]([C_ID],[C_TYPE], [C_NAME], [I_SINGLE], [DEC_PRICE], [C_STANDARD], " +
-                           "   [I_LENGTH], [I_WIDTH] ,[I_THICK],[C_AREA],[I_FINISH],[C_MEMO],"+ 
-                           " [C_PICCODE], [I_LAYOUTCOUNT], [C_SURFACE], [C_SCIENCE], [DEC_AREA], [DEC_WEIGHT], [I_BUY], [DEC_production] ) " +
+                           "   [I_LENGTH], [I_WIDTH] ,[I_THICK],[C_AREA],[I_FINISH],[C_MEMO],"+
+                           " [C_PICCODE], [I_LAYOUTCOUNT], [C_SURFACE], [C_SCIENCE], [DEC_AREA], [DEC_WEIGHT], [I_BUY], [DEC_production], " +
+                           " [DEC_ANGLE], [DEC_DIMENSION1], [DEC_DIMENSION2], [DEC_DIMENSION3], [C_REGRINDING_LENGTH]) " +
                            "  VALUES(@C_ID,@C_TYPE,@C_NAME,@I_SINGLE,0,@C_STANDARD, @I_LENGTH,@I_WIDTH ,@I_THICK,@C_AREA,@I_FINISH,@C_MEMO, "+
-                           " @C_PICCODE, @I_LAYOUTCOUNT, @C_SURFACE, @C_SCIENCE, @DEC_AREA, @DEC_WEIGHT, @I_BUY, @DEC_production )";
+                           " @C_PICCODE, @I_LAYOUTCOUNT, @C_SURFACE, @C_SCIENCE, @DEC_AREA, @DEC_WEIGHT, @I_BUY, @DEC_production,"+
+                            " @DEC_ANGLE, @DEC_DIMENSION1, @DEC_DIMENSION2, @DEC_DIMENSION3, @C_REGRINDING_LENGTH)";
               com.CommandText = sql;
               Hashtable table = new Hashtable();
               table.Add("C_ID", materiel.C_id);
@@ -609,14 +614,20 @@ namespace DAL
               table.Add("I_FINISH", materiel.I_finish);
               table.Add("C_MEMO", materiel.C_memo);
 
-              table.Add("C_PICCODE", materiel.C_piccode);
+              table.Add("C_PICCODE", materiel.C_piccode == null ? string.Empty : materiel.C_piccode);
               table.Add("I_LAYOUTCOUNT", materiel.I_layOutCount);
-              table.Add("C_SURFACE", materiel.C_surface);
-              table.Add("C_SCIENCE", materiel.C_Science);
+              table.Add("C_SURFACE", materiel.C_surface == null ? string.Empty : materiel.C_surface);
+              table.Add("C_SCIENCE", materiel.C_Science == null ? string.Empty : materiel.C_Science);
               table.Add("DEC_AREA", materiel.Dec_area);
               table.Add("DEC_WEIGHT", materiel.Dec_weight);
               table.Add("I_BUY", materiel.I_buy);
               table.Add("DEC_production", materiel.Dec_production);
+
+              table.Add("DEC_ANGLE", materiel.Dec_angle);
+              table.Add("DEC_DIMENSION1", materiel.Dec_dimension1);
+              table.Add("DEC_DIMENSION2", materiel.Dec_dimension2);
+              table.Add("DEC_DIMENSION3", materiel.Dec_dimension3);
+              table.Add("C_REGRINDING_LENGTH", materiel.C_regrinding_length == null ? string.Empty : materiel.C_regrinding_length);
 
               DbParameter[] parms = dbHelper.getParams(table);
 
@@ -624,18 +635,18 @@ namespace DAL
               com.Parameters.AddRange(parms);
               result = com.ExecuteNonQuery();
 
-              sql = " INSERT INTO [T_JB_MATERIEL_USER]([C_MATERIEL], [C_JIAOSE], [I_YESNO]) VALUES(@C_MATERIEL, @JIAOSE, @YESNO) ";
-              com.CommandText = sql;
-              Hashtable table2 = new Hashtable();
-              table2.Add("C_MATERIEL", materiel.C_id);
-              table2.Add("JIAOSE", userid);
-              table2.Add("YESNO", 1);
+              //sql = " INSERT INTO [T_JB_MATERIEL_USER]([C_MATERIEL], [C_JIAOSE], [I_YESNO]) VALUES(@C_MATERIEL, @JIAOSE, @YESNO) ";
+              //com.CommandText = sql;
+              //Hashtable table2 = new Hashtable();
+              //table2.Add("C_MATERIEL", materiel.C_id);
+              //table2.Add("JIAOSE", userid);
+              //table2.Add("YESNO", 1);
 
-              DbParameter[] parms2 = dbHelper.getParams(table2);
+              //DbParameter[] parms2 = dbHelper.getParams(table2);
 
-              com.Parameters.Clear();
-              com.Parameters.AddRange(parms2);
-              result = com.ExecuteNonQuery();
+              //com.Parameters.Clear();
+              //com.Parameters.AddRange(parms2);
+              //result = com.ExecuteNonQuery();
 
               tran.Commit();
               if (result > 0)
@@ -718,7 +729,8 @@ namespace DAL
             string  sql = " UPDATE [T_JB_MATERIEL]SET [C_TYPE]=@C_TYPE, [C_NAME]=@C_NAME, [I_SINGLE]=@I_SINGLE, [C_STANDARD]=@C_STANDARD, [I_LENGTH]=@I_LENGTH,  "+
                         " [I_WIDTH]=@I_WIDTH, [I_THICK]=@I_THICK, [C_AREA]=@C_AREA, [I_FINISH]=@I_FINISH, [C_MEMO]=@C_MEMO,   "+
                         " [C_PICCODE]=@C_PICCODE, [I_LAYOUTCOUNT]=@I_LAYOUTCOUNT, [C_SURFACE]=@C_SURFACE, [C_SCIENCE]=@C_SCIENCE,  "+
-                        "  [DEC_AREA]=@DEC_AREA, [DEC_WEIGHT]=@DEC_WEIGHT, [I_BUY]=@I_BUY, [DEC_production]=@DEC_production WHERE [C_ID]=@C_ID ";
+                        "  [DEC_AREA]=@DEC_AREA, [DEC_WEIGHT]=@DEC_WEIGHT, [I_BUY]=@I_BUY, [DEC_production]=@DEC_production,  " +
+                        "  [DEC_ANGLE]=@DEC_ANGLE, [DEC_DIMENSION1]=@DEC_DIMENSION1, [DEC_DIMENSION2]=@DEC_DIMENSION2, [DEC_DIMENSION3]=@DEC_DIMENSION3, [C_REGRINDING_LENGTH]=@C_REGRINDING_LENGTH WHERE [C_ID]=@C_ID ";
               Hashtable table = new Hashtable();
 
               table.Add("C_ID", materiel.C_id);
@@ -740,14 +752,20 @@ namespace DAL
               table.Add("I_FINISH", materiel.I_finish);
               table.Add("C_MEMO", materiel.C_memo);
 
-              table.Add("C_PICCODE", materiel.C_piccode);
+              table.Add("C_PICCODE", materiel.C_piccode == null ? string.Empty : materiel.C_piccode);
               table.Add("I_LAYOUTCOUNT", materiel.I_layOutCount);
-              table.Add("C_SURFACE", materiel.C_surface);
-              table.Add("C_SCIENCE", materiel.C_Science);
+              table.Add("C_SURFACE", materiel.C_surface == null ? string.Empty : materiel.C_surface);
+              table.Add("C_SCIENCE", materiel.C_Science == null ? string.Empty : materiel.C_Science);
               table.Add("DEC_AREA", materiel.Dec_area);
               table.Add("DEC_WEIGHT", materiel.Dec_weight);
               table.Add("I_BUY", materiel.I_buy);
               table.Add("DEC_production", materiel.Dec_production);
+
+              table.Add("DEC_ANGLE", materiel.Dec_angle);
+              table.Add("DEC_DIMENSION1", materiel.Dec_dimension1);
+              table.Add("DEC_DIMENSION2", materiel.Dec_dimension2);
+              table.Add("DEC_DIMENSION3", materiel.Dec_dimension3);
+              table.Add("C_REGRINDING_LENGTH", materiel.C_regrinding_length == null ? string.Empty : materiel.C_regrinding_length);
 
               DbParameter[] parms = dbHelper.getParams(table);
 

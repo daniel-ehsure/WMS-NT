@@ -130,6 +130,13 @@ namespace UI
                     for (int i = 0; i < dgv_Data.SelectedRows.Count; i++)
                     {
                         string id = Convert.ToString(dgv_Data.SelectedRows[i].Cells[0].Value);
+
+                        if (id.Equals("0001") || id.Equals("0002"))
+                        {
+                            MessageBox.Show("系统默认信息，不能删除!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
                         if (bll.IsHaveChild(id))
                         {
                             lists.Clear();
@@ -394,6 +401,11 @@ namespace UI
             }
             if (dgv_Data.SelectedRows.Count == 1)
             {
+                if (dgv_Data.SelectedRows[0].Cells[0].Value.Equals("0001") || dgv_Data.SelectedRows[0].Cells[0].Value.Equals("0002"))
+                {
+                    MessageBox.Show("系统默认信息，不能修改!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 MaterielTypeModify mod = new MaterielTypeModify(Convert.ToString(dgv_Data.SelectedRows[0].Cells[0].Value));
                 mod.ShowDialog();
                 refreshNode(this.treeView1.Nodes[0], Convert.ToString(dgv_Data.SelectedRows[0].Cells[0].Value));

@@ -167,5 +167,10 @@ namespace BLL
        {
            return dal.GetPlaceList(preId, area, type);
        }
+
+       public string GetNextCode(string pid)
+       {
+           return dal.GetNextCode(pid, pid.Length + 2);
+       }
     }
 }

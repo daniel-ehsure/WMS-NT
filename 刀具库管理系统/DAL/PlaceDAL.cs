@@ -10,9 +10,11 @@ using DBCore;
 
 namespace DAL
 {
-    public class PlaceDAL
+    public class PlaceDAL : CommonDAL
     {
         private DBHelper dbHelper = new SQLDBHelper();
+        private string tableName = "T_JB_Place";
+
         /// <summary>
         /// 根据类型编号获得子类型信息
         /// </summary>
@@ -72,56 +74,50 @@ namespace DAL
         public DataTable getList(string pid, string name, string memo, int end, int grade)
         {
             string sql;
-            if (grade < 0)
-            {
-                sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END], [I_GRADE] FROM [T_JB_Place] where 1=0 ";
-            }
-            else
-            {
-                sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END], [I_GRADE] FROM [T_JB_Place] where 1=1 ";
-            }
-
             DataTable dt = new DataTable();
+
             try
             {
-                if (pid != null || name != null || memo != null || end != -1)
+                if (grade < 0)
                 {
-                    Hashtable table = new Hashtable();
-                    if (pid != null)
-                    {
-                        if (grade == 0)
-                        {
-                            sql += " and c_warehouse = @C_PRE_ID";
-                            table.Add("C_PRE_ID", pid);
-                        }
-                        else
-                        {
-                            sql += " and C_PRE_ID = @C_PRE_ID";
-                            table.Add("C_PRE_ID", pid);
-                        }
-                    }
-                    if (name != null)
-                    {
-                        sql += " and C_NAME like @C_NAME";
-                        table.Add("C_NAME", "%" + name + "%");
-                    }
-
-                    if (end != -1)
-                    {
-                        sql += " and I_END = @I_END";
-                        table.Add("I_END", end);
-                    }
-
-                    sql += " order by convert(numeric,c_id) asc";
-                    DbParameter[] parms = dbHelper.getParams(table);
-                    dt = dbHelper.GetDataSet(sql, parms);
+                    sql = "SELECT C_ID, C_NAME, '' as C_AREA, 1 AS I_INUSE, 0 AS I_END, 0 AS I_GRADE from  T_JB_WAREHOUSE order by c_id";
+                    dt = dbHelper.GetDataSet(sql);
                 }
                 else
                 {
-                    sql += " order by convert(numeric,c_id) asc";
-                    dt = dbHelper.GetDataSet(sql);
-                }
+                    sql = " SELECT a.[C_ID], a.[C_NAME], b.[C_NAME],a.[I_INUSE], a.[I_END], a.[I_GRADE] FROM [T_JB_Place] a left join [T_JB_PlaceArea] b on a.C_AREA = b.C_ID where 1=1 ";
 
+
+                    if (pid != null || name != null || memo != null || end != -1)
+                    {
+                        Hashtable table = new Hashtable();
+                        if (pid != null)
+                        {
+                            sql += " and a.C_PRE_ID = @C_PRE_ID";
+                            table.Add("C_PRE_ID", pid);
+                        }
+                        if (name != null)
+                        {
+                            sql += " and a.C_NAME like @C_NAME";
+                            table.Add("C_NAME", "%" + name + "%");
+                        }
+
+                        if (end != -1)
+                        {
+                            sql += " and a.I_END = @I_END";
+                            table.Add("I_END", end);
+                        }
+
+                        sql += " order by convert(numeric,a.c_id) asc";
+                        DbParameter[] parms = dbHelper.getParams(table);
+                        dt = dbHelper.GetDataSet(sql, parms);
+                    }
+                    else
+                    {
+                        sql += " order by convert(numeric,a.c_id) asc";
+                        dt = dbHelper.GetDataSet(sql);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -248,26 +244,38 @@ namespace DAL
                 int count = 0;
                 string sql = "";
 
-                sql = "SELECT max(right(c_id,4)) FROM T_JB_Place where C_PRE_ID = '" + dm_type.C_pre_id + "'";
+                sql = "SELECT max(right(c_id,2)) FROM T_JB_Place where C_PRE_ID = '" + dm_type.C_pre_id + "'";
 
                 object obj = dbHelper.GetScalar(sql);
                 dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj);
 
 
-                sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END, I_END, C_MEMO) " +
-                               "values (@C_ID,@C_NAME,@C_PRE_ID,@I_GRADE,@I_END,@I_END,@C_MEMO)";
+                sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END, C_WAREHOUSE, I_INUSE, I_LENGTH, I_WIDTH, C_MEMO) " +
+                               "values (@C_ID,@C_NAME,@C_PRE_ID,@I_GRADE,@I_END,@C_WAREHOUSE, @I_INUSE, @I_LENGTH, @I_WIDTH, @C_MEMO)";
+
                 Hashtable table = new Hashtable();
 
                 dec_id = dec_id + 1;
-                c_id = dm_type.C_pre_id.Equals("0") ? dec_id.ToString().PadLeft(4, '0') : dm_type.C_pre_id + dec_id.ToString().PadLeft(4, '0');
+                c_id = dm_type.C_pre_id.Equals("0") ? dec_id.ToString().PadLeft(2, '0') : dm_type.C_pre_id + dec_id.ToString().PadLeft(2, '0');
+
+                if (dm_type.I_grade == 1)
+                {
+                    table.Add("C_WAREHOUSE", dm_type.C_pre_id);
+                }
+                else
+                {
+                    table.Add("C_WAREHOUSE", DBNull.Value);
+                }
 
                 table.Add("c_id", c_id);
                 table.Add("C_NAME", dm_type.C_name);
                 table.Add("C_PRE_ID", dm_type.C_pre_id);
                 table.Add("I_GRADE", dm_type.I_grade);
                 table.Add("I_END", dm_type.I_end);
-                table.Add("I_END", dm_type.I_end);
+                table.Add("I_INUSE", dm_type.I_inuse);
                 table.Add("C_MEMO", dm_type.C_memo);
+                table.Add("I_LENGTH", dm_type.I_length);
+                table.Add("I_WIDTH", dm_type.I_width);
 
                 DbParameter[] parms = dbHelper.getParams(table);
 
@@ -364,7 +372,7 @@ namespace DAL
             Hashtable table = new Hashtable();
             if (grade == 1)
             {
-                table.Add("C_PRE_ID", DBNull.Value);
+                table.Add("C_PRE_ID", pid);
                 table.Add("C_WAREHOUSE", pid);
                 id = pid + (num + 1).ToString().PadLeft(2, '0');
             }
@@ -770,7 +778,7 @@ namespace DAL
                 Hashtable table = new Hashtable();
                 if (preId != null)
                 {
-                    sql += " and a.C_PRE_ID like '"+preId+"%'";
+                    sql += " and a.C_PRE_ID like '" + preId + "%'";
                 }
                 if (area != null)
                 {
@@ -802,6 +810,11 @@ namespace DAL
             }
 
             return dt;
+        }
+
+        public string GetNextCode(string pid, int length)
+        {
+            return GetNextCode(tableName, length, " and C_PRE_ID = '" + pid + "'");
         }
     }
 }

@@ -110,6 +110,12 @@
     <Compile Include="BasicPlace\PlaceSetForm.Designer.cs">
       <DependentUpon>PlaceSetForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BasicPlace\PlaceAddSingle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasicPlace\PlaceAddSingle.Designer.cs">
+      <DependentUpon>PlaceAddSingle.cs</DependentUpon>
+    </Compile>
     <Compile Include="BasicWarehouse\WarehouseAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BasicPlace\PlaceSetForm.resx">
       <DependentUpon>PlaceSetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BasicPlace\PlaceAddSingle.resx">
+      <DependentUpon>PlaceAddSingle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BasicWarehouse\WarehouseAdd.resx">
       <DependentUpon>WarehouseAdd.cs</DependentUpon>

@@ -106,13 +106,10 @@ namespace UI
             {
                 MessageBox.Show("不能在最小控制单元下添加！");
             }
-            else if (currnetNode.Nodes != null && currnetNode.Nodes.Count > 0)
-            {
-                MessageBox.Show("当前级别已存在下级！");
-            }
             else
             {
-                PlaceAdd wa = new PlaceAdd(this);
+                PlaceAddSingle wa = new PlaceAddSingle(this);
+
                 wa.ShowDialog();
 
                 if (isAdd)
@@ -478,6 +475,35 @@ namespace UI
                     {
                         e.Value = "否";
                     }
+                }
+            }
+        }
+
+        private void btnSet_Click(object sender, EventArgs e)
+        {
+            if (currentPlace.I_grade < 0)
+            {
+                MessageBox.Show("不能在当前级别下添加！");
+            }
+            else if (currentPlace.I_end == 1)
+            {
+                MessageBox.Show("不能在最小控制单元下添加！");
+            }
+            else if (currnetNode.Nodes != null && currnetNode.Nodes.Count > 0)
+            {
+                MessageBox.Show("当前级别已存在下级！");
+            }
+            else
+            {
+                PlaceAdd wa = new PlaceAdd(this);
+                wa.ShowDialog();
+
+                if (isAdd)
+                {
+                    addNewType();
+                    setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
+                    initNew(currentPlace.C_id);
+                    isAdd = false;
                 }
             }
         }

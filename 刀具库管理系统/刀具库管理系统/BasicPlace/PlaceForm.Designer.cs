@@ -60,6 +60,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.btnSet = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -228,6 +229,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnSet);
             this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Controls.Add(this.txtPid);
             this.panel1.Controls.Add(this.label7);
@@ -428,6 +430,22 @@
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // btnSet
+            // 
+            this.btnSet.BackColor = System.Drawing.Color.LightGray;
+            this.btnSet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSet.ImageIndex = 2;
+            this.btnSet.ImageList = this.imageList1;
+            this.btnSet.Location = new System.Drawing.Point(663, 9);
+            this.btnSet.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSet.Name = "btnSet";
+            this.btnSet.Size = new System.Drawing.Size(75, 25);
+            this.btnSet.TabIndex = 70;
+            this.btnSet.Text = "设置(&S)";
+            this.btnSet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSet.UseVisualStyleBackColor = false;
+            this.btnSet.Click += new System.EventHandler(this.btnSet_Click);
+            // 
             // PlaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -487,6 +505,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox txtPid;
+        private System.Windows.Forms.Button btnSet;
 
     }
 }

@@ -104,6 +104,15 @@ namespace Model
             get { return c_area; }
             set { c_area = value; }
         }
+        private string c_areaName;
+        /// <summary>
+        /// 货区名称
+        /// </summary>
+        public string C_areaName
+        {
+            get { return c_areaName; }
+            set { c_areaName = value; }
+        }
 
         private int i_finish;
         /// <summary>

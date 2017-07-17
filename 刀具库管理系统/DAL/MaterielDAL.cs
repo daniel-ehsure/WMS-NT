@@ -170,13 +170,11 @@ namespace DAL
       {
           string sql = " select a.C_ID,a.C_NAME,a.C_TYPE,b.C_NAME as C_TYPENAME,a.C_STANDARD,a.C_AREA,c.C_NAME as C_AREANAME,I_FINISH, " +
                   " case I_FINISH when 1 then '是' else '否' end as C_FINISH,I_LENGTH,I_WIDTH,I_THICK,a.C_MEMO " +
-                  " from T_JB_MATERIEL a left join T_JB_MATERIELTYPE b on a.C_TYPE = b.C_ID left join t_jb_placeArea c on a.C_AREA = c.C_ID where a.C_ID in ( " +
-                  " select C_MATERIEL from T_JB_MATERIEL_USER where C_JIAOSE = @JIAOSE  ) ";
+                  " from T_JB_MATERIEL a left join T_JB_MATERIELTYPE b on a.C_TYPE = b.C_ID left join t_jb_placeArea c on a.C_AREA = c.C_ID where 1=1 ";
           DataTable dt = new DataTable();
           try
           {
               Hashtable table = new Hashtable();
-              table.Add("JIAOSE", userid);
               if (name != null)
               {
                   sql += " and a.C_NAME like @C_NAME";
@@ -455,6 +453,7 @@ namespace DAL
                   materiel.C_id = dt.Rows[0]["C_ID"].ToString();
                   materiel.C_name = dt.Rows[0]["C_NAME"].ToString();
                   materiel.C_type = dt.Rows[0]["C_TYPE"].ToString();
+                  materiel.C_typeName = dt.Rows[0]["C_TYPENAME"].ToString();
                   object temp = dt.Rows[0]["C_STANDARD"];
                   if (temp == null || DBNull.Value.Equals(temp))
                   {
@@ -473,6 +472,7 @@ namespace DAL
                   {
                       materiel.C_area = dt.Rows[0]["C_AREA"].ToString();
                   }
+                  materiel.C_areaName = dt.Rows[0]["C_AREANAME"].ToString();
                   materiel.I_finish = Convert.ToInt32(dt.Rows[0]["I_FINISH"]);
 
                   materiel.I_thick = Convert.ToDecimal(dt.Rows[0]["I_THICK"]);

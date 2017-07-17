@@ -24,34 +24,6 @@ namespace UI
 
         private void SelectMaterielFinishForm_Load(object sender, EventArgs e)
         {
-            #region 货区
-            DataTable dt = areaBll.GetList(null);
-            DataRow dr = dt.NewRow();
-
-            dr["c_id"] = "";
-            dr["c_name"] = "所有";
-
-            dt.Rows.InsertAt(dr, 0);
-
-            this.cmbArea.DataSource = dt;
-            this.cmbArea.DisplayMember = "c_name";
-            this.cmbArea.ValueMember = "c_id";
-            #endregion
-
-            #region 类型
-            DataTable dttype = tBll.GetList(null,null,null,1);
-            DataRow drtype = dttype.NewRow();
-
-            drtype["c_id"] = "";
-            drtype["c_name"] = "所有";
-
-            dttype.Rows.InsertAt(drtype, 0);
-
-            this.cmbType.DataSource = dttype;
-            this.cmbType.DisplayMember = "c_name";
-            this.cmbType.ValueMember = "c_id";
-            #endregion
-
             queryList();
         }
 
@@ -63,8 +35,8 @@ namespace UI
         public void queryList()
         {
             string name = string.Empty.Equals(txtName.Text.Trim())?null:txtName.Text;
-            string area = string.Empty.Equals(cmbArea.SelectedValue)?null:cmbArea.SelectedValue.ToString();
-            string type = string.Empty.Equals(cmbType.SelectedValue)?null:cmbType.SelectedValue.ToString();
+            string area = "0002";
+            string type = "0002";
             int finish = -1;
             string standerd = string.Empty.Equals(txtStand.Text.Trim())?null:txtStand.Text;;
             string userid = Global.longid;

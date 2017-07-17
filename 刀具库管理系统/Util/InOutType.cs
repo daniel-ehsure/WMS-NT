@@ -9,18 +9,22 @@ namespace Util
         /// <summary>
         /// 物料出库
         /// </summary>
-        MATERIEL_OUT = 1,
+        MATERIEL_OUT = 10,
         /// <summary>
         /// 物料入库
         /// </summary>
-        MATERIEL_IN = 2,
+        MATERIEL_IN = 20,
         /// <summary>
-        /// 刀具出库
+        /// 借刀具出库
         /// </summary>
-        KNIFE_OUT = 3,
+        KNIFE_OUT_USE = 12,
         /// <summary>
-        /// 刀具入库
+        /// 新刀具入库
         /// </summary>
-        KNIFE_IN = 4
+        KNIFE_IN = 21,
+        /// <summary>
+        /// 还刀具入库
+        /// </summary>
+        KNIFE_IN_USE = 22
     }
 }

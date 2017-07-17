@@ -11,14 +11,19 @@ using Util;
 
 namespace UI
 {
+    /// <summary>
+    /// 零件入库
+    /// </summary>
     public partial class OperateInForm : Form, InterfaceSelect
     {
         OperateInOutBLL bll = new OperateInOutBLL();
         PlaceAreaBLL sbll = new PlaceAreaBLL();
         RuningDoListBLL dbll = new RuningDoListBLL();
         MaterielBLL mbll = new MaterielBLL();
+        MaterielTypeBLL tbll = new MaterielTypeBLL();
         DataTable dt;
         InOutType inOutType = InOutType.MATERIEL_IN;
+        public T_JB_Materiel materielNow;
 
         public OperateInForm()
         {
@@ -34,6 +39,26 @@ namespace UI
                 MessageBox.Show("Test");
                 btnScan.Enabled = false;
             }
+
+            #region 初始化 物料类别
+            DataTable dt = tbll.GetList(null, null, null, 1);
+            DataView dataView = dt.DefaultView;
+            dataView.Sort = "C_ID asc";
+            cmbType.DataSource = dataView.ToTable();
+            cmbType.DisplayMember = "C_NAME";
+            cmbType.ValueMember = "C_ID";
+            cmbType.SelectedIndex = -1;
+            #endregion
+
+            #region 初始化 货区
+            DataTable dtt = sbll.GetList(null);
+            DataView dataViewt = dtt.DefaultView;
+            dataViewt.Sort = "C_ID asc";
+            cmbArea.DataSource = dataViewt.ToTable();
+            cmbArea.DisplayMember = "C_NAME";
+            cmbArea.ValueMember = "C_ID";
+            cmbArea.SelectedIndex = -1;
+            #endregion
         }
 
         //出库数量只能输入数字,小数点,回车和退格
@@ -278,7 +303,7 @@ namespace UI
                 else
                 {
                     this.lblMaterielName.Visible = false;
-                    T_JB_Materiel materiel = mbll.getMaterielById(lblInMateriel.Text);
+                    T_JB_Materiel materiel = mbll.getMaterielById(txtId.Text);
                     if (materiel == null)
                     {
                         this.lblMaterielName.Visible = true;
@@ -343,7 +368,45 @@ namespace UI
             }
         }
 
-
+        /// <summary>
+        /// 显示model
+        /// </summary>
+        /// <param name="materiel"></param>
+        void ModelToUI(T_JB_Materiel materiel)
+        {
+            this.txtId.Text = materiel.C_id;
+            this.txtMaterielName.Text = materiel.C_name;
+            this.cmbType.SelectedValue = materiel.C_type;
+            this.txtStand.Text = materiel.C_standerd;
+            this.txtThick.Text = materiel.I_thick.ToString();
+            this.txtLength.Text = materiel.I_length.ToString();
+            this.txtWidth.Text = materiel.I_width.ToString();
+            this.cmbArea.SelectedValue = materiel.C_area;
+            if (materiel.I_finish == 1)
+            {
+                this.checkBox1.Checked = true;
+            }
+            else
+            {
+                this.checkBox1.Checked = false;
+            }
+            this.txtMeno.Text = materiel.C_memo;
+            this.textBox1.Text = materiel.C_piccode;
+            this.textBox2.Text = materiel.I_layOutCount.ToString();
+            this.textBox3.Text = materiel.C_surface;
+            this.textBox4.Text = materiel.C_Science;
+            this.textBox5.Text = materiel.Dec_area.ToString();
+            this.textBox7.Text = materiel.Dec_weight.ToString();
+            this.textBox6.Text = materiel.Dec_production.ToString();
+            if (materiel.I_buy == 1)
+            {
+                this.checkBox2.Checked = true;
+            }
+            else
+            {
+                this.checkBox2.Checked = false;
+            }
+        }
 
 
 
@@ -356,9 +419,7 @@ namespace UI
         }
         public void setMateriel(string name, string id, string standard)
         {
-            this.txtMaterielName.Text = name;
-            this.lblInMateriel.Text = id;
-            this.txtStand.Text = standard;
+            ModelToUI(mbll.getMaterielById(id));
         }
 
         public void setMaterielAndPlace(string mname, string mid, string standard, string pid, string tray, int count, string typeName)
@@ -406,6 +467,11 @@ namespace UI
 
             //显示物料信息，显示货位（可手动选），输入数量
 
+        }
+
+        private void txtId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            MessageBox.Show("Test");
         }
     }
 }

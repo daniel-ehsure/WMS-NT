@@ -24,6 +24,15 @@ namespace Model
             get { return c_name; }
             set { c_name = value; }
         }
+        private string c_name_tree;
+        /// <summary>
+        /// 树名称
+        /// </summary>
+        public string C_name_tree
+        {
+            get { return c_name_tree; }
+            set { c_name_tree = value; }
+        }
         private string c_pre_id;
         /// <summary>
         /// 上级编码

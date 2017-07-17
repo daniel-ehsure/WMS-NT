@@ -36,7 +36,7 @@ namespace UI
         {
             initTree();
             initNew(currentPlace.C_id);
-            setList(currentPlace.C_id, null, null, -1, -1);
+            setList(currentPlace.C_id, null, null, -1,-1, -1);
         }
 
         /// <summary>
@@ -48,8 +48,6 @@ namespace UI
         {
             try
             {
-                //c_id = null;
-                //c_name = null;
                 currnetNode = e.Node;
                 currentPlace = (T_JB_Place)messages[e.Node];
                 if (currentPlace.I_end == 1)
@@ -62,7 +60,7 @@ namespace UI
                 }
                 initNew(currentPlace.C_id);
                 isQuery = false;
-                setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
+                setList(currentPlace.C_id, null, null, -1, -1, currentPlace.I_grade);
             }
             catch (Exception)
             {
@@ -115,7 +113,7 @@ namespace UI
                 if (isAdd)
                 {
                     addNewType();
-                    setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
+                    setList(currentPlace.C_id, null, null, -1, -1, currentPlace.I_grade);
                     initNew(currentPlace.C_id);
                     isAdd = false;
                 }
@@ -259,7 +257,7 @@ namespace UI
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    TreeNode subNode = new TreeNode(list[i].C_name);
+                    TreeNode subNode = new TreeNode(list[i].C_name_tree);
                     subNode.ImageIndex = 1;
                     node.Nodes.Add(subNode);
                     addTree(list[i].C_id, subNode, grade);
@@ -277,9 +275,9 @@ namespace UI
         /// <param name="name"></param>
         /// <param name="meno"></param>
         /// <param name="end"></param>
-        private void setList(string pid, string name, string meno, int end, int grade)
+        private void setList(string pid, string id, string meno, int end, int use, int grade)
         {
-            this.dgv_Data.DataSource = bll.GetList(pid, name, meno, end, grade);
+            this.dgv_Data.DataSource = bll.GetList(pid, id, meno, end, use, grade);
             getName();
         }
 
@@ -292,28 +290,29 @@ namespace UI
             {
                 string name = null;
                 string meno = null;
-                if (this.txtName.Text != null && !(string.Empty.Equals(txtName.Text.Trim())))
+                if (this.txtId.Text != null && !(string.Empty.Equals(txtId.Text.Trim())))
                 {
-                    name = txtName.Text;
+                    name = txtId.Text;
                 }
                 if (this.txtMeno.Text != null && !(string.Empty.Equals(txtMeno.Text.Trim())))
                 {
                     meno = txtMeno.Text;
                 }
                 int end = -1;
-                if (checkBox1.Checked)
+                if (cbEnd.Checked)
                 {
                     end = 1;
                 }
-                //else
-                //{
-                //    end = 0;
-                //}
-                setList(null, name, meno, end, 1);
+                int use = -1;
+                if (cbUse.Checked)
+                {
+                    use = 1;
+                }
+                setList(null, name, meno, end, use, 1);
             }
             else
             {
-                setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
+                setList(currentPlace.C_id, null, null, -1,-1, currentPlace.I_grade);
             }
         }
 
@@ -337,10 +336,8 @@ namespace UI
         /// <param name="pid"></param>
         private void initNew(string pid)
         {
-            this.txtName.Text = string.Empty;
-            this.lblName.Visible = false;
-            this.txtPid.Text = pid;
-            this.checkBox1.Checked = false;
+            this.txtId.Text = string.Empty;
+            this.cbEnd.Checked = false;
             this.txtMeno.Text = string.Empty;
 
         }
@@ -501,7 +498,7 @@ namespace UI
                 if (isAdd)
                 {
                     addNewType();
-                    setList(currentPlace.C_id, null, null, -1, currentPlace.I_grade);
+                    setList(currentPlace.C_id, null, null, -1, -1, currentPlace.I_grade);
                     initNew(currentPlace.C_id);
                     isAdd = false;
                 }

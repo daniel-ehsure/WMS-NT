@@ -62,36 +62,61 @@ namespace UI
             Close();
         }
 
+        //出库数量只能输入数字,小数点,回车和退格
+        private void txtNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar < 48 || e.KeyChar > 57) && (e.KeyChar != 8) && (e.KeyChar != 13) && (e.KeyChar != 46))
+            {
+                e.Handled = true;
+            }
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-
-            if (int.Parse(lblChildren.Text)>0 && cbEnd.Checked)
+            try
             {
-                MessageBox.Show("存在下级，不能设置为最小单元！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                T_JB_Place mo = new T_JB_Place();
-
-                mo.C_id = id;
-                mo.C_pre_id = lblPid.Text;
-                mo.C_name = txtName.Text.Trim();
-                mo.C_memo = txtMemo.Text.Trim();
-                mo.I_end = cbEnd.Checked ? 1 : 0;
-                mo.I_inuse = cbInuse.Checked ? 1 : 0;
-                mo.I_length = int.Parse(txtLength.Text.Trim());
-                mo.I_width = int.Parse(txtWidth.Text.Trim());
-
-                if (bll.Update(mo))
+                if (int.Parse(lblChildren.Text) > 0 && cbEnd.Checked)
                 {
-                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("修改货位成功！Id：" + lblId.Text);
-                    Close();
+                    MessageBox.Show("存在下级，不能设置为最小单元！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (this.txtName.Text == null || string.Empty.Equals(this.txtName.Text.Trim()))
+                {
+                    lbl1.Visible = true;
                 }
                 else
                 {
-                    MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    T_JB_Place mo = new T_JB_Place();
+
+                    mo.C_id = id;
+                    mo.C_pre_id = lblPid.Text;
+                    mo.C_name = txtName.Text.Trim();
+                    mo.C_memo = txtMemo.Text.Trim();
+                    mo.I_end = cbEnd.Checked ? 1 : 0;
+                    mo.I_inuse = cbInuse.Checked ? 1 : 0;
+
+                    int len = 0;
+                    int.TryParse(txtLength.Text.Trim(), out len);
+                    mo.I_length = len;
+
+                    int wid = 0;
+                    int.TryParse(txtWidth.Text.Trim(), out wid);
+                    mo.I_width = wid;
+
+                    if (bll.Update(mo))
+                    {
+                        MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("修改货位成功！Id：" + lblId.Text);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -26,15 +26,15 @@ namespace DAL
             string sql;
             if (pid.Equals("0"))
             {
-                sql = "SELECT C_ID, C_NAME from  T_JB_WAREHOUSE order by c_id";
+                sql = "SELECT C_ID, C_NAME, C_NAME as C_NAME_TREE from  T_JB_WAREHOUSE order by c_id";
             }
             else if (grade == 0)
             {
-                sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END FROM  T_JB_Place  where c_warehouse = '" + pid + "'  order by c_id";
+                sql = "SELECT C_ID, C_NAME, C_NAME_TREE, C_PRE_ID, I_GRADE, I_END FROM  T_JB_Place  where c_warehouse = '" + pid + "'  order by c_id";
             }
             else
             {
-                sql = "SELECT C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END FROM  T_JB_Place  where c_pre_id = '" + pid + "'  order by c_id";
+                sql = "SELECT C_ID, C_NAME, C_NAME_TREE, C_PRE_ID, I_GRADE, I_END FROM  T_JB_Place  where c_pre_id = '" + pid + "'  order by c_id";
             }
 
             try
@@ -46,6 +46,7 @@ namespace DAL
 
                     dm_type.C_id = Convert.IsDBNull(ds.Rows[i]["C_ID"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_ID"]);
                     dm_type.C_name = Convert.IsDBNull(ds.Rows[i]["C_NAME"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_NAME"]);
+                    dm_type.C_name_tree = Convert.IsDBNull(ds.Rows[i]["C_NAME_TREE"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_NAME_TREE"]);
                     dm_type.C_pre_id = pid.Equals("0") ? "0" : Convert.IsDBNull(ds.Rows[i]["C_PRE_ID"]) ? string.Empty : Convert.ToString(ds.Rows[i]["C_PRE_ID"]);
                     dm_type.I_end = pid.Equals("0") ? 0 : Convert.IsDBNull(ds.Rows[i]["I_END"]) ? 0 : Convert.ToInt32(ds.Rows[i]["I_END"]);
                     dm_type.I_grade = pid.Equals("0") ? 0 : Convert.IsDBNull(ds.Rows[i]["I_GRADE"]) ? 0 : Convert.ToInt32(ds.Rows[i]["I_GRADE"]);
@@ -71,7 +72,7 @@ namespace DAL
         /// <param name="name"></param>
         /// <param name="MEMO"></param>
         /// <returns></returns>
-        public DataTable getList(string pid, string name, string memo, int end, int grade)
+        public DataTable getList(string pid, string id, string memo, int end, int use, int grade)
         {
             string sql;
             DataTable dt = new DataTable();
@@ -88,7 +89,7 @@ namespace DAL
                     sql = " SELECT a.[C_ID], a.[C_NAME], b.[C_NAME],a.[I_INUSE], a.[I_END], a.[I_GRADE] FROM [T_JB_Place] a left join [T_JB_PlaceArea] b on a.C_AREA = b.C_ID where 1=1 ";
 
 
-                    if (pid != null || name != null || memo != null || end != -1)
+                    if (pid != null || id != null || memo != null || end != -1 || use != -1)
                     {
                         Hashtable table = new Hashtable();
                         if (pid != null)
@@ -96,16 +97,22 @@ namespace DAL
                             sql += " and a.C_PRE_ID = @C_PRE_ID";
                             table.Add("C_PRE_ID", pid);
                         }
-                        if (name != null)
+                        if (id != null)
                         {
-                            sql += " and a.C_NAME like @C_NAME";
-                            table.Add("C_NAME", "%" + name + "%");
+                            sql += " and a.C_ID like @C_ID";
+                            table.Add("C_ID", id + "%");
                         }
 
                         if (end != -1)
                         {
                             sql += " and a.I_END = @I_END";
                             table.Add("I_END", end);
+                        }
+
+                        if (use != -1)
+                        {
+                            sql += " and a.I_INUSE = @I_INUSE";
+                            table.Add("I_INUSE", use);
                         }
 
                         sql += " order by convert(numeric,a.c_id) asc";
@@ -249,9 +256,20 @@ namespace DAL
                 object obj = dbHelper.GetScalar(sql);
                 dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj);
 
+                if (dm_type.I_grade == 1)
+                {
+                    sql = "SELECT C_NAME FROM T_JB_WAREHOUSE where C_ID = '" + dm_type.C_pre_id + "'";
+                }
+                else
+                {
+                    sql = "SELECT C_NAME FROM T_JB_Place where C_ID = '" + dm_type.C_pre_id + "'";
+                }
 
-                sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END, C_WAREHOUSE, I_INUSE, I_LENGTH, I_WIDTH, C_MEMO) " +
-                               "values (@C_ID,@C_NAME,@C_PRE_ID,@I_GRADE,@I_END,@C_WAREHOUSE, @I_INUSE, @I_LENGTH, @I_WIDTH, @C_MEMO)";
+                object obj1 = dbHelper.GetScalar(sql);
+                string preName = obj1.ToString();
+
+                sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME, C_NAME_TREE, C_PRE_ID, I_GRADE, I_END, C_WAREHOUSE, I_INUSE, I_LENGTH, I_WIDTH, C_MEMO) " +
+                               "values (@C_ID,@C_NAME,@C_NAME_TREE,@C_PRE_ID,@I_GRADE,@I_END,@C_WAREHOUSE, @I_INUSE, @I_LENGTH, @I_WIDTH, @C_MEMO)";
 
                 Hashtable table = new Hashtable();
 
@@ -268,7 +286,8 @@ namespace DAL
                 }
 
                 table.Add("c_id", c_id);
-                table.Add("C_NAME", dm_type.C_name);
+                table.Add("C_NAME", preName + dm_type.C_name);
+                table.Add("C_NAME_TREE", dm_type.C_name);
                 table.Add("C_PRE_ID", dm_type.C_pre_id);
                 table.Add("I_GRADE", dm_type.I_grade);
                 table.Add("I_END", dm_type.I_end);
@@ -329,8 +348,20 @@ namespace DAL
             {
                 com.Transaction = tran;
 
-                sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME, C_PRE_ID, I_GRADE, I_END, C_WAREHOUSE, I_INUSE, I_LENGTH, I_WIDTH) " +
-                               "values (@C_ID,@C_NAME,@C_PRE_ID,@I_GRADE,@I_END,@C_WAREHOUSE, @I_INUSE, @I_LENGTH, @I_WIDTH)";
+                if (grade == 0)
+                {
+                    sql = "SELECT C_NAME FROM T_JB_WAREHOUSE where C_ID = '" + pid + "'";
+                }
+                else
+                {
+                    sql = "SELECT C_NAME FROM T_JB_Place where C_ID = '" + pid + "'";
+                }
+
+                object obj1 = dbHelper.GetScalar(sql);
+                string preName = obj1.ToString();
+
+                sql = "INSERT INTO T_JB_Place ( C_ID, C_NAME,C_NAME_TREE, C_PRE_ID, I_GRADE, I_END, C_WAREHOUSE, I_INUSE, I_LENGTH, I_WIDTH) " +
+                               "values (@C_ID,@C_NAME,@C_NAME_TREE,@C_PRE_ID,@I_GRADE,@I_END,@C_WAREHOUSE, @I_INUSE, @I_LENGTH, @I_WIDTH)";
 
                 com.CommandText = sql;
 
@@ -338,7 +369,7 @@ namespace DAL
 
                 for (int i = 0; i < num1; i++)
                 {
-                    AddPlace(list, 0, i, pid, grade + 1, com);
+                    AddPlace(list, 0, i, pid, grade + 1, com, preName);
                 }
 
                 tran.Commit();
@@ -365,7 +396,7 @@ namespace DAL
         /// <param name="count"></param>
         /// <param name="num"></param>
         /// <param name="upId"></param>
-        private void AddPlace(List<List<object>> list, int count, int num, string pid, int grade, DbCommand com)
+        private void AddPlace(List<List<object>> list, int count, int num, string pid, int grade, DbCommand com, string preName)
         {
             string id;
 
@@ -383,11 +414,17 @@ namespace DAL
                 id = pid + (num + 1).ToString().PadLeft(2, '0');
             }
 
+            string nameTree = (num + 1).ToString() + list[count][1].ToString();
             table.Add("C_ID", id);
-            table.Add("C_NAME", (num + 1).ToString() + list[count][1].ToString());
+            table.Add("C_NAME", preName + nameTree);
+            table.Add("C_NAME_TREE", nameTree);
             table.Add("I_GRADE", grade);
-            table.Add("I_LENGTH", int.Parse(list[count][2].ToString()));
-            table.Add("I_WIDTH", int.Parse(list[count][3].ToString()));
+            int len = 0;
+            int.TryParse(list[count][2].ToString(), out len);
+            table.Add("I_LENGTH", len);
+            int wid = 0;
+            int.TryParse(list[count][3].ToString(), out wid);
+            table.Add("I_WIDTH", wid);
             table.Add("I_END", int.Parse(list[count][4].ToString()));
             table.Add("I_INUSE", 1);
 
@@ -402,7 +439,7 @@ namespace DAL
                 count++;
                 for (int i = 0; i < int.Parse(list[count][0].ToString()); i++)
                 {
-                    AddPlace(list, count, i, id, grade + 1, com);
+                    AddPlace(list, count, i, id, grade + 1, com, preName + nameTree);
                 }
             }
         }

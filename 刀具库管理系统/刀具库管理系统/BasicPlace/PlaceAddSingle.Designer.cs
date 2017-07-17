@@ -180,6 +180,7 @@
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(150, 21);
             this.txtWidth.TabIndex = 78;
+            this.txtWidth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumber_KeyPress);
             // 
             // label4
             // 
@@ -197,6 +198,7 @@
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(150, 21);
             this.txtLength.TabIndex = 77;
+            this.txtLength.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumber_KeyPress);
             // 
             // label3
             // 

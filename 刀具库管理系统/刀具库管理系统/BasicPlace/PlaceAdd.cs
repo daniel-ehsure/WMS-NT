@@ -111,7 +111,14 @@ namespace UI
             {
                 if (item["num"].Enabled && !string.IsNullOrEmpty(item["num"].Text.Trim()))
                 {
-                    list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), (int)item["end"].Tag == 7 ? 1 : ((CheckBox)item["end"]).Checked ? 1 : 0 });
+                    if (checkInput(item))
+                    {
+                        list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), (int)item["end"].Tag == 7 ? 1 : ((CheckBox)item["end"]).Checked ? 1 : 0 });
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -120,12 +127,12 @@ namespace UI
                 parentForm.isAdd = true;
 
                 MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Log.saveLog("添加物料类型成功！");
+                Log.saveLog("设置货位成功！");
                 Close();
             }
             else
             {
-                MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -142,7 +149,7 @@ namespace UI
 
         private bool IsNotNull(Dictionary<string, Control> dic)
         {
-            return !(string.IsNullOrEmpty(dic["num"].Text.Trim()) | string.IsNullOrEmpty(dic["name"].Text.Trim()) | string.IsNullOrEmpty(dic["width"].Text.Trim()) | string.IsNullOrEmpty(dic["length"].Text.Trim()));
+            return !(string.IsNullOrEmpty(dic["num"].Text.Trim()) | string.IsNullOrEmpty(dic["name"].Text.Trim()));
         }
 
         private void cbEnd_CheckedChanged(object sender, EventArgs e)
@@ -177,6 +184,36 @@ namespace UI
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 保存时验证用户输入是否合法
+        /// </summary>
+        /// <returns></returns>
+        private bool checkInput(Dictionary<string, Control> item)
+        {
+            int num = 0;
+            if (!int.TryParse(item["num"].Text.Trim(),out num))
+            {
+                MessageBox.Show("数量必须为整数！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            int len = 0;
+            if (!(string.IsNullOrEmpty(item["length"].Text.Trim()) || int.TryParse(item["length"].Text.Trim(), out len)))
+            {
+                MessageBox.Show("长度必须为整数或为空！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            int wid = 0;
+            if (!(string.IsNullOrEmpty(item["width"].Text.Trim()) || int.TryParse(item["width"].Text.Trim(), out wid)))
+            {
+                MessageBox.Show("宽度必须为整数或为空！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
     }
 }

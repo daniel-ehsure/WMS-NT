@@ -46,21 +46,19 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.txtPid = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
+            this.btnSet = new System.Windows.Forms.Button();
+            this.cbEnd = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.txtMeno = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.btnSet = new System.Windows.Forms.Button();
+            this.cbUse = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -230,15 +228,13 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.btnSet);
-            this.panel1.Controls.Add(this.checkBox1);
-            this.panel1.Controls.Add(this.txtPid);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.lblName);
+            this.panel1.Controls.Add(this.cbUse);
+            this.panel1.Controls.Add(this.cbEnd);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.txtMeno);
             this.panel1.Controls.Add(this.label16);
-            this.panel1.Controls.Add(this.txtName);
+            this.panel1.Controls.Add(this.txtId);
             this.panel1.Controls.Add(this.label17);
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button3);
@@ -251,49 +247,32 @@
             this.panel1.Size = new System.Drawing.Size(683, 77);
             this.panel1.TabIndex = 0;
             // 
-            // checkBox1
+            // btnSet
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(323, 18);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBox1.Size = new System.Drawing.Size(84, 16);
-            this.checkBox1.TabIndex = 69;
-            this.checkBox1.Text = "：是否末级";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.btnSet.BackColor = System.Drawing.Color.LightGray;
+            this.btnSet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSet.ImageIndex = 2;
+            this.btnSet.ImageList = this.imageList1;
+            this.btnSet.Location = new System.Drawing.Point(663, 9);
+            this.btnSet.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSet.Name = "btnSet";
+            this.btnSet.Size = new System.Drawing.Size(75, 25);
+            this.btnSet.TabIndex = 70;
+            this.btnSet.Text = "设置(&S)";
+            this.btnSet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSet.UseVisualStyleBackColor = false;
+            this.btnSet.Click += new System.EventHandler(this.btnSet_Click);
             // 
-            // txtPid
+            // cbEnd
             // 
-            this.txtPid.Location = new System.Drawing.Point(214, 14);
-            this.txtPid.Margin = new System.Windows.Forms.Padding(2);
-            this.txtPid.MaxLength = 25;
-            this.txtPid.Name = "txtPid";
-            this.txtPid.ReadOnly = true;
-            this.txtPid.Size = new System.Drawing.Size(91, 21);
-            this.txtPid.TabIndex = 67;
-            this.txtPid.Text = "0";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(154, 18);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 12);
-            this.label7.TabIndex = 66;
-            this.label7.Text = "上级编码：";
-            // 
-            // lblName
-            // 
-            this.lblName.AutoSize = true;
-            this.lblName.ForeColor = System.Drawing.Color.Red;
-            this.lblName.Location = new System.Drawing.Point(146, 19);
-            this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(11, 12);
-            this.lblName.TabIndex = 65;
-            this.lblName.Text = "*";
-            this.lblName.Visible = false;
+            this.cbEnd.AutoSize = true;
+            this.cbEnd.Location = new System.Drawing.Point(299, 17);
+            this.cbEnd.Name = "cbEnd";
+            this.cbEnd.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cbEnd.Size = new System.Drawing.Size(108, 16);
+            this.cbEnd.TabIndex = 69;
+            this.cbEnd.Text = "：最小控制单元";
+            this.cbEnd.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -346,14 +325,14 @@
             this.label16.TabIndex = 26;
             this.label16.Text = "备注：";
             // 
-            // txtName
+            // txtId
             // 
-            this.txtName.Location = new System.Drawing.Point(54, 14);
-            this.txtName.Margin = new System.Windows.Forms.Padding(2);
-            this.txtName.MaxLength = 25;
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(91, 21);
-            this.txtName.TabIndex = 25;
+            this.txtId.Location = new System.Drawing.Point(54, 14);
+            this.txtId.Margin = new System.Windows.Forms.Padding(2);
+            this.txtId.MaxLength = 25;
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(150, 21);
+            this.txtId.TabIndex = 25;
             // 
             // label17
             // 
@@ -363,7 +342,7 @@
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(41, 12);
             this.label17.TabIndex = 24;
-            this.label17.Text = "名称：";
+            this.label17.Text = "编码：";
             // 
             // button5
             // 
@@ -430,21 +409,16 @@
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // btnSet
+            // cbUse
             // 
-            this.btnSet.BackColor = System.Drawing.Color.LightGray;
-            this.btnSet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSet.ImageIndex = 2;
-            this.btnSet.ImageList = this.imageList1;
-            this.btnSet.Location = new System.Drawing.Point(663, 9);
-            this.btnSet.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSet.Name = "btnSet";
-            this.btnSet.Size = new System.Drawing.Size(75, 25);
-            this.btnSet.TabIndex = 70;
-            this.btnSet.Text = "设置(&S)";
-            this.btnSet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSet.UseVisualStyleBackColor = false;
-            this.btnSet.Click += new System.EventHandler(this.btnSet_Click);
+            this.cbUse.AutoSize = true;
+            this.cbUse.Location = new System.Drawing.Point(209, 17);
+            this.cbUse.Name = "cbUse";
+            this.cbUse.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cbUse.Size = new System.Drawing.Size(84, 16);
+            this.cbUse.TabIndex = 69;
+            this.cbUse.Text = "：是否可用";
+            this.cbUse.UseVisualStyleBackColor = true;
             // 
             // PlaceForm
             // 
@@ -490,22 +464,20 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.TextBox txtMeno;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ImageList imageList3;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox txtPid;
+        private System.Windows.Forms.CheckBox cbEnd;
         private System.Windows.Forms.Button btnSet;
+        private System.Windows.Forms.CheckBox cbUse;
 
     }
 }

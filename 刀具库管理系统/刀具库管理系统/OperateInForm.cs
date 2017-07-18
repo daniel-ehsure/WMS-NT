@@ -127,7 +127,7 @@ namespace UI
         //选择货位
         private void button7_Click(object sender, EventArgs e)
         {
-            SelectPlaceInForm select = new SelectPlaceInForm(this);
+            SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType);
             select.ShowDialog();
         }
 

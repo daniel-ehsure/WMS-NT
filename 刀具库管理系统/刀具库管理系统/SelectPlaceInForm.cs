@@ -16,13 +16,14 @@ namespace UI
         PlaceBLL bll = new PlaceBLL();     
         InterfaceSelect parent = null;
         Label lbl = null;
-      
-        int inOutType = 2;
+        InOutType inOutType;
+
         int index = 0;
-        public SelectPlaceInForm(InterfaceSelect parent)
+        public SelectPlaceInForm(InterfaceSelect parent, InOutType inOutType)
         {
             InitializeComponent();
-            this.parent = parent;          
+            this.parent = parent;
+            this.inOutType = inOutType;
         }
         public SelectPlaceInForm(InterfaceSelect parent,Label lbl)
         {
@@ -98,7 +99,29 @@ namespace UI
         {
             try
             {
+                switch (inOutType)
+                {
+                    case InOutType.MATERIEL_OUT:
+                        //有零件的，no dolist
+                        break;
+                    case InOutType.MATERIEL_IN:
+                        //no dolist
+                        break;
+                    case InOutType.KNIFE_OUT_USE:
+                        //
+                        break;
+                    case InOutType.KNIFE_IN:
+                        break;
+                    case InOutType.KNIFE_IN_USE:
+                        break;
+                    default:
+                        break;
+                }
+
                 DataTable dt = bll.getListByWN(wh, name);
+
+
+
                 dgv_Data.DataSource = dt;
                 dgv_Data.Columns[0].HeaderText = "编码";
                 dgv_Data.Columns[0].ReadOnly = true;

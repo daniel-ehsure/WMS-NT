@@ -413,8 +413,8 @@ namespace DAL
 
                 com.CommandText = sql;
                 object obj = com.ExecuteScalar();
-                dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(9));
-                c_id = "IM" + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
+                dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(10));
+                c_id = Common.GetInOutCode(type) + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
 
                 if (dt.Rows.Count > 0)
                 {
@@ -1355,9 +1355,7 @@ namespace DAL
         /// </summary>
         /// <returns></returns>
         public bool HasDoList()
-        {//todo:有待验证
-            return false;
-
+        {
             try
             {
                 string sql = " select count(*) from T_Runing_Dolist";

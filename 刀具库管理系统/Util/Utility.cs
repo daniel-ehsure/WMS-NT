@@ -1476,5 +1476,10 @@ namespace Util
             return tuhao;
         }
 
+
+        public static T_JB_Materiel AnalyzeBarcodeMateriel(InOutType inOutType)
+        {//todo:扫描
+            throw new NotImplementedException();
+        }
     }
 }

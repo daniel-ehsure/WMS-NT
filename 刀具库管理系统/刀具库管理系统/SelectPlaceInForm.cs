@@ -17,13 +17,15 @@ namespace UI
         InterfaceSelect parent = null;
         Label lbl = null;
         InOutType inOutType;
+        string placeArea;
 
         int index = 0;
-        public SelectPlaceInForm(InterfaceSelect parent, InOutType inOutType)
+        public SelectPlaceInForm(InterfaceSelect parent, InOutType inOutType, string placeArea)
         {
             InitializeComponent();
             this.parent = parent;
             this.inOutType = inOutType;
+            this.placeArea = placeArea;
         }
         public SelectPlaceInForm(InterfaceSelect parent,Label lbl)
         {
@@ -33,28 +35,13 @@ namespace UI
         }
         private void SelectPlace_Load(object sender, EventArgs e)
         {
-            #region combox
-            DataTable dt = new WarehouseBLL().GetList(null);
-            dt.Columns[0].ColumnName = "id";
-            dt.Columns[1].ColumnName = "name";
-            DataRow dr = dt.NewRow();
-            dr["id"] = "";
-            dr["name"] = "所有";
-            dt.Rows.InsertAt(dr, 0);
-
-            comboBox1.DataSource = dt;
-            comboBox1.DisplayMember = "name";
-            comboBox1.ValueMember = "id";
-            comboBox1.SelectedIndex = 0;
-            #endregion
-
             setList(null, null);
         }
 
         //重置
         private void button5_Click(object sender, EventArgs e)
         {
-            this.comboBox1.Text = "所有";
+            this.txtId.Text = string.Empty;
             this.txtName.Text = string.Empty;
         }
         //查询
@@ -95,7 +82,7 @@ namespace UI
         /// <param name="name"></param>
         /// <param name="single"></param>
         /// <param name="standerd"></param>
-        public void setList(string wh, string name)
+        public void setList(string id, string name)
         {
             try
             {
@@ -118,7 +105,7 @@ namespace UI
                         break;
                 }
 
-                DataTable dt = bll.getListByWN(wh, name);
+                DataTable dt = bll.getListByIN(id, name, placeArea);
 
 
 
@@ -129,12 +116,9 @@ namespace UI
                 dgv_Data.Columns[1].HeaderText = "名称";
                 dgv_Data.Columns[1].ReadOnly = true;
                 dgv_Data.Columns[1].Width = 250;
-                dgv_Data.Columns[2].Visible = false;
-                dgv_Data.Columns[3].HeaderText = "是否可用";
-                dgv_Data.Columns[3].ReadOnly = true;
-                dgv_Data.Columns[3].Width = 150;
-                dgv_Data.Columns[4].Visible = false;
-                dgv_Data.Columns[5].Visible = false;
+                dgv_Data.Columns[2].HeaderText = "是否被占用";
+                dgv_Data.Columns[2].ReadOnly = true;
+                dgv_Data.Columns[2].Width = 150;
             }
             catch (Exception)
             {
@@ -152,22 +136,19 @@ namespace UI
         /// </summary>
         private void querylist()
         {
-            string wh = null;
+            string id = null;
             string name = null;
 
-            if (this.comboBox1.Text != null && !(string.Empty.Equals(this.comboBox1.Text.Trim())))
+            if (this.txtId.Text != null && !(string.Empty.Equals(this.txtId.Text.Trim())))
             {
-                if (!("所有".Equals(comboBox1.Text.Trim())))
-                {
-                    wh = comboBox1.SelectedValue.ToString();
-                }
+                id = txtId.Text.Trim();
             }
             if (this.txtName.Text != null && !(string.Empty.Equals(this.txtName.Text.Trim())))
             {
                 name = txtName.Text.Trim();
             }
 
-            setList(wh, name);
+            setList(id, name);
         }
 
         private void setParent()
@@ -176,40 +157,10 @@ namespace UI
             {
                 string id = this.dgv_Data.Rows[index].Cells[0].Value.ToString();
                 string name = this.dgv_Data.Rows[index].Cells[1].Value.ToString();
-                int length = Convert.ToInt32(this.dgv_Data.Rows[index].Cells[4].Value);
-                int width = Convert.ToInt32(this.dgv_Data.Rows[index].Cells[5].Value);
-                if (lbl != null)
-                {
-                    lbl.Text = Convert.ToString(this.dgv_Data.Rows[index].Cells[6].Value);
-                }
-                parent.setPlace(name, id, length, width);
+
+                parent.setPlace(name, id, 0, 0);
 
                 this.Close();
-            }
-        }
-
-        /// <summary>
-        /// 格式化列表
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgv_Data_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.ColumnIndex == 2)
-            {
-                e.FormattingApplied = true;
-                DataGridViewRow row = dgv_Data.Rows[e.RowIndex];
-                if (row != null)
-                {
-                    if (e.Value.Equals(1))
-                    {
-                        e.Value = "是";
-                    }
-                    else
-                    {
-                        e.Value = "否";
-                    }
-                }
             }
         }
     }

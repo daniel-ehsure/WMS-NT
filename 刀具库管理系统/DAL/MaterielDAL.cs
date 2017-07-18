@@ -331,17 +331,18 @@ namespace DAL
               object obj4 = dbHelper.GetScalar(sql, parms4);
               int count4 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj4);
 
-              sql = " select count(*) from T_JB_MATERIEL_USER where C_MATERIEL = @id and C_JIAOSE <> @userid ";
+              //物料权限
+              //sql = " select count(*) from T_JB_MATERIEL_USER where C_MATERIEL = @id and C_JIAOSE <> @userid ";
 
-              Hashtable table5 = new Hashtable();
-              table5.Add("id", id);
-              table5.Add("userid", userid);
+              //Hashtable table5 = new Hashtable();
+              //table5.Add("id", id);
+              //table5.Add("userid", userid);
 
-              DbParameter[] parms5 = dbHelper.getParams(table5);
-              object obj5 = dbHelper.GetScalar(sql, parms5);
-              int count5 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj5);
+              //DbParameter[] parms5 = dbHelper.getParams(table5);
+              //object obj5 = dbHelper.GetScalar(sql, parms5);
+              //int count5 = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj5);
 
-              if (count1 > 0 || count2 > 0 || count4 > 0 || count5 > 0)
+              if (count1 > 0 || count2 > 0 || count4 > 0)
               {
                   return true;
               }
@@ -404,9 +405,10 @@ namespace DAL
               com.CommandText = sql;
               com.ExecuteNonQuery();
 
-              sql = "delete from T_JB_MATERIEL_USER where C_MATERIEL in " + ccid;
-              com.CommandText = sql;
-              result = com.ExecuteNonQuery();
+              //物料权限
+              //sql = "delete from T_JB_MATERIEL_USER where C_MATERIEL in " + ccid;
+              //com.CommandText = sql;
+              //result = com.ExecuteNonQuery();
               tran.Commit();
               if (result > 0)
               {

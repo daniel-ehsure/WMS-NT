@@ -18,12 +18,14 @@ namespace UI
     {
         OperateInOutBLL bll = new OperateInOutBLL();
         PlaceAreaBLL sbll = new PlaceAreaBLL();
+        PlaceBLL pbll = new PlaceBLL();
         RuningDoListBLL dbll = new RuningDoListBLL();
         MaterielBLL mbll = new MaterielBLL();
         MaterielTypeBLL tbll = new MaterielTypeBLL();
         DataTable dt;
         InOutType inOutType = InOutType.MATERIEL_IN;
         public T_JB_Materiel materielNow;
+        List<T_JB_Materiel> listMateriel = new List<T_JB_Materiel>();
 
         public OperateInForm()
         {
@@ -32,12 +34,14 @@ namespace UI
 
         private void OperateInForm_Load(object sender, EventArgs e)
         {
-             initData();
+            initData();
 
             if (bll.HasDoList())
             {
-                MessageBox.Show("Test");
-                btnScan.Enabled = false;
+                MessageBox.Show("存在未完成的联机任务，不能进行出入库操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnHand.Enabled = false;
+                btnDoList.Enabled = false;
+                btnOK.Enabled = false;
             }
 
             #region 初始化 物料类别
@@ -101,17 +105,24 @@ namespace UI
             }
             else
             {
-                if (bll.HandIn(dt, txtInMeno.Text, inOutType))
+                try
                 {
-                    MessageBox.Show("入库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    setMain(true);
-                    initMain();
-                    initSub();
-                    dt.Rows.Clear();
+                    if (bll.HandIn(dt, txtInMeno.Text, inOutType))
+                    {
+                        MessageBox.Show("入库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        setMain(true);
+                        initMain();
+                        initSub();
+                        dt.Rows.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("入库失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("入库失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -127,8 +138,15 @@ namespace UI
         //选择货位
         private void button7_Click(object sender, EventArgs e)
         {
-            SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType);
-            select.ShowDialog();
+            if (txtId.Text.Trim().Length > 0)
+            {
+                SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType, materielNow.C_area);
+                select.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("请先选择零件!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         //联机入库
@@ -141,20 +159,26 @@ namespace UI
             }
             else
             {
-
-                if (dbll.SaveDolist(dt, txtInMeno.Text, inOutType))
+                try
                 {
-                    MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    setMain(true);
-                    initMain();
-                    initSub();
-                    dt.Rows.Clear();
+                    if (dbll.SaveDolist(dt, txtInMeno.Text, inOutType))
+                    {
+                        MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Close();
+                        setMain(true);
+                        initMain();
+                        initSub();
+                        dt.Rows.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
         }
 
@@ -171,7 +195,7 @@ namespace UI
             dr[4] = txtInPlace.Text.Trim();
             dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
             dr[6] = Global.longid;
-            dr[7] = lblTypeName.Text;
+            //dr[7] = lblTypeName.Text;
             bool flag = false;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -200,7 +224,7 @@ namespace UI
         {
             dt = new DataTable();
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 8; i++)
             {
                 DataColumn column = new DataColumn();
                 column.DataType = System.Type.GetType("System.String");
@@ -251,15 +275,6 @@ namespace UI
                     flag = false;
                     this.lblPlace.Visible = true;
                 }
-                else
-                {
-                    this.lblPlace.Visible = false;
-                    if (bll.isPlaceInuse(txtInPlace.Text.Trim()))
-                    {
-                        MessageBox.Show("该货位已经被使用!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        flag = false;
-                    }
-                }
             }
 
             if (flag)
@@ -303,19 +318,31 @@ namespace UI
                 else
                 {
                     this.lblMaterielName.Visible = false;
-                    T_JB_Materiel materiel = mbll.getMaterielById(txtId.Text);
-                    if (materiel == null)
+
+                    try
                     {
-                        this.lblMaterielName.Visible = true;
-                        flag = false;
+                        T_JB_Materiel materiel = mbll.getMaterielById(txtId.Text);
+                        if (materiel == null)
+                        {//当前零件不存在，增加
+                            mbll.save(materielNow, Global.longid);
+                            this.lblMaterielName.Visible = true;
+                            flag = false;
+                        }
+                        else
+                        {//存在，更新
+                            this.lblMaterielName.Visible = false;
+
+                            //mbll.update(materielNow);
+
+                            //txtMaterielName.Text = materiel.C_name;
+                            //lblInMateriel.Text = materiel.C_id;
+                            //txtStand.Text = materiel.C_standerd;
+                            //lblTypeName.Text = materiel.C_typeName;
+                        }
                     }
-                    else
+                    catch (Exception)
                     {
-                        this.lblMaterielName.Visible = false;
-                        txtMaterielName.Text = materiel.C_name;
-                        lblInMateriel.Text = materiel.C_id;
-                        txtStand.Text = materiel.C_standerd;
-                        lblTypeName.Text = materiel.C_typeName;
+                        MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -326,8 +353,8 @@ namespace UI
         private void setMain(bool flag)
         {
             dtpIndate.Enabled = flag;
-            txtInPlace.Enabled = flag;
-            button7.Enabled = flag;
+            //txtInPlace.Enabled = flag;
+            //button7.Enabled = flag;
             txtInMeno.Enabled = flag;
         }
         private void initMain()
@@ -338,10 +365,29 @@ namespace UI
 
         private void initSub()
         {
-            txtMaterielName.Text = string.Empty;
             lblInMateriel.Text = string.Empty;
             txtCount.Text = string.Empty;
             txtStand.Text = string.Empty;
+
+            txtMaterielName.Text = string.Empty;
+            txtId.Text = string.Empty;
+            txtStand.Text = string.Empty;
+            txtThick.Text = string.Empty;
+            txtLength.Text = string.Empty;
+            txtWidth.Text = string.Empty;
+            txtMeno.Text = string.Empty;
+            txtId.Text = string.Empty;
+            this.textBox1.Text = string.Empty;
+            this.textBox2.Text = string.Empty;
+            this.textBox3.Text = string.Empty;
+            this.textBox4.Text = string.Empty;
+            this.textBox5.Text = string.Empty;
+            this.textBox7.Text = string.Empty;
+            this.textBox6.Text = string.Empty;
+            this.checkBox2.Checked = false;
+            this.checkBox1.Checked = false;
+            cmbType.SelectedIndex = -1;
+            cmbArea.SelectedIndex = -1;
         }
 
         private void dgv_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -419,7 +465,8 @@ namespace UI
         }
         public void setMateriel(string name, string id, string standard)
         {
-            ModelToUI(mbll.getMaterielById(id));
+            materielNow = mbll.getMaterielById(id);
+            ModelToUI(materielNow);
         }
 
         public void setMaterielAndPlace(string mname, string mid, string standard, string pid, string tray, int count, string typeName)
@@ -443,35 +490,18 @@ namespace UI
 
         #endregion
 
-        /// <summary>
-        /// 扫码
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnScan_Click(object sender, EventArgs e)
-        {
-            //todo:扫码相关
-            string scanResult = string.Empty;
-
-            //根据扫码结果，判断物料是否存在
-            T_JB_Materiel materiel = mbll.getMaterielById(scanResult);
-            if (materiel == null)
-            {
-                //弹出窗口添加
-            }
-            else
-            {
-                //find last 货区
-            }
-
-
-            //显示物料信息，显示货位（可手动选），输入数量
-
-        }
-
         private void txtId_KeyPress(object sender, KeyPressEventArgs e)
         {
-            MessageBox.Show("Test");
+            if (e.KeyChar == 13)
+            {
+                T_JB_Materiel mo = Utility.AnalyzeBarcodeMateriel(inOutType);
+                ModelToUI(mo);
+
+                if (txtInPlace.Text.Trim().Length > 0)
+                {//无货位自动分配
+                    string place = pbll.GetAutoPlace(mo.C_area);
+                }
+            }
         }
     }
 }

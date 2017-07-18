@@ -140,32 +140,40 @@ namespace DAL
         }
 
         /// <summary>
-        /// 根据仓库和名称获得货位（最小控制单元）
+        /// 根据id和名称获得货位（最小控制单元）
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public DataTable getListByWN(string warehouseId, string name)
+        public DataTable getListByIN(string id, string name, string placeArea)
         {
             string sql;
 
-            sql = " SELECT [C_ID], [C_NAME], [C_PRE_ID],[I_INUSE], [I_END], [I_GRADE] FROM [T_JB_Place] where I_END=1 ";
+            sql = " SELECT [C_ID], [C_NAME], case when b.num > 0 then '是' else '否' end FROM [T_JB_Place] a " +
+                " left join (select C_PLACE, count(*) num from [T_OPERATE_STOCKS] group by C_PLACE) b on a.C_ID = b.C_PLACE where I_END=1 and I_INUSE = 1 " +
+                " and C_ID not in (select C_PLACE from T_RUNING_DOLIST) ";
 
             DataTable dt = new DataTable();
             try
             {
-                if (warehouseId != null || name != null)
+                if (id != null || name != null || placeArea != null)
                 {
                     Hashtable table = new Hashtable();
-                    if (warehouseId != null)
+                    if (id != null)
                     {
-                        sql += " and C_ID like @warehouseId";
-                        table.Add("warehouseId", warehouseId + "%");
+                        sql += " and C_ID like @id";
+                        table.Add("id", id + "%");
                     }
 
                     if (name != null)
                     {
                         sql += " and C_NAME like @C_NAME";
                         table.Add("C_NAME", "%" + name + "%");
+                    }
+
+                    if (placeArea != null)
+                    {
+                        sql += " and C_AREA = @C_AREA";
+                        table.Add("C_AREA", placeArea);
                     }
 
                     sql += " order by convert(numeric,c_id) asc";
@@ -852,6 +860,41 @@ namespace DAL
         public string GetNextCode(string pid, int length)
         {
             return GetNextCode(tableName, length, " and C_PRE_ID = '" + pid + "'");
+        }
+
+        public DataTable GetEmptyPlace(string area)
+        {
+            string sql;
+
+            sql = " SELECT [C_ID], [C_NAME] FROM [T_JB_Place] " +
+                "  where I_END=1 and I_INUSE = 1 " +
+                " and C_ID not in (select C_PLACE from T_RUNING_DOLIST) " +
+                " and C_ID not in (select C_PLACE from T_OPERATE_STOCKS) ";
+
+            DataTable dt = new DataTable();
+            try
+            {
+                Hashtable table = new Hashtable();
+                if (area != null)
+                {
+                    sql += " and C_AREA = @C_AREA";
+                    table.Add("C_AREA", area);
+                }
+
+                sql += " order by convert(numeric,c_id) asc";
+                DbParameter[] parms = dbHelper.getParams(table);
+                dt = dbHelper.GetDataSet(sql, parms);
+            }
+            catch (Exception ex)
+            {
+                Log.write(ex.Message + "\r\n" + ex.StackTrace);
+                throw ex;
+            }
+            finally
+            {
+                dbHelper.getConnection().Close();
+            }
+            return dt;
         }
     }
 }

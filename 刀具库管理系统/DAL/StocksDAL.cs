@@ -21,14 +21,14 @@ namespace DAL
         {
             string sql = @"select * from (
                             select a.C_MATERIEL_ID,b.C_NAME,c.C_NAME as C_TYPENAME,b.C_STANDARD,a.C_PLACE,a.DEC_COUNT,
-                            a.DEC_COUNT -isnull( d.usecount,0) as canuse
+                            a.DEC_COUNT -isnull( d.usecount,0) as canuse, a.PRIID
                             from T_OPERATE_STOCKS a 
                             left join T_JB_MATERIEL b on a.C_MATERIEL_ID = b.C_ID
                             left join T_JB_MATERIELTYPE c on b.C_TYPE = c.C_ID
                             left join  (select  isnull( DEC_COUNT,0) as usecount ,C_MATERIEL,C_PLACE from T_Runing_Dolist where I_INOUT = 1) d  on  d.C_MATERIEL = a.C_MATERIEL_ID
                             and d.C_PLACE = a.C_PLACE
                             ) g
-                        where g.canuse >0 and g.C_PLACE not in (select C_PLACE from T_Runing_Dolist) and g.C_MATERIEL_ID in ( select C_MATERIEL from T_JB_MATERIEL_USER where C_JIAOSE = @JIAOSE  )  ";
+                        where g.canuse >0 and g.C_PLACE not in (select C_PLACE from T_Runing_Dolist)  ";
             DataTable dt = new DataTable();
             try
             {

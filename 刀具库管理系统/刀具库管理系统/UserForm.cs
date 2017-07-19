@@ -78,6 +78,9 @@ namespace UI
                         if (layoutBLL.save(user))
                         {
                             MessageBox.Show("用户信息保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            Log.saveLog(string.Format("添加用户{0}成功！",user.C_loginID));
+
                             setUserList(null, null);
                             txtId.Text = string.Empty;
                             txtName.Text = string.Empty;
@@ -209,6 +212,8 @@ namespace UI
                     {
                         layoutBLL.delte(lists);
                        queryUserlist();
+                       Log.saveLog(string.Format("删除用户{0}成功！", string.Join(",", lists.ToArray())));
+
                     }
                     
                     

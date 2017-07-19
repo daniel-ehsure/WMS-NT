@@ -403,7 +403,7 @@ namespace DAL
               ccid += " )";
               sql += ccid;
               com.CommandText = sql;
-              com.ExecuteNonQuery();
+              result = com.ExecuteNonQuery();
 
               //物料权限
               //sql = "delete from T_JB_MATERIEL_USER where C_MATERIEL in " + ccid;

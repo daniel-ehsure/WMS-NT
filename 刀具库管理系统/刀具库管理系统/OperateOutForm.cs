@@ -135,6 +135,7 @@ namespace UI
             dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
             dr[6] = Global.longid;
             dr[7] = lblTypeName.Text;
+            dr[8] = lblStockId.Text;
             bool flag = false;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -187,6 +188,7 @@ namespace UI
             dgv_Data.Columns[6].HeaderText = "操作员";
             dgv_Data.Columns[6].Visible = false;
             dgv_Data.Columns[7].Visible = false;
+            dgv_Data.Columns[8].Visible = false;
         }
 
         private bool checkInput()
@@ -261,6 +263,7 @@ namespace UI
             dtpIndate.Enabled = flag;
             txtInMeno.Enabled = flag;
         }
+
         private void initMain()
         {
             txtInMeno.Text = string.Empty;
@@ -335,6 +338,8 @@ namespace UI
             this.txtCount.Text = count.ToString();
             this.lblMax.Text = count.ToString();
             this.lblTypeName.Text = typeName;
+            //库存编号
+            this.lblStockId.Text = tray;
         }
 
         public void setMaterielAndPlace(string mname, string mid, int thick, int single, string standard, int length, int width, string pname, string pid, int plength, int pwidth, int count)

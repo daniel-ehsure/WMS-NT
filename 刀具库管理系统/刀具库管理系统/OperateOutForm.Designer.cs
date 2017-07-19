@@ -66,6 +66,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgv_Data = new System.Windows.Forms.DataGridView();
+            this.lblStockId = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -289,6 +290,7 @@
             // 
             this.groupBox2.Controls.Add(this.lblTypeName);
             this.groupBox2.Controls.Add(this.lblMax);
+            this.groupBox2.Controls.Add(this.lblStockId);
             this.groupBox2.Controls.Add(this.lblInMateriel);
             this.groupBox2.Controls.Add(this.btnOK);
             this.groupBox2.Controls.Add(this.lblCount);
@@ -495,6 +497,17 @@
             this.dgv_Data.TabIndex = 65;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
+            // lblStockId
+            // 
+            this.lblStockId.AutoSize = true;
+            this.lblStockId.Location = new System.Drawing.Point(754, 48);
+            this.lblStockId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblStockId.Name = "lblStockId";
+            this.lblStockId.Size = new System.Drawing.Size(83, 12);
+            this.lblStockId.TabIndex = 122;
+            this.lblStockId.Text = "lblInMateriel";
+            this.lblStockId.Visible = false;
+            // 
             // OperateOutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -566,5 +579,6 @@
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Label lblMax;
         private System.Windows.Forms.Label lblTypeName;
+        private System.Windows.Forms.Label lblStockId;
     }
 }

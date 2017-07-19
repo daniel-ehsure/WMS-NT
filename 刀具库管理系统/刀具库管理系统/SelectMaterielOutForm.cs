@@ -18,6 +18,8 @@ namespace UI
         InterfaceSelect parent = null;
         DataTable dt;       
         int index = 0;
+        public string materielId = string.Empty;
+
         public SelectMaterielOutForm(InterfaceSelect parent, DataTable dt)
         {
             InitializeComponent();
@@ -108,6 +110,7 @@ namespace UI
                 {
                     for (int j = 0; j < dt.Rows.Count; j++)
                     {
+
                         if (st.Rows[i][0].Equals(dt.Rows[j][0]) && st.Rows[i][4].Equals(dt.Rows[j][4]))
                         {
                             st.Rows[i][6] = Convert.ToInt32(st.Rows[i][6]) - Convert.ToInt32(dt.Rows[j][3]);
@@ -128,6 +131,8 @@ namespace UI
                 dgv_Data.Columns[4].HeaderText = "货位";
                 dgv_Data.Columns[5].HeaderText = "库存数量";
                 dgv_Data.Columns[6].HeaderText = "可用数量";
+                dgv_Data.Columns[7].HeaderText = "库存编码";
+                dgv_Data.Columns[7].Visible = false;
             }
             catch (Exception)
             {
@@ -147,13 +152,11 @@ namespace UI
                 string pid = this.dgv_Data.Rows[index].Cells[4].Value.ToString();
                 int count = Convert.ToInt32(this.dgv_Data.Rows[index].Cells[6].Value);
                 string typeName = this.dgv_Data.Rows[index].Cells[2].Value.ToString();
+                string stockId = this.dgv_Data.Rows[index].Cells[7].Value.ToString();
 
-                parent.setMaterielAndPlace(name, id, standard, pid, null, count, typeName);
+                parent.setMaterielAndPlace(name, id, standard, pid, stockId, count, typeName);
                 this.Close();
             }
         }
-
-     
-        
     }
 }

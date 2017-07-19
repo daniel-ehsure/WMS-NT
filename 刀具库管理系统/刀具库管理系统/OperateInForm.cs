@@ -188,7 +188,7 @@ namespace UI
         private void addRow()
         {
             DataRow dr = dt.NewRow();
-            dr[0] = lblInMateriel.Text;
+            dr[0] = txtId.Text;
             dr[1] = txtMaterielName.Text;
             dr[2] = txtStand.Text;
             dr[3] = txtCount.Text.Trim();
@@ -232,8 +232,6 @@ namespace UI
 
                 dt.Columns.Add(column);
             }
-
-
 
             this.dgv_Data.DataSource = dt;
             getName();
@@ -333,11 +331,6 @@ namespace UI
                             this.lblMaterielName.Visible = false;
 
                             //mbll.update(materielNow);
-
-                            //txtMaterielName.Text = materiel.C_name;
-                            //lblInMateriel.Text = materiel.C_id;
-                            //txtStand.Text = materiel.C_standerd;
-                            //lblTypeName.Text = materiel.C_typeName;
                         }
                     }
                     catch (Exception)

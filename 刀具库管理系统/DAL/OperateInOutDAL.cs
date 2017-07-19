@@ -10,7 +10,7 @@ using DBCore;
 
 namespace DAL
 {
-   public class OperateInOutDAL
+    public class OperateInOutDAL
     {
         private DBHelper dbHelper = new SQLDBHelper();
         /// <summary>
@@ -32,7 +32,7 @@ namespace DAL
                 {
                     count = Convert.ToInt32(temp);
                 }
-                if(inOutType ==2)
+                if (inOutType == 2)
                 {
                     sql = "select  max( CONVERT(int,C_DH)) from T_Runing_Dolist where I_INOUT =2";
                     int count2 = 0;
@@ -69,7 +69,7 @@ namespace DAL
             return id;
         }
 
-       
+
 
 
 
@@ -78,7 +78,7 @@ namespace DAL
         /// </summary>
         /// <param name="user">货位信息</param>
         /// <returns></returns>
-        public bool save(int inOutType,string c_id, DateTime rq,string materiel,string place,int count,string czy,string meno)
+        public bool save(int inOutType, string c_id, DateTime rq, string materiel, string place, int count, string czy, string meno)
         {
             int result = 0;
             DbConnection conn = dbHelper.getConnection();
@@ -114,10 +114,10 @@ namespace DAL
                 DbParameter[] parms = dbHelper.getParams(table);
                 com.Parameters.Clear();
                 com.Parameters.AddRange(parms);
-                 com.ExecuteNonQuery();
+                com.ExecuteNonQuery();
                 if (inOutType == 2) //入库
                 {
-                    
+
 
                     sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME)";
                     com.CommandText = sql;
@@ -125,7 +125,7 @@ namespace DAL
                     table2.Add("C_MATERIEL_ID", materiel);
                     table2.Add("C_PLACE", place);
                     table2.Add("DEC_COUNT", count);
-                    table2.Add("D_END_TIME", rq);                    
+                    table2.Add("D_END_TIME", rq);
 
                     DbParameter[] parms2 = dbHelper.getParams(table2);
                     com.Parameters.Clear();
@@ -139,7 +139,7 @@ namespace DAL
                     Hashtable table2 = new Hashtable();
                     table2.Add("C_MATERIEL_ID", materiel);
                     table2.Add("C_PLACE", place);
-                    table2.Add("DEC_COUNT", count);                   
+                    table2.Add("DEC_COUNT", count);
 
                     DbParameter[] parms2 = dbHelper.getParams(table2);
                     com.Parameters.Clear();
@@ -174,15 +174,15 @@ namespace DAL
             }
         }
 
-       /// <summary>
-       /// 获得出入库明细
-       /// </summary>
-       /// <param name="materile"></param>
-       /// <param name="startDate"></param>
-       /// <param name="endDate"></param>
-       /// <param name="inout"></param>
-       /// <returns></returns>
-        public DataTable getList(DateTime startDate, DateTime endDate, string inOutId,int inout,string mid)
+        /// <summary>
+        /// 获得出入库明细
+        /// </summary>
+        /// <param name="materile"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="inout"></param>
+        /// <returns></returns>
+        public DataTable getList(DateTime startDate, DateTime endDate, string inOutId, int inout, string mid)
         {
             string sql = @"select * from ( select a.C_ID,case a.C_CRK_LEIBIE when 1  then '物料出库' when 2 then '物料入库' 
                             when 3 then '刀具出库' when 4 then '刀具入库' else '出库' end as c_inout,a.C_MATERIEL,
@@ -198,22 +198,22 @@ namespace DAL
             {
                 sql += " where (a.C_CRK_LEIBIE  = 1 or  a.C_CRK_LEIBIE = 3) ";
             }
-             if (mid != null && !(string.Empty.Equals(mid)))
-               {
-                   sql += " and a.C_MATERIEL like '%"+mid+"%'";
-                
-               }
-             sql += "   ) h where 1=1";
+            if (mid != null && !(string.Empty.Equals(mid)))
+            {
+                sql += " and a.C_MATERIEL like '%" + mid + "%'";
+
+            }
+            sql += "   ) h where 1=1";
             DataTable dt = new DataTable();
             try
             {
 
                 Hashtable table = new Hashtable();
-                
+
                 if (startDate != Global.minValue && endDate != Global.minValue)
                 {
-                    sql += " and  convert(datetime, CONVERT(varchar(100), D_RQ, 23),120) between @startDate and @endDate";                    
-                   
+                    sql += " and  convert(datetime, CONVERT(varchar(100), D_RQ, 23),120) between @startDate and @endDate";
+
 
                     table.Add("startDate", startDate);
                     table.Add("endDate", endDate);
@@ -264,7 +264,7 @@ namespace DAL
             string sql = "select count (*) from T_Runing_Dolist where C_Tray = @tray";
             Hashtable table = new Hashtable();
             table.Add("tray", tray);
-           
+
             DbParameter[] parms1 = dbHelper.getParams(table);
             object obj1 = dbHelper.GetScalar(sql, parms1);
             if (obj1 != null && !(DBNull.Value.Equals(obj1)) && Convert.ToInt32(obj1) > 0)
@@ -285,11 +285,11 @@ namespace DAL
 
         }
 
-       /// <summary>
-       /// 货位是否被使用
-       /// </summary>
-       /// <param name="place"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 货位是否被使用
+        /// </summary>
+        /// <param name="place"></param>
+        /// <returns></returns>
         public bool isPlaceInuse(string place)
         {
             bool flag = false;
@@ -298,7 +298,7 @@ namespace DAL
             table.Add("place", place);
             DbParameter[] parms = dbHelper.getParams(table);
             object obj = dbHelper.GetScalar(sql, parms);
-            if(obj == null || DBNull.Value.Equals(obj) || Convert.ToInt32(obj) == 0)
+            if (obj == null || DBNull.Value.Equals(obj) || Convert.ToInt32(obj) == 0)
             {
                 return true;
             }
@@ -319,11 +319,11 @@ namespace DAL
                     if (obj2 != null && !(DBNull.Value.Equals(obj2)) && Convert.ToInt32(obj2) > 0)
                     {
                         return true;
-                    }                   
+                    }
                 }
             }
             return flag;
-                
+
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace DAL
         public T_JB_Materiel getMaterielByIdOrName(string id)
         {
             T_JB_Materiel materiel = null;
-            string sql = " SELECT a.[C_ID], a.[C_NAME], a.[I_THICK], a.[I_SINGLE], a.[C_STANDARD], a.[I_LENGTH], a.[I_WIDTH],b.C_NAME as C_TYPE_NAME "+
+            string sql = " SELECT a.[C_ID], a.[C_NAME], a.[I_THICK], a.[I_SINGLE], a.[C_STANDARD], a.[I_LENGTH], a.[I_WIDTH],b.C_NAME as C_TYPE_NAME " +
                         " FROM [T_JB_MATERIEL] a left join T_JB_TYPE b ON a.C_TYPE = b.C_ID  where a.C_ID = '" + id + "' or a.C_NAME= '" + id + "'";
             try
             {
@@ -459,19 +459,49 @@ namespace DAL
                         com.Parameters.AddRange(parms2);
                         com.ExecuteNonQuery();
 
-                        sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_DH])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME, @C_DH)";
+                        //判断货位原来是否有同样零件
+                        sql = "SELECT count(*) FROM T_OPERATE_STOCKS where [C_MATERIEL_ID] = @C_MATERIEL_ID and [C_PLACE] = @C_PLACE";
                         com.CommandText = sql;
-                        Hashtable table3 = new Hashtable();
-                        table3.Add("C_MATERIEL_ID", dt.Rows[i][0]);
-                        table3.Add("C_PLACE", dt.Rows[i][4]);
-                        table3.Add("DEC_COUNT", dt.Rows[i][3]);
-                        table3.Add("D_END_TIME", dt.Rows[i][5]);
-                        table3.Add("C_DH", c_id);
-
-                        DbParameter[] parms3 = dbHelper.getParams(table3);
+                        Hashtable table4 = new Hashtable();
+                        table4.Add("C_MATERIEL_ID", dt.Rows[i][0]);
+                        table4.Add("C_PLACE", dt.Rows[i][4]);
+                        DbParameter[] parms4 = dbHelper.getParams(table4);
                         com.Parameters.Clear();
-                        com.Parameters.AddRange(parms3);
-                        result = com.ExecuteNonQuery();
+                        com.Parameters.AddRange(parms4);
+                        int stockCount = int.Parse(com.ExecuteScalar().ToString());
+
+                        if (stockCount > 0)
+                        {//有同样零件
+                            sql = "UPDATE T_OPERATE_STOCKS SET [DEC_COUNT] = [DEC_COUNT] + @DEC_COUNT, [D_END_TIME] = @D_END_TIME, [C_DH] = @C_DH where [C_MATERIEL_ID] = @C_MATERIEL_ID and [C_PLACE] = @C_PLACE ";
+                            com.CommandText = sql;
+                            Hashtable table3 = new Hashtable();
+                            table3.Add("C_MATERIEL_ID", dt.Rows[i][0]);
+                            table3.Add("C_PLACE", dt.Rows[i][4]);
+                            table3.Add("DEC_COUNT", dt.Rows[i][3]);
+                            table3.Add("D_END_TIME", dt.Rows[i][5]);
+                            table3.Add("C_DH", c_id);
+
+                            DbParameter[] parms3 = dbHelper.getParams(table3);
+                            com.Parameters.Clear();
+                            com.Parameters.AddRange(parms3);
+                            result = com.ExecuteNonQuery();
+                        }
+                        else
+                        {//无同样零件
+                            sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_DH])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME, @C_DH)";
+                            com.CommandText = sql;
+                            Hashtable table3 = new Hashtable();
+                            table3.Add("C_MATERIEL_ID", dt.Rows[i][0]);
+                            table3.Add("C_PLACE", dt.Rows[i][4]);
+                            table3.Add("DEC_COUNT", dt.Rows[i][3]);
+                            table3.Add("D_END_TIME", dt.Rows[i][5]);
+                            table3.Add("C_DH", c_id);
+
+                            DbParameter[] parms3 = dbHelper.getParams(table3);
+                            com.Parameters.Clear();
+                            com.Parameters.AddRange(parms3);
+                            result = com.ExecuteNonQuery();
+                        }
                     }
                 }
 
@@ -535,8 +565,8 @@ namespace DAL
 
                 com.CommandText = sql;
                 object obj = com.ExecuteScalar();
-                dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(9));
-                c_id = "OM" + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
+                dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(10));
+                c_id = Common.GetInOutCode(type) + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
 
                 if (dt.Rows.Count > 0)
                 {
@@ -629,7 +659,7 @@ namespace DAL
         public DataTable getAllOutPlace(int inout)
         {
             DataTable ds = new DataTable();
-            string sql = " select * from T_SYS_INPORT where i_inout = "+inout+" ";
+            string sql = " select * from T_SYS_INPORT where i_inout = " + inout + " ";
             try
             {
 
@@ -653,7 +683,7 @@ namespace DAL
         /// </summary>
         /// <param name="user">货位信息</param>
         /// <returns></returns>
-        public bool handEmptyIn(string place,string tray,int uselie)
+        public bool handEmptyIn(string place, string tray, int uselie)
         {
             int result = 0;
             DbConnection conn = dbHelper.getConnection();
@@ -708,7 +738,7 @@ namespace DAL
 
                 table2.Add("C_PLACE", place);
                 table2.Add("C_Tray", tray);
-                table2.Add("DEC_COUNT", 0);               
+                table2.Add("DEC_COUNT", 0);
                 DbParameter[] parms2 = dbHelper.getParams(table2);
                 com.Parameters.Clear();
                 com.Parameters.AddRange(parms2);
@@ -717,9 +747,9 @@ namespace DAL
                 sql = "INSERT INTO [T_OPERATE_STOCKS]( [C_PLACE], [D_END_TIME], [C_Tray],[I_uselie])  VALUES ( @C_PLACE, @D_END_TIME, @C_Tray,@I_uselie)";
                 com.CommandText = sql;
                 Hashtable table3 = new Hashtable();
-               
+
                 table3.Add("C_PLACE", place);
-             
+
                 table3.Add("D_END_TIME", DateTime.Now);
                 table3.Add("C_Tray", tray);
                 table3.Add("I_uselie", uselie);
@@ -888,9 +918,9 @@ namespace DAL
                 com.CommandText = sql;
                 Hashtable table3 = new Hashtable();
 
-                table3.Add("C_PLACE", place);                
+                table3.Add("C_PLACE", place);
                 table3.Add("C_Tray", tray);
-               
+
                 DbParameter[] parms3 = dbHelper.getParams(table3);
                 com.Parameters.Clear();
                 com.Parameters.AddRange(parms3);
@@ -919,11 +949,11 @@ namespace DAL
             }
 
         }
-       /// <summary>
-       /// 根据工位编码获得出口地址
-       /// </summary>
-       /// <param name="stationid"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 根据工位编码获得出口地址
+        /// </summary>
+        /// <param name="stationid"></param>
+        /// <returns></returns>
         public string getOutPlacrSorece(string stationid)
         {
             string sql = "select C_PLACE from T_JB_STATION_PLACE where C_STATION_ID = '" + stationid + "' ";
@@ -1011,7 +1041,7 @@ namespace DAL
         }
 
 
-        public DataTable getProductOutList( string planid,string mid)
+        public DataTable getProductOutList(string planid, string mid)
         {
             string sql = string.Empty;
             sql = @" select * from (
@@ -1028,9 +1058,9 @@ namespace DAL
             try
             {
 
-                Hashtable table = new Hashtable();               
+                Hashtable table = new Hashtable();
 
-                
+
                 if (!(string.IsNullOrEmpty(planid)))
                 {
                     sql += " and  C_OPPOSITE_NO = @planid";
@@ -1091,7 +1121,7 @@ namespace DAL
                 Hashtable table = new Hashtable();
 
                 if (startDate != Global.minValue && endDate != Global.minValue)
-                {   
+                {
                     table.Add("startDate", startDate);
                     table.Add("endDate", endDate);
                 }
@@ -1121,12 +1151,12 @@ namespace DAL
         public int getValue(string id, string proid)
         {
             int count = 1;
-            string sql = " select I_VALUE from T_JB_COMPONENT_PROCEDURE where C_COMPONENT_ID = '"+id+"' and C_PROCEDURE_ID = '"+proid+"' ";
+            string sql = " select I_VALUE from T_JB_COMPONENT_PROCEDURE where C_COMPONENT_ID = '" + id + "' and C_PROCEDURE_ID = '" + proid + "' ";
 
             object temp = dbHelper.GetScalar(sql);
             if (temp != null && !(DBNull.Value.Equals(temp)))
             {
-                count = Convert.ToInt32(temp);              
+                count = Convert.ToInt32(temp);
             }
             return count;
         }
@@ -1162,7 +1192,7 @@ namespace DAL
                     }
                 }
 
-              
+
                 if (table.Count > 0)
                 {
                     DbParameter[] parms = dbHelper.getParams(table);
@@ -1205,7 +1235,7 @@ namespace DAL
 
                     table.Add("C_ID", planid);
                 }
-               
+
 
 
                 if (table.Count > 0)
@@ -1234,13 +1264,13 @@ namespace DAL
 
         public DataTable getSubList(string mainid)
         {
-            string sql = @" select * from T_COMPONENT_LAYOUT where C_COMPONENT_MAIN = '"+mainid+"' ";
+            string sql = @" select * from T_COMPONENT_LAYOUT where C_COMPONENT_MAIN = '" + mainid + "' ";
 
             DataTable dt = new DataTable();
             try
             {
-                    dt = dbHelper.GetDataSet(sql);
-               
+                dt = dbHelper.GetDataSet(sql);
+
             }
             catch (Exception ex)
             {
@@ -1282,9 +1312,9 @@ namespace DAL
 
 
         #region 统计工序时需要
-        public DataTable getInAllDetail(string planid, DateTime startDate, DateTime endDate,string procedure)
+        public DataTable getInAllDetail(string planid, DateTime startDate, DateTime endDate, string procedure)
         {
-           
+
             DataTable dt = new DataTable();
             try
             {
@@ -1325,7 +1355,7 @@ namespace DAL
                             inner join T_JB_PROCEDURE p on a.c_Procedure = p.C_ID
                             where a.C_CRK_LEIBIE =13   " + where;
 
-            
+
                 if (table.Count > 0)
                 {
                     DbParameter[] parms = dbHelper.getParams(table);

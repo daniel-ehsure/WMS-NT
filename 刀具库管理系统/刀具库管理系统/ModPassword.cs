@@ -105,6 +105,7 @@ namespace UI
                 if (layoutBLL.updateUser(user))
                 {
                     MessageBox.Show("用户信息更改成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Log.saveLog(string.Format("修改用户{0}成功！", user.C_loginID));
                     this.Close();
                 }
                 else

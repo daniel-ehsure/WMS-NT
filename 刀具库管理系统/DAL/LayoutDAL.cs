@@ -757,7 +757,7 @@ namespace DAL
         /// <returns></returns>
         public DataTable getLogByDate(string date)
         {
-            string sql = " select pid 序号, username 用户, addtime 时间, mess 信息 from T_SYS_LOG where addtime between '" + date + " 00:00:00' and '" + date + " 23:59:59'";
+            string sql = " select pid 序号, username 用户, addtime 时间, mess 信息 from T_SYS_LOG where addtime between '" + date + " 00:00:00' and '" + date + " 23:59:59' order by pid";
 
             DataTable dt = new DataTable();
             try

@@ -126,8 +126,6 @@ namespace UI
                 this.Close();
                 return;
             }
-
-
         }
       
 

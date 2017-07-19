@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using BLL;
 using Model;
+using Util;
 
 namespace UI
 {
@@ -116,6 +117,7 @@ namespace UI
                 if (bll.save(jiaose, users))
                 {
                     MessageBox.Show("数据保存成功！", "信息!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Log.saveLog(string.Format("设置用户{0}权限成功！", jiaose));
                 }
                 else
                 {

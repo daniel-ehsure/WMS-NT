@@ -22,27 +22,15 @@ namespace DAL
         /// <returns></returns>
         public DataTable getList(int type)
         {
-            string sql = @"select a.Dec_ID,a.C_DH,case I_INOUT when 11  then '生产出库' when 12 then '板材出库' 
-                        when 13 then '产品出库' when 14 then '空托盘出库' when 21 then '报工入库' when 22 then '板材入库' 
-                        when 23 then '成品入库' when 24 then '空托盘入库'  else '出库' end as c_inout,
-                        a.C_MATERIEL,a.C_MATERIEL_NAME,a.DEC_COUNT,a.C_CZY,b.c_name as c_Procedure_name,a.C_PLACE,a.C_Tray
-                         from T_Runing_Dolist a left join T_JB_PROCEDURE b on a.c_Procedure = b.c_id   WHERE 1=1";
+            string sql = @"select a.Dec_ID,a.C_DH,case I_INOUT when 10  then '零件出库' when 20 then '零件入库' 
+                        when 12 then '刀具使用出库' when 21 then '新刀具入库' when 22 then '刀具使用入库'  else '' end as c_inout,
+                        a.C_MATERIEL,b.C_NAME as C_MATERIEL_NAME,a.DEC_COUNT,a.C_CZY,a.C_PLACE
+                         from T_Runing_Dolist a left join T_JB_MATERIEL b on a.C_MATERIEL = b.c_id  where I_RUN = 0";
             DataTable dt = new DataTable();
             try
             {
-                if (type == 1)
-                {
-                    sql += " and a.I_INOUT < 20 ";
-
-                }
-                else if (type == 2)
-                {
-                    sql += " and a.I_INOUT > 20 ";
-                }
-
-                sql += " order by C_PLACE ";
+                sql += " order by a.Dec_ID ";
                 dt = dbHelper.GetDataSet(sql);
-
             }
             catch (Exception ex)
             {
@@ -54,7 +42,6 @@ namespace DAL
                 dbHelper.getConnection().Close();
             }
             return dt;
-
         }
 
 
@@ -65,7 +52,6 @@ namespace DAL
         /// <returns></returns>
         public bool deleteDoList(List<string> list)
         {
-
             int count = 0;
             DbConnection con = dbHelper.getConnection();
             try
@@ -86,37 +72,7 @@ namespace DAL
                 com.Transaction = tran;
                 foreach (string did in list)
                 {
-                    sql = " select * from T_Runing_Dolist where Dec_ID = " + did;
-                    com.CommandText = sql;
-
-                    SqlDataAdapter sda = new SqlDataAdapter(com);
-                    DataTable dt = new DataTable();
-                    sda.Fill(dt);
-                    if (dt.Rows.Count > 0)
-                    {
-                        int inout = Convert.ToInt32(dt.Rows[0]["I_INOUT"]);
-                        if (inout > 20)
-                        {
-                            int i_take = Convert.ToInt32(dt.Rows[0]["I_UseLie"]);
-                            if (i_take >= 2)
-                            {
-                                string placeTemp = dt.Rows[0]["C_PLACE"].ToString();
-                                string jia = placeTemp.Substring(0, 2);
-                                string ceng = placeTemp.Substring(4, 2);
-                                int lie = Convert.ToInt32(placeTemp.Substring(2, 2));
-
-                                string rightPlace = jia + "0" + (lie + 1) + ceng;
-                                sql = " update T_JB_PLACE set I_TAKE = 1 where C_ID = '" + placeTemp + "' ";
-                                com.CommandText = sql;
-                                com.ExecuteNonQuery();
-                                sql = " update T_JB_PLACE set I_INUSE = 1 where C_ID = '" + rightPlace + "'";
-                                com.CommandText = sql;
-                                com.ExecuteNonQuery();
-                                sql = "";
-                            }
-                        }
-                    }
-                    sql = "delete from T_Runing_Dolist where Dec_ID = @Dec_ID ";
+                    sql = "delete from T_Runing_Dolist where Dec_ID = @Dec_ID and C_DH = @C_DH and I_RUN = 0";
                     com.CommandText = sql;
                     Hashtable table = new Hashtable();
                     table.Add("Dec_ID", did);

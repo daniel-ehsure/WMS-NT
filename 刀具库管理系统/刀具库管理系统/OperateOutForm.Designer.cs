@@ -47,12 +47,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblMax = new System.Windows.Forms.Label();
-            this.lblStockId = new System.Windows.Forms.Label();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.dgv_Data = new System.Windows.Forms.DataGridView();
             this.cmbArea = new System.Windows.Forms.ComboBox();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.txtMeno = new System.Windows.Forms.TextBox();
@@ -96,6 +90,12 @@
             this.label22 = new System.Windows.Forms.Label();
             this.txtMaterielName = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
+            this.lblMax = new System.Windows.Forms.Label();
+            this.lblStockId = new System.Windows.Forms.Label();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dgv_Data = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -342,82 +342,6 @@
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "明细信息";
-            // 
-            // lblMax
-            // 
-            this.lblMax.AutoSize = true;
-            this.lblMax.Location = new System.Drawing.Point(875, 40);
-            this.lblMax.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblMax.Name = "lblMax";
-            this.lblMax.Size = new System.Drawing.Size(41, 12);
-            this.lblMax.TabIndex = 123;
-            this.lblMax.Text = "lblMax";
-            this.lblMax.Visible = false;
-            // 
-            // lblStockId
-            // 
-            this.lblStockId.AutoSize = true;
-            this.lblStockId.Location = new System.Drawing.Point(851, 19);
-            this.lblStockId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblStockId.Name = "lblStockId";
-            this.lblStockId.Size = new System.Drawing.Size(65, 12);
-            this.lblStockId.TabIndex = 122;
-            this.lblStockId.Text = "lblStockId";
-            this.lblStockId.Visible = false;
-            // 
-            // btnOK
-            // 
-            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOK.ImageIndex = 0;
-            this.btnOK.ImageList = this.imageList1;
-            this.btnOK.Location = new System.Drawing.Point(851, 143);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(64, 22);
-            this.btnOK.TabIndex = 115;
-            this.btnOK.Text = "确认(&O)";
-            this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // label5
-            // 
-            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label5.Location = new System.Drawing.Point(8, 245);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(920, 8);
-            this.label5.TabIndex = 30;
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.dgv_Data);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(8, 253);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(920, 112);
-            this.panel2.TabIndex = 31;
-            // 
-            // dgv_Data
-            // 
-            this.dgv_Data.AllowUserToAddRows = false;
-            this.dgv_Data.AllowUserToDeleteRows = false;
-            this.dgv_Data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_Data.BackgroundColor = System.Drawing.Color.White;
-            this.dgv_Data.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Data.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_Data.Location = new System.Drawing.Point(0, 0);
-            this.dgv_Data.MultiSelect = false;
-            this.dgv_Data.Name = "dgv_Data";
-            this.dgv_Data.ReadOnly = true;
-            this.dgv_Data.RowHeadersVisible = false;
-            this.dgv_Data.RowTemplate.Height = 23;
-            this.dgv_Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Data.Size = new System.Drawing.Size(916, 108);
-            this.dgv_Data.TabIndex = 65;
-            this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
             // cmbArea
             // 
@@ -851,6 +775,83 @@
             this.label28.Size = new System.Drawing.Size(65, 12);
             this.label28.TabIndex = 157;
             this.label28.Text = "物料名称：";
+            // 
+            // lblMax
+            // 
+            this.lblMax.AutoSize = true;
+            this.lblMax.Location = new System.Drawing.Point(875, 40);
+            this.lblMax.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblMax.Name = "lblMax";
+            this.lblMax.Size = new System.Drawing.Size(41, 12);
+            this.lblMax.TabIndex = 123;
+            this.lblMax.Text = "lblMax";
+            this.lblMax.Visible = false;
+            // 
+            // lblStockId
+            // 
+            this.lblStockId.AutoSize = true;
+            this.lblStockId.Location = new System.Drawing.Point(851, 19);
+            this.lblStockId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblStockId.Name = "lblStockId";
+            this.lblStockId.Size = new System.Drawing.Size(65, 12);
+            this.lblStockId.TabIndex = 122;
+            this.lblStockId.Text = "lblStockId";
+            this.lblStockId.Visible = false;
+            // 
+            // btnOK
+            // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOK.ImageIndex = 0;
+            this.btnOK.ImageList = this.imageList1;
+            this.btnOK.Location = new System.Drawing.Point(851, 134);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(64, 22);
+            this.btnOK.TabIndex = 115;
+            this.btnOK.Text = "确认(&O)";
+            this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // label5
+            // 
+            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label5.Location = new System.Drawing.Point(8, 245);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(920, 8);
+            this.label5.TabIndex = 30;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.dgv_Data);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(8, 253);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(920, 112);
+            this.panel2.TabIndex = 31;
+            // 
+            // dgv_Data
+            // 
+            this.dgv_Data.AllowUserToAddRows = false;
+            this.dgv_Data.AllowUserToDeleteRows = false;
+            this.dgv_Data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_Data.BackgroundColor = System.Drawing.Color.White;
+            this.dgv_Data.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_Data.Location = new System.Drawing.Point(0, 0);
+            this.dgv_Data.MultiSelect = false;
+            this.dgv_Data.Name = "dgv_Data";
+            this.dgv_Data.ReadOnly = true;
+            this.dgv_Data.RowHeadersVisible = false;
+            this.dgv_Data.RowTemplate.Height = 23;
+            this.dgv_Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_Data.Size = new System.Drawing.Size(916, 108);
+            this.dgv_Data.TabIndex = 65;
+            this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
             // OperateOutForm
             // 

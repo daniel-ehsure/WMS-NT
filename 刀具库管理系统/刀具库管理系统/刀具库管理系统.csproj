@@ -172,6 +172,12 @@
     <Compile Include="ModPassword.designer.cs">
       <DependentUpon>ModPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="OperateDoListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperateDoListForm.Designer.cs">
+      <DependentUpon>OperateDoListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OperateInForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,6 +254,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ModPassword.resx">
       <DependentUpon>ModPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OperateDoListForm.resx">
+      <DependentUpon>OperateDoListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OperateInForm.resx">
       <DependentUpon>OperateInForm.cs</DependentUpon>

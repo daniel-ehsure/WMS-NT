@@ -32,18 +32,10 @@ namespace UI
             if (bll.HasDoList())
             {
                 MessageBox.Show("Test");
-                btnScan.Enabled = false;
             }
         }
 
         //出库数量只能输入数字,小数点,回车和退格
-        private void txtNumber_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if ((e.KeyChar < 48 || e.KeyChar > 57) && (e.KeyChar != 8) && (e.KeyChar != 13))
-            {
-                e.Handled = true;
-            }
-        }
 
         //确认
         private void btnOK_Click(object sender, EventArgs e)
@@ -155,7 +147,7 @@ namespace UI
         private void addRow()
         {
             DataRow dr = dt.NewRow();
-            dr[0] = lblInMateriel.Text;
+            dr[0] = txtId.Text;
             dr[1] = txtMaterielName.Text;
             dr[2] = txtStand.Text;
             dr[3] = 1;
@@ -251,7 +243,7 @@ namespace UI
                 else
                 {
                     this.lblMaterielName.Visible = false;
-                    T_JB_Materiel materiel = mbll.getMaterielById(lblInMateriel.Text);
+                    T_JB_Materiel materiel = mbll.getMaterielById(txtId.Text);
                     if (materiel == null)
                     {
                         this.lblMaterielName.Visible = true;
@@ -261,7 +253,7 @@ namespace UI
                     {
                         this.lblMaterielName.Visible = false;
                         txtMaterielName.Text = materiel.C_name;
-                        lblInMateriel.Text = materiel.C_id;
+                        txtId.Text = materiel.C_id;
                         txtStand.Text = materiel.C_standerd;
                         lblTypeName.Text = materiel.C_typeName;
                     }
@@ -287,7 +279,7 @@ namespace UI
         private void initSub()
         {
             txtMaterielName.Text = string.Empty;
-            lblInMateriel.Text = string.Empty;
+            txtId.Text = string.Empty;
             txtStand.Text = string.Empty;
         }
 
@@ -329,7 +321,7 @@ namespace UI
         public void setMateriel(string name, string id, string standard)
         {
             this.txtMaterielName.Text = name;
-            this.lblInMateriel.Text = id;
+            this.txtId.Text = id;
             this.txtStand.Text = standard;
         }
 

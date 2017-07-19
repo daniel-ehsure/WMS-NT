@@ -74,67 +74,72 @@ namespace UI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //todo:add try
-            bool isEnd;
-
-            foreach (var key in dicCtrl.Keys)
+            try
             {
-                if (dicCtrl[key]["num"].Enabled)
-                {
-                    isEnd = IsEnd(dicCtrl[key]);
+                bool isEnd;
 
-                    if (key == 1)
+                foreach (var key in dicCtrl.Keys)
+                {
+                    if (dicCtrl[key]["num"].Enabled)
                     {
-                        if (!IsNotNull(dicCtrl[key]))
-                        {
-                            MessageBox.Show("请完善第1行数据！");
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        if (HasInput(dicCtrl[key]))
+                        isEnd = IsEnd(dicCtrl[key]);
+
+                        if (key == 1)
                         {
                             if (!IsNotNull(dicCtrl[key]))
                             {
-                                MessageBox.Show("请完善第" + key + "行数据！");
+                                MessageBox.Show("请完善第1行数据！");
                                 return;
+                            }
+                        }
+                        else
+                        {
+                            if (HasInput(dicCtrl[key]))
+                            {
+                                if (!IsNotNull(dicCtrl[key]))
+                                {
+                                    MessageBox.Show("请完善第" + key + "行数据！");
+                                    return;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            List<List<object>> list = new List<List<object>>();
+                List<List<object>> list = new List<List<object>>();
 
-            foreach (var item in dicCtrl.Values)
-            {
-                if (item["num"].Enabled && !string.IsNullOrEmpty(item["num"].Text.Trim()))
+                foreach (var item in dicCtrl.Values)
                 {
-                    if (checkInput(item))
+                    if (item["num"].Enabled && !string.IsNullOrEmpty(item["num"].Text.Trim()))
                     {
-                        list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), (int)item["end"].Tag == 7 ? 1 : ((CheckBox)item["end"]).Checked ? 1 : 0 });
-                    }
-                    else
-                    {
-                        return;
+                        if (checkInput(item))
+                        {
+                            list.Add(new List<object> { item["num"].Text.Trim(), item["name"].Text.Trim(), item["length"].Text.Trim(), item["width"].Text.Trim(), (int)item["end"].Tag == 7 ? 1 : ((CheckBox)item["end"]).Checked ? 1 : 0 });
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                 }
-            }
 
-            if (bll.SaveList(list, pid, parentForm.currentPlace.I_grade))
+                if (bll.SaveList(list, pid, parentForm.currentPlace.I_grade))
+                {
+                    parentForm.isAdd = true;
+
+                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Log.saveLog("设置货位成功！");
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception)
             {
-                parentForm.isAdd = true;
-
-                MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Log.saveLog("设置货位成功！");
-                Close();
+                MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
-            {
-                MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
         }
 
         private bool HasInput(Dictionary<string, Control> dic)
@@ -193,7 +198,7 @@ namespace UI
         private bool checkInput(Dictionary<string, Control> item)
         {
             int num = 0;
-            if (!int.TryParse(item["num"].Text.Trim(),out num))
+            if (!int.TryParse(item["num"].Text.Trim(), out num))
             {
                 MessageBox.Show("数量必须为整数！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;

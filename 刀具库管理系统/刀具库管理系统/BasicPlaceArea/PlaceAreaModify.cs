@@ -64,22 +64,29 @@ namespace UI
             }
             else
             {
-                T_JB_PLACEAREA mo = new T_JB_PLACEAREA();
-
-                mo.C_ID = id;
-                mo.C_NAME = txtName.Text.Trim();
-                mo.C_MEMO = txtMemo.Text.Trim();
-
-
-                if (bll.Update(mo))
+                try
                 {
-                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("修改货区成功！Id：" + lblId.Text);
-                    Close();
+                    T_JB_PLACEAREA mo = new T_JB_PLACEAREA();
+
+                    mo.C_ID = id;
+                    mo.C_NAME = txtName.Text.Trim();
+                    mo.C_MEMO = txtMemo.Text.Trim();
+
+
+                    if (bll.Update(mo))
+                    {
+                        MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("修改货区成功！Id：" + lblId.Text);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

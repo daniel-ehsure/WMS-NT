@@ -67,24 +67,31 @@ namespace UI
             }
             else
             {
-                T_JB_MaterielType mo = new T_JB_MaterielType();
-
-                mo.C_id = id;
-                mo.C_pre_id = lblPid.Text;
-                mo.C_name = txtName.Text.Trim();
-                mo.C_memo = txtMemo.Text.Trim();
-                mo.I_end = cbEnd.Checked ? 1 : 0;
-                mo.I_if_jx = cbJx.Checked ? 1 : 0;
-
-                if (bll.Update(mo))
+                try
                 {
-                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("修改物料类型成功！Id：" + lblId.Text);
-                    Close();
+                    T_JB_MaterielType mo = new T_JB_MaterielType();
+
+                    mo.C_id = id;
+                    mo.C_pre_id = lblPid.Text;
+                    mo.C_name = txtName.Text.Trim();
+                    mo.C_memo = txtMemo.Text.Trim();
+                    mo.I_end = cbEnd.Checked ? 1 : 0;
+                    mo.I_if_jx = cbJx.Checked ? 1 : 0;
+
+                    if (bll.Update(mo))
+                    {
+                        MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("修改物料类型成功！Id：" + lblId.Text);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

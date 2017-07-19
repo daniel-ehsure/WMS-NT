@@ -25,7 +25,6 @@ namespace UI
         DataTable dt;
         InOutType inOutType = InOutType.MATERIEL_IN;
         public T_JB_Materiel materielNow;
-        List<T_JB_Materiel> listMateriel = new List<T_JB_Materiel>();
 
         public OperateInForm()
         {
@@ -107,9 +106,12 @@ namespace UI
             {
                 try
                 {
-                    if (bll.HandIn(dt, txtInMeno.Text, inOutType))
+                    string result = bll.HandIn(dt, txtInMeno.Text, inOutType);
+
+                    if (!string.IsNullOrEmpty(result))
                     {
                         MessageBox.Show("入库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("零件入库成功！单号：" + result);
                         setMain(true);
                         initMain();
                         initSub();
@@ -164,6 +166,7 @@ namespace UI
                     if (dbll.SaveDolist(dt, txtInMeno.Text, inOutType))
                     {
                         MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("保存零件入库联机任务成功！");
                         Close();
                         setMain(true);
                         initMain();

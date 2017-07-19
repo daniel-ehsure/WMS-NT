@@ -119,6 +119,7 @@ namespace UI
                         if (bll.save(temp, Global.longid))
                         {
                             MessageBox.Show("物料保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Log.saveLog("添加物料成功！Id：" + txtId.Text);
                             reset();
                         }
                         else

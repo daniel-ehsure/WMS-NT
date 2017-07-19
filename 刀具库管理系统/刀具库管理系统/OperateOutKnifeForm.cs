@@ -68,17 +68,27 @@ namespace UI
             }
             else
             {
-                if (bll.handOut(dt, txtInMeno.Text, inOutType))
+                try
                 {
-                    MessageBox.Show("出库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    setMain(true);
-                    initMain();
-                    initSub();
-                    dt.Rows.Clear();
+                    string result = bll.handOut(dt, txtInMeno.Text, inOutType);
+
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        MessageBox.Show("出库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("刀具使用出库成功！单号：" + result);
+                        setMain(true);
+                        initMain();
+                        initSub();
+                        dt.Rows.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("出库失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("出库失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -102,22 +112,30 @@ namespace UI
         {
             if (dt.Rows.Count <= 0)
             {
-                MessageBox.Show("没有要入库的记录!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("没有要出库的记录!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             else
             {
-                if (dbll.saveDolist(dt, txtInMeno.Text, 1))
+                try
                 {
-                    MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    setMain(true);
-                    initMain();
-                    initSub();
-                    dt.Rows.Clear();
+                    if (dbll.saveDolist(dt, txtInMeno.Text, 1))
+                    {
+                        MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("保存刀具使用出库联机任务成功！");
+                        setMain(true);
+                        initMain();
+                        initSub();
+                        dt.Rows.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

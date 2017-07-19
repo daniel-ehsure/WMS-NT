@@ -15,9 +15,14 @@ namespace UI
     {
         OperateInOutBLL bll = new OperateInOutBLL();
         PlaceAreaBLL sbll = new PlaceAreaBLL();
+        PlaceBLL pbll = new PlaceBLL();
         RuningDoListBLL dbll = new RuningDoListBLL();
+        MaterielBLL mbll = new MaterielBLL();
+        MaterielTypeBLL tbll = new MaterielTypeBLL();
         DataTable dt;
         InOutType inOutType = InOutType.MATERIEL_OUT;
+        public T_JB_Materiel materielNow;
+
 
         public OperateOutForm()
         {
@@ -27,6 +32,34 @@ namespace UI
         private void OperateInForm_Load(object sender, EventArgs e)
         {
             initData();
+
+            if (bll.HasDoList())
+            {
+                MessageBox.Show("存在未完成的联机任务，不能进行出入库操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnHand.Enabled = false;
+                btnDoList.Enabled = false;
+                btnOK.Enabled = false;
+            }
+
+            #region 初始化 物料类别
+            DataTable dt = tbll.GetList(null, null, null, 1);
+            DataView dataView = dt.DefaultView;
+            dataView.Sort = "C_ID asc";
+            cmbType.DataSource = dataView.ToTable();
+            cmbType.DisplayMember = "C_NAME";
+            cmbType.ValueMember = "C_ID";
+            cmbType.SelectedIndex = -1;
+            #endregion
+
+            #region 初始化 货区
+            DataTable dtt = sbll.GetList(null);
+            DataView dataViewt = dtt.DefaultView;
+            dataViewt.Sort = "C_ID asc";
+            cmbArea.DataSource = dataViewt.ToTable();
+            cmbArea.DisplayMember = "C_NAME";
+            cmbArea.ValueMember = "C_ID";
+            cmbArea.SelectedIndex = -1;
+            #endregion
         }
 
         //出库数量只能输入数字,小数点,回车和退格
@@ -68,17 +101,27 @@ namespace UI
             }
             else
             {
-                if (bll.handOut(dt, txtInMeno.Text, inOutType))
+                try
                 {
-                    MessageBox.Show("出库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    setMain(true);
-                    initMain();
-                    initSub();
-                    dt.Rows.Clear();
+                    string result = bll.handOut(dt, txtInMeno.Text, inOutType);
+
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        MessageBox.Show("出库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("零件出库成功！单号：" + result);
+                        setMain(true);
+                        initMain();
+                        initSub();
+                        dt.Rows.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("出库失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("出库失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -93,7 +136,7 @@ namespace UI
         //选择货位
         private void button7_Click(object sender, EventArgs e)
         {
-            SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType,"");
+            SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType, "");
             select.ShowDialog();
         }
 
@@ -107,17 +150,26 @@ namespace UI
             }
             else
             {
-                if (dbll.saveDolist(dt, txtInMeno.Text, 1))
+                try
                 {
-                    MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    setMain(true);
-                    initMain();
-                    initSub();
-                    dt.Rows.Clear();
+                    if (dbll.SaveDolist(dt, txtInMeno.Text, inOutType))
+                    {
+                        MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("保存零件出库联机任务成功！");
+                        Close();
+                        setMain(true);
+                        initMain();
+                        initSub();
+                        dt.Rows.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -127,7 +179,7 @@ namespace UI
         private void addRow()
         {
             DataRow dr = dt.NewRow();
-            dr[0] = lblInMateriel.Text;
+            dr[0] = txtId.Text;
             dr[1] = txtMaterielName.Text;
             dr[2] = txtStand.Text;
             dr[3] = txtCount.Text.Trim();
@@ -141,7 +193,7 @@ namespace UI
             {
                 string m = Convert.ToString(dt.Rows[i][0]);
                 string p = Convert.ToString(dt.Rows[i][4]);
-                if (lblInMateriel.Text.Equals(m) && txtInPlace.Text.Trim().Equals(p))
+                if (txtId.Text.Equals(m) && txtInPlace.Text.Trim().Equals(p))
                 {
                     flag = true;
                     int old = Convert.ToInt32(dt.Rows[i][3]);
@@ -199,16 +251,7 @@ namespace UI
                 MessageBox.Show("出库日期不能大于当前日期!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 flag = false;
             }
-            if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
-            {
-                flag = false;
-                this.lblInPlace.Visible = true;
-            }
-            else
-            {
-                this.lblInPlace.Visible = false;
-            }
-            if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
+             if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
             {
                 flag = false;
                 this.lblCount.Visible = true;
@@ -271,12 +314,28 @@ namespace UI
 
         private void initSub()
         {
-            txtMaterielName.Text = string.Empty;
-            lblInMateriel.Text = string.Empty;
             txtCount.Text = string.Empty;
             txtStand.Text = string.Empty;
-            txtInPlace.Text = string.Empty;
-            lblMax.Text = string.Empty;
+
+            txtMaterielName.Text = string.Empty;
+            txtId.Text = string.Empty;
+            txtStand.Text = string.Empty;
+            txtThick.Text = string.Empty;
+            txtLength.Text = string.Empty;
+            txtWidth.Text = string.Empty;
+            txtMeno.Text = string.Empty;
+            txtId.Text = string.Empty;
+            this.textBox1.Text = string.Empty;
+            this.textBox2.Text = string.Empty;
+            this.textBox3.Text = string.Empty;
+            this.textBox4.Text = string.Empty;
+            this.textBox5.Text = string.Empty;
+            this.textBox7.Text = string.Empty;
+            this.textBox6.Text = string.Empty;
+            this.checkBox2.Checked = false;
+            this.checkBox1.Checked = false;
+            cmbType.SelectedIndex = -1;
+            cmbArea.SelectedIndex = -1;
         }
 
         private void dgv_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -317,7 +376,7 @@ namespace UI
         public void setMateriel(string name, string id, string standard)
         {
             this.txtMaterielName.Text = name;
-            this.lblInMateriel.Text = id;
+            this.txtId.Text = id;
             this.txtStand.Text = standard;
         }
         public void setMateriel(string name, string id, int thick, int single, string standard, int length, int width)
@@ -332,14 +391,16 @@ namespace UI
         public void setMaterielAndPlace(string mname, string mid, string standard, string pid, string tray, int count, string typeName)
         {
             this.txtMaterielName.Text = mname;
-            this.lblInMateriel.Text = mid;
-            this.txtStand.Text = standard;
             this.txtInPlace.Text = pid;
             this.txtCount.Text = count.ToString();
             this.lblMax.Text = count.ToString();
             this.lblTypeName.Text = typeName;
             //库存编号
             this.lblStockId.Text = tray;
+
+            materielNow = mbll.getMaterielById(mid);
+
+            ModelToUI(materielNow);
         }
 
         public void setMaterielAndPlace(string mname, string mid, int thick, int single, string standard, int length, int width, string pname, string pid, int plength, int pwidth, int count)
@@ -350,8 +411,61 @@ namespace UI
         #endregion
 
 
+        /// <summary>
+        /// 显示model
+        /// </summary>
+        /// <param name="materiel"></param>
+        void ModelToUI(T_JB_Materiel materiel)
+        {
+            this.txtId.Text = materiel.C_id;
+            this.txtMaterielName.Text = materiel.C_name;
+            this.cmbType.SelectedValue = materiel.C_type;
+            this.txtStand.Text = materiel.C_standerd;
+            this.txtThick.Text = materiel.I_thick.ToString();
+            this.txtLength.Text = materiel.I_length.ToString();
+            this.txtWidth.Text = materiel.I_width.ToString();
+            this.cmbArea.SelectedValue = materiel.C_area;
+            if (materiel.I_finish == 1)
+            {
+                this.checkBox1.Checked = true;
+            }
+            else
+            {
+                this.checkBox1.Checked = false;
+            }
+            this.txtMeno.Text = materiel.C_memo;
+            this.textBox1.Text = materiel.C_piccode;
+            this.textBox2.Text = materiel.I_layOutCount.ToString();
+            this.textBox3.Text = materiel.C_surface;
+            this.textBox4.Text = materiel.C_Science;
+            this.textBox5.Text = materiel.Dec_area.ToString();
+            this.textBox7.Text = materiel.Dec_weight.ToString();
+            this.textBox6.Text = materiel.Dec_production.ToString();
+            if (materiel.I_buy == 1)
+            {
+                this.checkBox2.Checked = true;
+            }
+            else
+            {
+                this.checkBox2.Checked = false;
+            }
+        }
 
+        private void txtId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                T_JB_Materiel mo = Utility.AnalyzeBarcodeMateriel(inOutType);
 
+                if (true)
+                {//只有一个货位有该零件
+                    ModelToUI(mo);
+                }
+                else
+                {//多个货位，窗体选择
 
+                }
+            }
+        }
     }
 }

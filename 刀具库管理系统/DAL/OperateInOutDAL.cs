@@ -379,8 +379,10 @@ namespace DAL
         /// 手工入库
         /// </summary>
         /// <returns></returns>
-        public bool HandIn(DataTable dt, string mainMeno, InOutType type)
+        public string HandIn(DataTable dt, string mainMeno, InOutType type)
         {
+            string dh;
+
             DateTime dtNow = DateTime.Now;
             int result = 0;
             DbConnection conn = dbHelper.getConnection();
@@ -415,6 +417,7 @@ namespace DAL
                 object obj = com.ExecuteScalar();
                 dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(10));
                 c_id = Common.GetInOutCode(type) + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
+                dh = c_id;
 
                 if (dt.Rows.Count > 0)
                 {
@@ -508,11 +511,11 @@ namespace DAL
                 tran.Commit();
                 if (result > 0)
                 {
-                    return true;
+                    return dh;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
             }
             catch (Exception ex)
@@ -534,8 +537,9 @@ namespace DAL
         /// </summary>
         /// <param name="user">货位信息</param>
         /// <returns></returns>
-        public bool handOut(DataTable dt, string mainMeno, InOutType type)
+        public string handOut(DataTable dt, string mainMeno, InOutType type)
         {
+            string dh;
             DateTime dtNow = DateTime.Now;
             int result = 0;
             DbConnection conn = dbHelper.getConnection();
@@ -567,6 +571,7 @@ namespace DAL
                 object obj = com.ExecuteScalar();
                 dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(10));
                 c_id = Common.GetInOutCode(type) + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
+                dh = c_id;
 
                 if (dt.Rows.Count > 0)
                 {
@@ -631,11 +636,11 @@ namespace DAL
                 tran.Commit();
                 if (result > 0)
                 {
-                    return true;
+                    return dh;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
             }
             catch (Exception ex)

@@ -65,22 +65,29 @@ namespace UI
             }
             else
             {
-                T_DM_UNIT mo = new T_DM_UNIT();
-
-                mo.C_id = id;
-                mo.C_pre_id = lblPid.Text;
-                mo.C_name = txtName.Text.Trim();
-                mo.C_memo = txtMemo.Text.Trim();
-
-                if (bll.Update(mo))
+                try
                 {
-                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("修改部门成功！Id：" + lblId.Text);
-                    Close();
+                    T_DM_UNIT mo = new T_DM_UNIT();
+
+                    mo.C_id = id;
+                    mo.C_pre_id = lblPid.Text;
+                    mo.C_name = txtName.Text.Trim();
+                    mo.C_memo = txtMemo.Text.Trim();
+
+                    if (bll.Update(mo))
+                    {
+                        MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("修改部门成功！Id：" + lblId.Text);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

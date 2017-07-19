@@ -47,33 +47,38 @@ namespace UI
             }
             else
             {
-                T_JB_WAREHOUSE mo = new T_JB_WAREHOUSE();
-
-                mo.C_COM = txtCom.Text.Trim();
-                mo.C_NAME = txtName.Text.Trim();
-                mo.C_BAUDRATE = txtBaudrate.Text.Trim();
-                mo.C_PORT = txtPort.Text.Trim();
-                mo.C_WRITE_PORT = txtWritePort.Text.Trim();
-                mo.C_READ_PORT = txtReadPort.Text.Trim();
-                mo.C_IP_ADDRESS = txtIpAddress.Text.Trim();
-                mo.C_TYPE = cmbType.SelectedValue.ToString();
-                mo.I_AUTO = cbAuto.Checked ? 1 : 0;
-                mo.I_IN_MOBILE = cbIn.Checked ? 1 : 0;
-                mo.I_OUT_MOBILE = cbOut.Checked ? 1 : 0;
-
-                if (bll.Save(mo))
+                try
                 {
-                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("添加库房成功！Id：" + lblId.Text);
-                    Close();
+                    T_JB_WAREHOUSE mo = new T_JB_WAREHOUSE();
+
+                    mo.C_COM = txtCom.Text.Trim();
+                    mo.C_NAME = txtName.Text.Trim();
+                    mo.C_BAUDRATE = txtBaudrate.Text.Trim();
+                    mo.C_PORT = txtPort.Text.Trim();
+                    mo.C_WRITE_PORT = txtWritePort.Text.Trim();
+                    mo.C_READ_PORT = txtReadPort.Text.Trim();
+                    mo.C_IP_ADDRESS = txtIpAddress.Text.Trim();
+                    mo.C_TYPE = cmbType.SelectedValue.ToString();
+                    mo.I_AUTO = cbAuto.Checked ? 1 : 0;
+                    mo.I_IN_MOBILE = cbIn.Checked ? 1 : 0;
+                    mo.I_OUT_MOBILE = cbOut.Checked ? 1 : 0;
+
+                    if (bll.Save(mo))
+                    {
+                        MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("添加库房成功！Id：" + lblId.Text);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-
         }
     }
 }

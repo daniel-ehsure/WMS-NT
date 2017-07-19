@@ -81,7 +81,7 @@ namespace BLL
         /// 手工入库
         /// </summary>
         /// <returns></returns>
-        public bool HandIn(DataTable dt, string mainMeno, InOutType type)
+        public string HandIn(DataTable dt, string mainMeno, InOutType type)
         {
             return dal.HandIn(dt, mainMeno, type);
         }
@@ -91,7 +91,7 @@ namespace BLL
         /// </summary>
         /// <param name="user">货位信息</param>
         /// <returns></returns>
-        public bool handOut(DataTable dt, string mainMeno, InOutType type)
+        public string handOut(DataTable dt, string mainMeno, InOutType type)
         {
             return dal.handOut(dt, mainMeno, type);
         }

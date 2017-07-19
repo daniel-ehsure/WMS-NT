@@ -127,6 +127,7 @@ namespace UI
                 if (mbll.setJurisdiction(isyes, isno, jiaose))            
                 {
                     MessageBox.Show("数据保存成功！", "信息!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Log.saveLog("物料分配成功！");
                 }
                 else
                 {

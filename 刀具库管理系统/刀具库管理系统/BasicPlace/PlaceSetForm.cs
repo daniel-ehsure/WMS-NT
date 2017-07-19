@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using BLL;
+using Util;
 
 namespace UI
 {
@@ -341,11 +342,20 @@ namespace UI
             {
                 collection.Add(row.Cells[0].Value.ToString());
             }
-            if (bll.UpdateArea(collection, dgv_area.SelectedRows[0].Cells[0].Value.ToString()))
+
+            try
             {
-                MessageBox.Show("货区分配成功！", "信息!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                checkBox1.Checked = false;
-                setPlaceData();
+                if (bll.UpdateArea(collection, dgv_area.SelectedRows[0].Cells[0].Value.ToString()))
+                {
+                    MessageBox.Show("货区分配成功！", "信息!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Log.saveLog("货区分配成功！");
+                    checkBox1.Checked = false;
+                    setPlaceData();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -671,7 +671,7 @@ namespace DAL
         /// <param name="station"></param>
         /// <returns></returns>
         public bool saveDolist(DataTable dt, string meno, int controlType)
-        {//todo:controlType 出入库标志和联机出库的一些规则
+        {
             int result = 0;
 
             DbConnection conn = dbHelper.getConnection();
@@ -831,7 +831,7 @@ namespace DAL
 
                     Hashtable table2 = new Hashtable();
                     table2.Add("Dec_ID", i + 1);
-                    table2.Add("C_DH", "");
+                    table2.Add("C_DH", Common.GetInOutCode(type));
                     table2.Add("I_INOUT", (int)type);
                     table2.Add("D_RQ", Convert.ToDateTime(dt.Rows[i][5]).ToString("yyyy-MM-dd"));
                     table2.Add("C_MATERIEL", dt.Rows[i][0]);

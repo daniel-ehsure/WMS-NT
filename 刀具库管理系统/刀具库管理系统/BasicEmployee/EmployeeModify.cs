@@ -112,6 +112,7 @@ namespace UI
                     if (bll.update(temp))
                     {
                         MessageBox.Show("员工信息更改成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("修改员工成功！姓名：" + temp.C_name);
                         this.Close();
                     }
                     else

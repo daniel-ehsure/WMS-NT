@@ -41,25 +41,32 @@ namespace UI
             }
             else
             {
-                T_DM_UNIT temp = new T_DM_UNIT();
-                temp.C_name = txtName.Text.Trim();
-                temp.C_pre_id = lblPid.Text.Trim();
-                temp.C_memo = txtMemo.Text.Trim();
-
-                string c_id = bll.Save(temp);
-
-                if (c_id != null && !(string.Empty.Equals(c_id.Trim())))
+                try
                 {
-                    temp.C_id = c_id;
-                    parentForm.addType = temp;
+                    T_DM_UNIT temp = new T_DM_UNIT();
+                    temp.C_name = txtName.Text.Trim();
+                    temp.C_pre_id = lblPid.Text.Trim();
+                    temp.C_memo = txtMemo.Text.Trim();
 
-                    MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.saveLog("添加物料类型成功！Id：" + c_id);
-                    Close();
+                    string c_id = bll.Save(temp);
+
+                    if (c_id != null && !(string.Empty.Equals(c_id.Trim())))
+                    {
+                        temp.C_id = c_id;
+                        parentForm.addType = temp;
+
+                        MessageBox.Show("保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("添加部门成功！Id：" + c_id);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("获取保存失败！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

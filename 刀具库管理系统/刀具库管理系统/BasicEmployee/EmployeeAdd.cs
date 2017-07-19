@@ -94,6 +94,7 @@ namespace UI
                     if (bll.save(temp, Global.longid))
                     {
                         MessageBox.Show("员工保存成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("添加员工成功！姓名：" + temp.C_name);
                         reset();
                     }
                     else

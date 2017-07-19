@@ -157,6 +157,7 @@ namespace UI
                         if (bll.update(temp))
                         {
                             MessageBox.Show("物料信息更改成功！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Log.saveLog("修改物料成功！Id：" + txtId.Text);
                             this.Close();
                         }
                         else

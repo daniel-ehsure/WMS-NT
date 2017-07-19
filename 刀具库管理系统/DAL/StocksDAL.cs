@@ -17,11 +17,11 @@ namespace DAL
         /// 获得出入库信息
         /// </summary>
         /// <returns></returns>
-       public DataTable getStocksList(string materiel,string materieName, string place, string stand,string userid)
+       public DataTable getStocksList(string materiel, string materieName, string place, string stand, string userid, string materielId)
         {
             string sql = @"select * from (
                             select a.C_MATERIEL_ID,b.C_NAME,c.C_NAME as C_TYPENAME,b.C_STANDARD,a.C_PLACE,a.DEC_COUNT,
-                            a.DEC_COUNT -isnull( d.usecount,0) as canuse, a.PRIID
+                            a.DEC_COUNT -isnull( d.usecount,0) as canuse, a.PRIID,a.DEC_COUNT -isnull( d.usecount,0) as num
                             from T_OPERATE_STOCKS a 
                             left join T_JB_MATERIEL b on a.C_MATERIEL_ID = b.C_ID
                             left join T_JB_MATERIELTYPE c on b.C_TYPE = c.C_ID
@@ -40,6 +40,12 @@ namespace DAL
                     sql += " and g.C_MATERIEL_ID like @materiel ";
 
                     table.Add("materiel", "%" + materiel + "%");
+                }
+                if (materielId != null && !(string.Empty.Equals(materielId)))
+                {
+                    sql += " and g.C_MATERIEL_ID = @materielId ";
+
+                    table.Add("materielId", materielId);
                 }
                 if (materieName != null && !(string.Empty.Equals(materieName)))
                 {

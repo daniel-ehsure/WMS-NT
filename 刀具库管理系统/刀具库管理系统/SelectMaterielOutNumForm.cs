@@ -11,32 +11,34 @@ using Model;
 
 namespace UI
 {
-    public partial class SelectMaterielOutForm : Form
+    public partial class SelectMaterielOutNumForm : Form
     {
        
         StocksBLL stockBll = new StocksBLL();
         InterfaceSelect parent = null;
         DataTable dt;
+        DataTable dtBak;
         int index = 0;
         public string materielId = string.Empty;
 
-        public SelectMaterielOutForm(InterfaceSelect parent, DataTable dt)
+        public SelectMaterielOutNumForm(InterfaceSelect parent, DataTable dt, DataTable dtBak, string materielId)
         {
             InitializeComponent();
-            this.parent = parent;
+            this.parent = parent;            
             this.dt = dt;
+            this.dtBak = dtBak;
+            this.materielId = materielId;
         }
 
         private void SelectMateriel_Load(object sender, EventArgs e)
         {
             querylist();
+            this.dgv_Data.EditMode = DataGridViewEditMode.EditOnEnter;
+            this.dgv_Data.DataError += delegate(object sender1, DataGridViewDataErrorEventArgs e1) { };  
         }
         //重置
         private void button5_Click(object sender, EventArgs e)
         {
-            this.textBox5.Text = string.Empty;
-            this.textBox4.Text = string.Empty;
-            this.textBox6.Text = string.Empty;
             this.textBox1.Text = string.Empty;
         }
         //查询
@@ -50,32 +52,52 @@ namespace UI
             this.Close();
         }
 
-        //双击选择
-        private void dgv_Data_DoubleClick(object sender, EventArgs e)
-        {
-            setParent();
-        }
         //选择按钮
         private void button1_Click(object sender, EventArgs e)
         {
-            setParent();
+            if (dgv_Data.SelectedRows.Count > 0)
+            {
+                for (int j = 0; j < dgv_Data.SelectedRows.Count; j++)
+                {
+                    float res;
+                    if (float.TryParse(dgv_Data.SelectedRows[j].Cells[8].Value.ToString(), out res))
+                    {
+                        if (res > Convert.ToInt32(dgv_Data.SelectedRows[j].Cells[6].Value))
+                        {
+                            MessageBox.Show("出库数量不能大于可用数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("出库数量必须为数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+
+                for (int j = 0; j < dgv_Data.SelectedRows.Count; j++)
+                {
+                    DataRow dr = dtBak.NewRow();
+                    dr[0] = materielId;
+                    //dr[1] = txtMaterielName.Text;
+                    //dr[2] = txtStand.Text;
+                    dr[3] = Convert.ToInt32(dgv_Data.SelectedRows[j].Cells[8].Value);
+                    dr[4] = dgv_Data.SelectedRows[j].Cells[4].Value.ToString();
+                    //dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
+                    dr[6] = Global.longid;
+                    dr[7] = dgv_Data.SelectedRows[j].Cells[2].Value.ToString();
+                    dr[8] = dgv_Data.SelectedRows[j].Cells[7].Value.ToString();
+                    dtBak.Rows.Add(dr);
+                }
+
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("请选择数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
-       
-
-
-
-
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //设置当前选择行
-            index = e.RowIndex;
-        }
-
-
-
-      
-
+     
         /// <summary>
         /// 查询物料列表
         /// </summary>
@@ -87,21 +109,9 @@ namespace UI
                 string name = null;
                 string place = null;
                 string standerd = null;                
-                if (this.textBox5.Text != null && !(string.Empty.Equals(this.textBox5.Text.Trim())))
-                {
-                    id = textBox5.Text.Trim();
-                }
-                if (this.textBox4.Text != null && !(string.Empty.Equals(this.textBox4.Text.Trim())))
-                {
-                    name = textBox4.Text.Trim();
-                }
                 if (this.textBox1.Text != null && !(string.Empty.Equals(this.textBox1.Text.Trim())))
                 {
                     place = textBox1.Text.Trim();
-                }
-                if (this.textBox6.Text != null && !(string.Empty.Equals(this.textBox6.Text.Trim())))
-                {
-                    standerd = textBox6.Text.Trim();
                 }
 
                 DataTable st = stockBll.getStocksList(id, name, place, standerd, Global.longid, materielId);
@@ -125,16 +135,24 @@ namespace UI
                 dgv_Data.DataSource = dv;
 
                 dgv_Data.Columns[0].HeaderText = "物料编码";
+                dgv_Data.Columns[0].ReadOnly = true;
                 dgv_Data.Columns[1].HeaderText = "物料名称";
+                dgv_Data.Columns[1].ReadOnly = true;
                 dgv_Data.Columns[2].HeaderText = "物料类别";
+                dgv_Data.Columns[2].ReadOnly = true;
                 dgv_Data.Columns[3].HeaderText = "规格型号";
+                dgv_Data.Columns[3].ReadOnly = true;
                 dgv_Data.Columns[4].HeaderText = "货位";
+                dgv_Data.Columns[4].ReadOnly = true;
                 dgv_Data.Columns[5].HeaderText = "库存数量";
+                dgv_Data.Columns[5].ReadOnly = true;
                 dgv_Data.Columns[6].HeaderText = "可用数量";
+                dgv_Data.Columns[6].ReadOnly = true;
                 dgv_Data.Columns[7].HeaderText = "库存编码";
                 dgv_Data.Columns[7].Visible = false;
-                dgv_Data.Columns[7].HeaderText = "可用数量";
-                dgv_Data.Columns[8].Visible = false;
+                dgv_Data.Columns[8].HeaderText = "出库数量";
+                dgv_Data.Columns[8].ReadOnly = false;
+                
             }
             catch (Exception)
             {

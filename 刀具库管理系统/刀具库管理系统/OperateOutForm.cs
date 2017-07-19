@@ -19,6 +19,7 @@ namespace UI
         RuningDoListBLL dbll = new RuningDoListBLL();
         MaterielBLL mbll = new MaterielBLL();
         MaterielTypeBLL tbll = new MaterielTypeBLL();
+        StocksBLL stockBll = new StocksBLL();
         DataTable dt;
         InOutType inOutType = InOutType.MATERIEL_OUT;
         public T_JB_Materiel materielNow;
@@ -133,12 +134,6 @@ namespace UI
             select.ShowDialog();
             txtCount.Focus();
         }
-        //选择货位
-        private void button7_Click(object sender, EventArgs e)
-        {
-            SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType, "");
-            select.ShowDialog();
-        }
 
         //联机出库
         private void button2_Click(object sender, EventArgs e)
@@ -208,7 +203,41 @@ namespace UI
             }
         }
 
+        private void addRowMult(DataTable dtBak, T_JB_Materiel mo)
+        {
+            for (int j = 0; j < dtBak.Rows.Count; j++)
+            {
+                DataRow dr = dt.NewRow();
+                dr[0] = dtBak.Rows[j][0];
+                dr[1] = mo.C_name;
+                dr[2] = mo.C_standerd;
+                dr[3] = dtBak.Rows[j][3];
+                dr[4] = dtBak.Rows[j][4];
+                dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
+                dr[6] = dtBak.Rows[j][6];
+                dr[7] = dtBak.Rows[j][7];
+                dr[8] = dtBak.Rows[j][8];
+                bool flag = false;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string m = Convert.ToString(dt.Rows[i][0]);
+                    string p = Convert.ToString(dt.Rows[i][4]);
+                    if (txtId.Text.Equals(m) && txtInPlace.Text.Trim().Equals(p))
+                    {
+                        flag = true;
+                        int old = Convert.ToInt32(dt.Rows[i][3]);
+                        int total = old + Convert.ToInt32(txtCount.Text.Trim());
+                        dt.Rows[i][3] = total.ToString();
+                        break;
+                    }
+                }
+                if (flag == false)
+                {
+                    dt.Rows.InsertAt(dr, 0);
+                }
+            }
 
+        }
 
         private void initData()
         {
@@ -251,7 +280,7 @@ namespace UI
                 MessageBox.Show("出库日期不能大于当前日期!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 flag = false;
             }
-             if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
+            if (txtCount.Text == null || string.Empty.Equals(txtCount.Text))
             {
                 flag = false;
                 this.lblCount.Visible = true;
@@ -362,11 +391,6 @@ namespace UI
             }
         }
 
-
-
-
-
-
         #region InterfaceSelect 成员
 
         public void setMateriel(string name, string id)
@@ -455,15 +479,42 @@ namespace UI
         {
             if (e.KeyChar == 13)
             {
+                #region 测试
+                //DataTable dtBak = dt.Clone();
+                //SelectMaterielOutNumForm select1 = new SelectMaterielOutNumForm(this, dt, dtBak, "001001");
+                //select1.ShowDialog();
+
+                //addRowMult(dtBak,mbll.getMaterielById("001001")); 
+                #endregion
+
                 T_JB_Materiel mo = Utility.AnalyzeBarcodeMateriel(inOutType);
 
-                if (true)
-                {//只有一个货位有该零件
-                    ModelToUI(mo);
+                if (mo != null)
+                {
+                    #region 无论多少，都要弹出框
+                    //DataTable st = stockBll.getStocksList(null, null, null, null, Global.longid, mo.C_id);
+
+                    //if (st.Rows.Count == 1)
+                    //{//只有一个货位有该零件
+                    //    //ModelToUI(mo);
+                    //    //txtCount.Text = Convert.ToInt32(st.Rows[0][5]).ToString();
+                    //    //txtInPlace.Text = st.Rows[0][4].ToString();
+                    //}
+                    //else
+                    //{//多个货位，窗体选择
+
+                    //} 
+                    #endregion
+
+                    DataTable dtBak = dt.Clone();
+                    SelectMaterielOutNumForm select = new SelectMaterielOutNumForm(this, dt, dtBak, mo.C_id);
+                    select.ShowDialog();
+
+                    addRowMult(dtBak, mo);
                 }
                 else
-                {//多个货位，窗体选择
-
+                {
+                    MessageBox.Show("无法解析！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

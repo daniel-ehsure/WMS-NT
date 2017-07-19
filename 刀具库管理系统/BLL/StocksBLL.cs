@@ -14,9 +14,9 @@ namespace BLL
         /// 获得全部库存信息
         /// </summary>
         /// <returns></returns>
-        public DataTable getStocksList(string materiel, string materieName, string place, string stand, string userid)
+        public DataTable getStocksList(string materiel, string materieName, string place, string stand, string userid, string materielId)
         {
-            return dal.getStocksList(materiel, materieName, place, stand, userid);
+            return dal.getStocksList(materiel, materieName, place, stand, userid, materielId);
         }
        /// <summary>
        /// 获得全部货位信息

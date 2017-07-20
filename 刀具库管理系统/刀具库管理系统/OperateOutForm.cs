@@ -427,7 +427,14 @@ namespace UI
             //库存编号
             this.lblStockId.Text = tray;
 
-            materielNow = mbll.getMaterielById(mid);
+            try
+            {
+                materielNow = mbll.getMaterielById(mid);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             ModelToUI(materielNow);
         }

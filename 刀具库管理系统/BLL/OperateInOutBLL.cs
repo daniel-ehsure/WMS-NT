@@ -597,5 +597,6 @@ namespace BLL
             return dal.HasDoList();
             
         }
+
     }
 }

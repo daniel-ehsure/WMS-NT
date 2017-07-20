@@ -335,6 +335,9 @@
     <EmbeddedResource Include="SelectMaterielOutNumForm.resx">
       <DependentUpon>SelectMaterielOutNumForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SelectKnifeOutForm.resx">
+      <DependentUpon>SelectKnifeOutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -480,6 +483,12 @@
     </Compile>
     <Compile Include="SelectMaterielOutNumForm.designer.cs">
       <DependentUpon>SelectMaterielOutNumForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectKnifeOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectKnifeOutForm.designer.cs">
+      <DependentUpon>SelectKnifeOutForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

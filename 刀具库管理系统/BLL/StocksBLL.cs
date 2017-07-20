@@ -83,5 +83,10 @@ namespace BLL
         {
             return dal.queryPlanPriceList(mid, dh, startDate, endDate);
         }
+
+        public DataTable GetKnifeStocksList(List<string> list)
+        {
+            return dal.GetKnifeStocksList(list);
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace DAL
         /// </summary>
         /// <param name="toRunDate"></param>
         /// <returns></returns>
-        public bool deleteDoList(List<string> list)
+        public bool deleteDoList(List<string> list, string dh)
         {
             int count = 0;
             DbConnection con = dbHelper.getConnection();
@@ -76,14 +76,13 @@ namespace DAL
                     com.CommandText = sql;
                     Hashtable table = new Hashtable();
                     table.Add("Dec_ID", did);
+                    table.Add("C_DH", dh);
 
                     DbParameter[] parms = dbHelper.getParams(table);
                     com.Parameters.Clear();
                     com.Parameters.AddRange(parms);
                     count = com.ExecuteNonQuery();
                 }
-
-
 
                 tran.Commit();
                 if (count > 0)
@@ -113,7 +112,7 @@ namespace DAL
         /// 执行联机任务
         /// </summary>
         /// <returns></returns>
-        public bool executeDoList(List<string> list)
+        public bool executeDoList(List<string> list, string dh)
         {
             int result = 0;
             DbConnection conn = dbHelper.getConnection();
@@ -127,475 +126,180 @@ namespace DAL
                 conn.Close();
                 throw ex;
             }
+
             SqlTransaction tran = (SqlTransaction)conn.BeginTransaction();
             SqlCommand com = (SqlCommand)conn.CreateCommand();
             string sql = string.Empty;
+            DateTime dtNow = DateTime.Now;
+
             try
             {
                 com.Transaction = tran;
 
-                foreach (string id in list)
+                sql = " select * from T_Runing_Dolist where Dec_ID in (" + string.Join(",", list.ToArray()) + ") and C_DH = @C_DH and I_RUN = 0";
+                com.CommandText = sql;
+                Hashtable table = new Hashtable();
+
+                //List<string> list1 = new List<string>(list.ToArray());
+
+                table.Add("C_DH", dh);
+
+                DbParameter[] parms = dbHelper.getParams(table);
+                com.Parameters.Clear();
+                com.Parameters.AddRange(parms);
+
+                SqlDataAdapter sda = new SqlDataAdapter(com);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                InOutType type = InOutType.KNIFE_IN;
+
+                if (dt.Rows.Count > 0)
                 {
-                    sql = " select * from T_Runing_Dolist where Dec_ID = " + id;
-                    com.CommandText = sql;
-
-                    SqlDataAdapter sda = new SqlDataAdapter(com);
-                    DataTable dt = new DataTable();
-                    sda.Fill(dt);
-                    if (dt.Rows.Count > 0)
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        int inout = Convert.ToInt32(dt.Rows[0]["I_INOUT"]);
-                        if (inout < 20) //出库
-                        {
-                            #region 获得出库单号
-                            long dec_id = 0;
-                            string c_id = string.Empty;
-                            sql = "SELECT max(c_id) FROM   T_OPERATE_INOUT_MAIN where C_CRK_LEIBIE =" + inout;
+                        if (i == 0)
+                        {//主表只加一次
 
+                            type = (InOutType)Convert.ToInt32(dt.Rows[0]["I_INOUT"]);
+                            //判断主表数据是否存在
+                            sql = "SELECT count(*) FROM T_OPERATE_INOUT_MAIN where [C_ID] = @C_ID";
                             com.CommandText = sql;
-                            object obj = com.ExecuteScalar();
-                            dec_id = Convert.IsDBNull(obj) ? 1000 : Convert.ToInt64(obj);
-                            c_id = (dec_id + 1).ToString();
-                            #endregion
-                            #region 插入主表
-                            sql = "INSERT INTO [T_OPERATE_INOUT_MAIN]([C_ID], [D_RQ], [C_CRK_LEIBIE],   [C_OPPOSITE_NO]) VALUES(" +
-                                "'" + c_id + "', '" + dt.Rows[0]["D_RQ"] + "', '" + inout + "',    ";
+                            Hashtable tableDh = new Hashtable();
+                            tableDh.Add("C_ID", dh);
+                            DbParameter[] parmsDh = dbHelper.getParams(tableDh);
+                            com.Parameters.Clear();
+                            com.Parameters.AddRange(parmsDh);
+                            int mainCount = int.Parse(com.ExecuteScalar().ToString());
 
-                            object mainMeno = dt.Rows[0]["C_DH"];
-                            if (mainMeno == null || string.Empty.Equals(mainMeno) || DBNull.Value.Equals(mainMeno))
+                            if (mainCount == 0)
                             {
-                                sql += "null)";
-                            }
-                            else
-                            {
-                                sql += "'" + mainMeno + "')";
-
-                            }
-                            com.CommandText = sql;
-                            com.ExecuteNonQuery();
-                            #endregion
-                            #region 插入子表
-                            sql = "INSERT INTO [T_OPERATE_INOUT_SUB]([C_ID],[C_CRK_LEIBIE], [C_MATERIEL], [C_PLACE], [C_Tray], [DEC_COUNT],  [C_PLACE_OLD],[I_TYPE],[C_STATION],[c_people_id],[c_Procedure]) " +
-                            "  VALUES('" + c_id + "','" + inout + "', ";
-                            object C_MATERIEL = dt.Rows[0]["C_MATERIEL"];
-                            if (C_MATERIEL == null || string.Empty.Equals(C_MATERIEL) || DBNull.Value.Equals(C_MATERIEL))
-                            {
-                                sql += "null";
-                            }
-                            else
-                            {
-                                sql += "'" + C_MATERIEL + "'";
-                            }
-                            sql += ", '" + dt.Rows[0]["C_PLACE"] + "', '" + dt.Rows[0]["C_Tray"] + "', ";
-                            object DEC_COUNT = dt.Rows[0]["DEC_COUNT"];
-                            if (DEC_COUNT == null || string.Empty.Equals(DEC_COUNT) || DBNull.Value.Equals(DEC_COUNT))
-                            {
-                                sql += "null";
-                            }
-                            else
-                            {
-                                sql += DEC_COUNT;
-
-                            }
-                            sql += ", '" + dt.Rows[0]["C_PLACE"] + "',1,'" + dt.Rows[0]["C_STATION"] + "',";
-                            object c_people_id = dt.Rows[0]["C_CZY"];
-                            if (inout == 13)
-                            {
-                                c_people_id = dt.Rows[0]["c_people_id"];
-                            }
-                            if (c_people_id == null || string.Empty.Equals(c_people_id) || DBNull.Value.Equals(c_people_id))
-                            {
-                                sql += "null,";
-                            }
-                            else
-                            {
-                                sql += "'" + c_people_id + "',";
-
-                            }
-                            object c_Procedure = dt.Rows[0]["c_Procedure"];
-                            if (c_Procedure == null || string.Empty.Equals(c_Procedure) || DBNull.Value.Equals(c_Procedure))
-                            {
-                                sql += "null)";
-                            }
-                            else
-                            {
-                                sql += "'" + c_Procedure + "')";
-                            }
-                            com.CommandText = sql;
-                            com.ExecuteNonQuery();
-                            #endregion
-                            bool isEmpty = false;
-
-                            string materiel = DBNull.Value.Equals(dt.Rows[0]["C_MATERIEL"]) ? string.Empty : Convert.ToString(dt.Rows[0]["C_MATERIEL"]);
-                            if (materiel == null || string.Empty.Equals(materiel))
-                            {
-                                isEmpty = true;
-                            }
-
-                            #region 更新库存
-
-                            if (isEmpty == false)
-                            {
-                                c_people_id = dt.Rows[0]["C_CZY"];
-                                sql = "UPDATE [T_OPERATE_STOCKS] SET  [DEC_COUNT]=[DEC_COUNT] - " + dt.Rows[0]["DEC_COUNT"] + " where [C_MATERIEL_ID] = '" +
-                                    dt.Rows[0]["C_MATERIEL"] + "' and [C_PLACE] = '" + dt.Rows[0]["C_PLACE"] + "'";
-
-                                if (c_people_id == null || string.Empty.Equals(c_people_id) || DBNull.Value.Equals(c_people_id))
-                                {
-                                    sql += " and c_people_id is null";
-                                }
-                                else
-                                {
-                                    sql += " and c_people_id = '" + c_people_id + "'";
-                                }
-                                if (c_Procedure == null || string.Empty.Equals(c_Procedure) || DBNull.Value.Equals(c_Procedure))
-                                {
-                                    sql += " and c_Procedure is null";
-                                }
-                                else
-                                {
-                                    if ("0005".Equals(c_Procedure))
-                                    {
-                                        sql += " and c_Procedure = '9999'";
-                                    }
-                                    else
-                                    {
-                                        sql += " and c_Procedure = '" + c_Procedure + "'";
-                                    }
-                                }
-                                if (mainMeno == null || string.Empty.Equals(mainMeno) || DBNull.Value.Equals(mainMeno))
-                                {
-                                    sql += " and C_DH is null";
-                                }
-                                else
-                                {
-                                    if (inout == 12)
-                                    {
-                                        sql += " and C_DH is null";
-                                    }
-                                    else
-                                    {
-                                        sql += " and C_DH = '" + mainMeno + "'";
-                                    }
-                                }
-
+                                sql = "INSERT INTO [T_OPERATE_INOUT_MAIN]([C_ID], [D_RQ], [C_CRK_LEIBIE],  [C_CZY], [C_MEMO], [D_TIME]) VALUES(@C_ID, @D_RQ, @C_CRK_LEIBIE,  @C_CZY,  @C_MEMO, @D_TIME)";
                                 com.CommandText = sql;
-                                com.ExecuteNonQuery();
+                                Hashtable tableMain = new Hashtable();
 
+                                tableMain.Add("C_ID", dh);
+                                tableMain.Add("D_RQ", dt.Rows[0][3]);
+                                tableMain.Add("C_CZY", dt.Rows[0][7]);
+                                tableMain.Add("C_CRK_LEIBIE", (int)type);
+                                tableMain.Add("D_TIME", dtNow);
+                                tableMain.Add("C_MEMO", dt.Rows[0][10]);
+
+                                DbParameter[] parmsMain = dbHelper.getParams(tableMain);
+                                com.Parameters.Clear();
+                                com.Parameters.AddRange(parmsMain);
+                                com.ExecuteNonQuery();
+                            }
+                        }
+
+                        //子表
+                        sql = "INSERT INTO [T_OPERATE_INOUT_SUB]([C_ID], [C_CRK_LEIBIE],[C_MATERIEL], [C_PLACE], [DEC_COUNT], [I_FLAG], [C_MACHINE]) " +
+         "  VALUES(@C_ID,@C_CRK_LEIBIE, @C_MATERIEL, @C_PLACE, @DEC_COUNT, @I_FLAG, @C_MACHINE)";
+                        com.CommandText = sql;
+                        Hashtable table2 = new Hashtable();
+                        table2.Add("C_ID", dh);
+                        table2.Add("C_CRK_LEIBIE", (int)type);
+                        table2.Add("C_MATERIEL", dt.Rows[i][4]);
+                        table2.Add("C_PLACE", dt.Rows[i][5]);
+                        table2.Add("DEC_COUNT", dt.Rows[i][6]);
+                        table2.Add("I_FLAG", dt.Rows[i][11]);
+                        table2.Add("C_MACHINE", dt.Rows[i][12]);
+
+                        DbParameter[] parms2 = dbHelper.getParams(table2);
+                        com.Parameters.Clear();
+                        com.Parameters.AddRange(parms2);
+                        com.ExecuteNonQuery();
+
+                        switch (type)
+                        {
+                            case InOutType.MATERIEL_OUT:
+                                sql = "UPDATE [T_OPERATE_STOCKS] SET  [DEC_COUNT]=[DEC_COUNT] - @DEC_COUNT where [C_MATERIEL_ID] = @C_MATERIEL_ID and [C_PLACE] = @C_PLACE";
+                                com.CommandText = sql;
+                                Hashtable table3 = new Hashtable();
+                                table3.Add("C_MATERIEL_ID", dt.Rows[i][4]);
+                                table3.Add("C_PLACE", dt.Rows[i][5]);
+                                table3.Add("DEC_COUNT", dt.Rows[i][6]);
+
+                                DbParameter[] parms3 = dbHelper.getParams(table3);
+                                com.Parameters.Clear();
+                                com.Parameters.AddRange(parms3);
+                                result = com.ExecuteNonQuery();
 
                                 sql = "DELETE FROM  [T_OPERATE_STOCKS] where [DEC_COUNT] <=0";
                                 com.CommandText = sql;
                                 com.ExecuteNonQuery();
-                            }
-                            else
-                            {
-                                string place = DBNull.Value.Equals(dt.Rows[0]["C_PLACE"]) ? string.Empty : Convert.ToString(dt.Rows[0]["C_PLACE"]);
-                                sql = "DELETE FROM  [T_OPERATE_STOCKS] where [C_PLACE]  = '" + place + "'";
+                                break;
+
+                            case InOutType.KNIFE_OUT_USE:
+
+                                break;
+
+                            case InOutType.MATERIEL_IN:
+                                //判断货位原来是否有同样零件
+                                sql = "SELECT count(*) FROM T_OPERATE_STOCKS where [C_MATERIEL_ID] = @C_MATERIEL_ID and [C_PLACE] = @C_PLACE";
                                 com.CommandText = sql;
-                                com.ExecuteNonQuery();
-                            }
+                                Hashtable table4 = new Hashtable();
+                                table4.Add("C_MATERIEL_ID", dt.Rows[i][4]);
+                                table4.Add("C_PLACE", dt.Rows[i][5]);
+                                DbParameter[] parms4 = dbHelper.getParams(table4);
+                                com.Parameters.Clear();
+                                com.Parameters.AddRange(parms4);
+                                int stockCount = int.Parse(com.ExecuteScalar().ToString());
 
-                            #endregion
-
-                            #region 更新货位
-                            sql = "select sum([DEC_COUNT]) from T_OPERATE_STOCKS where [C_PLACE] = '" + dt.Rows[0]["C_PLACE"] + "' ";
-                            com.CommandText = sql;
-                            int stocksCount = 0;
-                            object stocksCountTemp = com.ExecuteScalar();
-                            if (stocksCountTemp == null || string.Empty.Equals(stocksCountTemp) || DBNull.Value.Equals(stocksCountTemp))
-                            {
-                                stocksCount = 0;
-                            }
-                            else
-                            {
-                                stocksCount = Convert.ToInt32(stocksCountTemp);
-                            }
-
-                            if (stocksCount <= 0)
-                            {
-                                int i_take = Convert.ToInt32(dt.Rows[0]["I_UseLie"]);
-                                if (i_take >= 2)
-                                {
-                                    string placeTemp = dt.Rows[0]["C_PLACE"].ToString();
-                                    string jia = placeTemp.Substring(0, 2);
-                                    string ceng = placeTemp.Substring(4, 2);
-                                    int lie = Convert.ToInt32(placeTemp.Substring(2, 2));
-
-                                    string rightPlace = jia + "0" + (lie + 1) + ceng;
-                                    sql = " update T_JB_PLACE set I_TAKE = 1 where C_ID = '" + placeTemp + "' ";
+                                if (stockCount > 0)
+                                {//有同样零件
+                                    sql = "UPDATE T_OPERATE_STOCKS SET [DEC_COUNT] = [DEC_COUNT] + @DEC_COUNT, [D_END_TIME] = @D_END_TIME, [C_DH] = @C_DH where [C_MATERIEL_ID] = @C_MATERIEL_ID and [C_PLACE] = @C_PLACE ";
                                     com.CommandText = sql;
+                                    Hashtable table5 = new Hashtable();
+                                    table5.Add("C_MATERIEL_ID", dt.Rows[i][4]);
+                                    table5.Add("C_PLACE", dt.Rows[i][5]);
+                                    table5.Add("DEC_COUNT", dt.Rows[i][6]);
+                                    table5.Add("D_END_TIME", dt.Rows[i][3]);
+                                    table5.Add("C_DH", dh);
+
+                                    DbParameter[] parms5 = dbHelper.getParams(table5);
+                                    com.Parameters.Clear();
+                                    com.Parameters.AddRange(parms5);
                                     com.ExecuteNonQuery();
-                                    sql = " update T_JB_PLACE set I_INUSE = 1 where C_ID = '" + rightPlace + "'";
+                                }
+                                else
+                                {//无同样零件
+                                    sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_DH])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME, @C_DH)";
                                     com.CommandText = sql;
+                                    Hashtable table6 = new Hashtable();
+                                    table6.Add("C_MATERIEL_ID", dt.Rows[i][4]);
+                                    table6.Add("C_PLACE", dt.Rows[i][5]);
+                                    table6.Add("DEC_COUNT", dt.Rows[i][6]);
+                                    table6.Add("D_END_TIME", dt.Rows[i][3]);
+                                    table6.Add("C_DH", dh);
+
+                                    DbParameter[] parms6 = dbHelper.getParams(table6);
+                                    com.Parameters.Clear();
+                                    com.Parameters.AddRange(parms6);
                                     com.ExecuteNonQuery();
-                                    sql = "";
                                 }
-                            }
-                            #endregion
+                                break;
 
-                            if (inout == 13)
-                            {
-                                sql = " select I_VALUE from T_JB_COMPONENT_PROCEDURE where C_COMPONENT_ID = '" + dt.Rows[0]["C_MATERIEL"] + "' and C_PROCEDURE_ID ='0005' ";
-                                com.CommandText = sql;
-                                object objPCount = com.ExecuteScalar();
-                                int pCount = Convert.IsDBNull(objPCount) ? 0 : Convert.ToInt32(objPCount);
-                                if (pCount == 0)
-                                {
-                                    pCount = 1;
-                                }
-                                int piCount = Convert.ToInt32(dt.Rows[0]["DEC_COUNT"]);
-                                int toCount = pCount * piCount;
-                                sql = " update T_OPERATE_PRODUCE_PLAN_SUB set I_PIECE_FINISH_COUNT = I_PIECE_FINISH_COUNT+" + piCount + ",I_FINISH_COUNT = I_FINISH_COUNT+" + toCount +
-                           " where C_PLAN_ID= '" + mainMeno + "' and C_COMPONENT_ID = '" + dt.Rows[0]["C_MATERIEL"] + "' and C_PROCEDURE_ID = '0005' ";
-                                com.CommandText = sql;
-                                result = com.ExecuteNonQuery();
+                            case InOutType.KNIFE_IN:
+                            case InOutType.KNIFE_IN_USE:
 
-                            }
+                                break;
+                            default:
+                                break;
                         }
-                        else if (inout > 20) //入库
-                        {
-
-                            #region 获得出库单号
-                            long dec_id = 0;
-                            string c_id = string.Empty;
-                            sql = "SELECT max(c_id) FROM   T_OPERATE_INOUT_MAIN where C_CRK_LEIBIE =" + inout;
-
-                            com.CommandText = sql;
-                            object obj = com.ExecuteScalar();
-                            dec_id = Convert.IsDBNull(obj) ? 1000 : Convert.ToInt64(obj);
-                            c_id = (dec_id + 1).ToString();
-                            #endregion
-                            #region 插入主表
-                            sql = "INSERT INTO [T_OPERATE_INOUT_MAIN]([C_ID], [D_RQ], [C_CRK_LEIBIE], [C_OPPOSITE_NO]) VALUES('" +
-                                c_id + "', '" + dt.Rows[0]["D_RQ"] + "', '" + inout + "',";
-
-
-                            object mainMeno = dt.Rows[0]["C_DH"];
-                            if (mainMeno == null || string.Empty.Equals(mainMeno) || DBNull.Value.Equals(mainMeno))
-                            {
-                                sql += "null)";
-                            }
-                            else
-                            {
-                                sql += "'" + mainMeno + "')";
-
-                            }
-
-                            com.CommandText = sql;
-                            com.ExecuteNonQuery();
-                            #endregion
-                            #region 插入子表
-                            sql = "INSERT INTO [T_OPERATE_INOUT_SUB]([C_ID],[C_CRK_LEIBIE], [C_MATERIEL], [C_PLACE], [C_Tray], [DEC_COUNT],  [C_PLACE_OLD],[I_TYPE],[C_STATION],[c_people_id],[c_Procedure]) " +
-                            "  VALUES('" + c_id + "','" + inout + "',";
-                            object C_MATERIEL = dt.Rows[0]["C_MATERIEL"];
-                            if (C_MATERIEL == null || string.Empty.Equals(C_MATERIEL) || DBNull.Value.Equals(C_MATERIEL))
-                            {
-                                sql += "null";
-                            }
-                            else
-                            {
-                                sql += "'" + C_MATERIEL + "'";
-                            }
-                            sql += ", '" + dt.Rows[0]["C_PLACE"] + "', '" + dt.Rows[0]["C_Tray"] +
-                             "', ";
-                            object DEC_COUNT = dt.Rows[0]["DEC_COUNT"];
-                            if (DEC_COUNT == null || string.Empty.Equals(DEC_COUNT) || DBNull.Value.Equals(DEC_COUNT))
-                            {
-                                sql += "null";
-                            }
-                            else
-                            {
-                                sql += DEC_COUNT;
-
-                            }
-                            sql += ", '" + dt.Rows[0]["C_PLACE"] + "',1,'" + dt.Rows[0]["C_STATION"] + "',";
-                            object c_people_id = dt.Rows[0]["C_CZY"];
-                            if (c_people_id == null || string.Empty.Equals(c_people_id) || DBNull.Value.Equals(c_people_id))
-                            {
-                                sql += "null,";
-                            }
-                            else
-                            {
-                                sql += "'" + c_people_id + "',";
-
-                            }
-                            object c_Procedure = dt.Rows[0]["c_Procedure"];
-                            if (c_Procedure == null || string.Empty.Equals(c_Procedure) || DBNull.Value.Equals(c_Procedure))
-                            {
-                                sql += "null)";
-                            }
-                            else
-                            {
-                                sql += "'" + c_Procedure + "')";
-                            }
-
-                            com.CommandText = sql;
-                            com.ExecuteNonQuery();
-                            #endregion
-                            #region 更新库存
-                            sql = " select count(*) from T_OPERATE_STOCKS where [C_MATERIEL_ID] = '" + dt.Rows[0]["C_MATERIEL"] + "' and [C_PLACE] ='" + dt.Rows[0]["C_PLACE"] + "'  ";
-
-                            if (c_people_id == null || string.Empty.Equals(c_people_id) || DBNull.Value.Equals(c_people_id))
-                            {
-                                sql += " and c_people_id is null";
-                            }
-                            else
-                            {
-                                sql += " and c_people_id = '" + c_people_id + "'";
-                            }
-                            if (c_Procedure == null || string.Empty.Equals(c_Procedure) || DBNull.Value.Equals(c_Procedure))
-                            {
-                                sql += " and c_Procedure is null";
-                            }
-                            else
-                            {
-                                sql += " and c_Procedure = '" + c_Procedure + "'";
-
-                            }
-                            if (mainMeno == null || string.Empty.Equals(mainMeno) || DBNull.Value.Equals(mainMeno))
-                            {
-                                sql += " and C_DH is null";
-                            }
-                            else
-                            {
-                                sql += " and C_DH = '" + mainMeno + "'";
-
-                            }
-
-                            com.CommandText = sql;
-                            object tempCount = com.ExecuteScalar();
-                            int stockCount = 0;
-                            if (tempCount != null && !(DBNull.Value.Equals(tempCount)))
-                            {
-                                stockCount = Convert.ToInt32(tempCount);
-                            }
-                            if (stockCount > 0)
-                            {
-
-                                sql = "UPDATE [T_OPERATE_STOCKS] SET  [DEC_COUNT]=[DEC_COUNT] + " + dt.Rows[0]["DEC_COUNT"] +
-                                    ",[D_END_TIME] =getdate() where [C_MATERIEL_ID] = '" + dt.Rows[0]["C_MATERIEL"] + "' and [C_PLACE] = '" + dt.Rows[0]["C_PLACE"] + "'";
-
-
-
-                                if (c_people_id == null || string.Empty.Equals(c_people_id) || DBNull.Value.Equals(c_people_id))
-                                {
-                                    sql += " and c_people_id is null";
-                                }
-                                else
-                                {
-                                    sql += " and c_people_id = '" + c_people_id + "'";
-
-                                }
-                                if (c_Procedure == null || string.Empty.Equals(c_Procedure) || DBNull.Value.Equals(c_Procedure))
-                                {
-                                    sql += " and c_Procedure is null";
-                                }
-                                else
-                                {
-                                    sql += " and c_Procedure = '" + c_Procedure + "'";
-
-                                }
-                                if (mainMeno == null || string.Empty.Equals(mainMeno) || DBNull.Value.Equals(mainMeno))
-                                {
-                                    sql += " and C_DH is null";
-                                }
-                                else
-                                {
-                                    sql += " and C_DH ='" + mainMeno + "'";
-
-                                }
-                                com.CommandText = sql;
-
-                                com.ExecuteNonQuery();
-                            }
-                            else
-                            {
-                                sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_Tray],[I_uselie],[c_people_id],[c_Procedure],[C_DH])  VALUES (";
-
-                                if (C_MATERIEL == null || string.Empty.Equals(C_MATERIEL) || DBNull.Value.Equals(C_MATERIEL))
-                                {
-                                    sql += "null";
-                                }
-                                else
-                                {
-                                    sql += "'" + C_MATERIEL + "'";
-
-                                }
-                                sql += ", '" + dt.Rows[0]["C_PLACE"] + "', ";
-
-                                if (DEC_COUNT == null || string.Empty.Equals(DEC_COUNT) || DBNull.Value.Equals(DEC_COUNT))
-                                {
-                                    sql += "null";
-                                }
-                                else
-                                {
-                                    sql += DEC_COUNT;
-
-                                }
-                                sql += ", getdate(), '" + dt.Rows[0]["C_Tray"] + "'," + dt.Rows[0]["I_UseLie"] + ",";
-                                if (c_people_id == null || string.Empty.Equals(c_people_id) || DBNull.Value.Equals(c_people_id))
-                                {
-                                    sql += "null,";
-                                }
-                                else
-                                {
-                                    sql += "'" + c_people_id + "',";
-                                }
-                                if (c_Procedure == null || string.Empty.Equals(c_Procedure) || DBNull.Value.Equals(c_Procedure))
-                                {
-                                    sql += "null,";
-                                }
-                                else
-                                {
-                                    sql += "'" + c_Procedure + "',";
-                                }
-                                if (mainMeno == null || string.Empty.Equals(mainMeno) || DBNull.Value.Equals(mainMeno))
-                                {
-                                    sql += "null)";
-                                }
-                                else
-                                {
-                                    sql += "'" + mainMeno + "')";
-
-                                }
-                                com.CommandText = sql;
-                                result = com.ExecuteNonQuery();
-                            }
-
-                            #endregion
-                            if (inout == 21)
-                            {
-                                sql = " select I_VALUE from T_JB_COMPONENT_PROCEDURE where C_COMPONENT_ID = '" + dt.Rows[0]["C_MATERIEL"] + "' and C_PROCEDURE_ID ='" + c_Procedure + "' ";
-                                com.CommandText = sql;
-                                object objPCount = com.ExecuteScalar();
-                                int pCount = Convert.IsDBNull(objPCount) ? 0 : Convert.ToInt32(objPCount);
-                                if (pCount == 0 && "9999".Equals(c_Procedure))
-                                {
-                                    pCount = 1;
-                                }
-                                int piCount = Convert.ToInt32(dt.Rows[0]["DEC_COUNT"]);
-                                int toCount = pCount * piCount;
-                                sql = " update T_OPERATE_PRODUCE_PLAN_SUB set I_PIECE_FINISH_COUNT = I_PIECE_FINISH_COUNT+" + piCount + ",I_FINISH_COUNT = I_FINISH_COUNT+" + toCount +
-                           " where C_PLAN_ID= '" + mainMeno + "' and C_COMPONENT_ID = '" + dt.Rows[0]["C_MATERIEL"] + "' and C_PROCEDURE_ID = '" + c_Procedure + "' ";
-                                com.CommandText = sql;
-                                result = com.ExecuteNonQuery();
-
-
-                            }
-
-
-
-                        }
-
-                        sql = " delete T_Runing_Dolist where dec_id =  " + dt.Rows[0]["dec_id"];
-                        com.CommandText = sql;
-                        result = com.ExecuteNonQuery();
                     }
+
+                    sql = "DELETE FROM  [T_Runing_Dolist] where Dec_ID in (" + string.Join(",", list.ToArray()) + ") and C_DH = @C_DH and I_RUN = 0";
+                    com.CommandText = sql;
+
+                    DbParameter[] parmsDel = dbHelper.getParams(table);
+                    com.Parameters.Clear();
+                    com.Parameters.AddRange(parmsDel);
+
+                    result = com.ExecuteNonQuery();
                 }
 
-
-
                 tran.Commit();
+
                 if (result > 0)
                 {
                     return true;
@@ -616,7 +320,6 @@ namespace DAL
             {
                 conn.Close();
             }
-
         }
 
         /// <summary>
@@ -656,7 +359,7 @@ namespace DAL
                 com.CommandText = sql;
                 object obj = com.ExecuteScalar();
                 dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj);
-               
+
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID],  [I_INOUT], [D_RQ], [C_MATERIEL], [C_MATERIEL_NAME], [C_TYPE_NAME], 
@@ -664,19 +367,19 @@ namespace DAL
                             VALUES(@Dec_ID, @I_INOUT, @D_RQ, @C_MATERIEL, @C_MATERIEL_NAME, @C_TYPE_NAME, @C_PLACE, 
                             @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MEMO)";
                     com.CommandText = sql;
-                    dec_id  = dec_id+1;
+                    dec_id = dec_id + 1;
                     c_id = (dec_id).ToString();
                     Hashtable table2 = new Hashtable();
                     table2.Add("Dec_ID", c_id);
-                    table2.Add("I_INOUT",controlType );
-                    table2.Add("D_RQ", Convert.ToDateTime( dt.Rows[i][5]).ToString("yyyy-MM-dd"));
+                    table2.Add("I_INOUT", controlType);
+                    table2.Add("D_RQ", Convert.ToDateTime(dt.Rows[i][5]).ToString("yyyy-MM-dd"));
                     table2.Add("C_MATERIEL", dt.Rows[i][0]);
                     table2.Add("C_MATERIEL_NAME", dt.Rows[i][1]);
                     table2.Add("C_TYPE_NAME", dt.Rows[i][7]);
                     table2.Add("C_PLACE", dt.Rows[i][4]);
                     table2.Add("DEC_COUNT", dt.Rows[i][3]);
                     table2.Add("C_CZY", dt.Rows[i][6]);
-                    table2.Add("I_RUN", 1);                   
+                    table2.Add("I_RUN", 1);
                     table2.Add("D_AddRQ", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
                     if (meno == null || string.Empty.Equals(meno.Trim()))
                     {
@@ -690,7 +393,7 @@ namespace DAL
                     DbParameter[] parms2 = dbHelper.getParams(table2);
                     com.Parameters.Clear();
                     com.Parameters.AddRange(parms2);
-                    result =  com.ExecuteNonQuery();
+                    result = com.ExecuteNonQuery();
 
 
                 }
@@ -698,7 +401,7 @@ namespace DAL
                 if (controlType == 1)
                 {
                     DataView dv = dt.DefaultView;
-                    DataTable dataTableDistinct = dv.ToTable(true, new string[] {"4"});
+                    DataTable dataTableDistinct = dv.ToTable(true, new string[] { "4" });
                     for (int i = 0; i < dataTableDistinct.Rows.Count; i++)
                     {
                         string usePlace = dataTableDistinct.Rows[i][0].ToString();
@@ -778,6 +481,18 @@ namespace DAL
             {
                 com.Transaction = tran;
 
+                string dh;
+                DateTime dtNow = DateTime.Now;
+                long dec_id = 0;
+                string c_id = string.Empty;
+                sql = "SELECT MAX(c_id) FROM T_OPERATE_INOUT_MAIN where datediff(day,[D_TIME],getdate()) = 0 AND C_CRK_LEIBIE = '" + (int)type + "'";
+
+                com.CommandText = sql;
+                object obj = com.ExecuteScalar();
+                dec_id = Convert.IsDBNull(obj) ? 0 : Convert.ToInt64(obj.ToString().Substring(10));
+                c_id = Common.GetInOutCode(type) + dtNow.ToString("yyyyMMdd") + (dec_id + 1).ToString().PadLeft(6, '0');
+                dh = c_id;
+
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID], [C_DH],  [I_INOUT], [D_RQ], [C_MATERIEL], 
@@ -787,7 +502,7 @@ namespace DAL
 
                     Hashtable table2 = new Hashtable();
                     table2.Add("Dec_ID", i + 1);
-                    table2.Add("C_DH", Common.GetInOutCode(type));
+                    table2.Add("C_DH", dh);
                     table2.Add("I_INOUT", (int)type);
                     table2.Add("D_RQ", Convert.ToDateTime(dt.Rows[i][5]).ToString("yyyy-MM-dd"));
                     table2.Add("C_MATERIEL", dt.Rows[i][0]);

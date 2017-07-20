@@ -29,18 +29,18 @@ namespace BLL
         /// </summary>
         /// <param name="toRunDate"></param>
         /// <returns></returns>
-       public bool deleteDoList(List<string> list)
+       public bool deleteDoList(List<string> list, string dh)
        {
-           return dal.deleteDoList(list);
+           return dal.deleteDoList(list, dh);
        }
 
         /// <summary>
         /// 执行联机任务
         /// </summary>
         /// <returns></returns>
-       public bool executeDoList(List<string> list)
+       public bool executeDoList(List<string> list, string dh)
        {
-           return dal.executeDoList(list);
+           return dal.executeDoList(list, dh);
        }
 
         /// <summary>

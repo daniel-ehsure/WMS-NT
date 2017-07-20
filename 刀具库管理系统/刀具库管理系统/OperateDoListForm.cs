@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using BLL;
+using Util;
 
 namespace UI
 {
@@ -41,8 +42,6 @@ namespace UI
             }
             if (MessageBox.Show("删除之后信息将不能恢复，是否确认删除?", "提示:", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-
-
                 try
                 {
                     List<String> lists = new List<string>();
@@ -55,14 +54,17 @@ namespace UI
                     }
                     if (lists.Count > 0)
                     {
-                        if (bll.deleteDoList(lists))
+                        string dh = Convert.ToString(dgv_Data.SelectedRows[0].Cells[1].Value);
+                        if (bll.deleteDoList(lists, dh))
                         {
-
+                            MessageBox.Show("删除成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Log.saveLog("删除联机任务成功！单号：" + dh + " 序号：" + string.Join(",", lists.ToArray()));
                             querryList();
                         }
                         else
                         {
-                            MessageBox.Show("信息删除失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("删除失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            querryList();
                         }
                     }
 
@@ -87,50 +89,26 @@ namespace UI
             try
             {
                 List<String> lists = new List<string>();
-                bool flag = false;
-                for (int i = 0; i < dgv_Data.SelectedRows.Count&& flag == false; i++)
+                for (int i = 0; i < dgv_Data.SelectedRows.Count; i++)
                 {
                     string id = Convert.ToString(dgv_Data.SelectedRows[i].Cells[0].Value);
-                    string place = Convert.ToString(dgv_Data.SelectedRows[i].Cells[8].Value);
-                    for (int j = 0; j < dgv_Data.Rows.Count; j++)
-                    {
-                        if (dgv_Data.Rows[j].Selected)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            if (place.Equals(Convert.ToString(dgv_Data.Rows[j].Cells[8].Value)))
-                            {
-                                flag = true;
-                                lists.Clear();
-                                break;
-                            }
-                        }
-
-                    }
 
                     lists.Add(id);
                 }
-                if (flag)
-                {
-                    MessageBox.Show("联机任务执行需要按照货位统一执行，请确保选择货位的全部数据都为选择状态!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
                 if (lists.Count > 0)
                 {
-                    if (bll.executeDoList(lists))
+                        string dh = Convert.ToString(dgv_Data.SelectedRows[0].Cells[1].Value);
+                    if (bll.executeDoList(lists, dh))
                     {
-
+                        MessageBox.Show("执行成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("执行联机任务成功！单号：" + dh + " 序号：" + string.Join(",", lists.ToArray()));
                         querryList();
                     }
                     else
                     {
-                        MessageBox.Show("任务执行失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("执行失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-
-
             }
             catch (Exception)
             {

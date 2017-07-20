@@ -51,7 +51,7 @@ namespace UI
         //选择物料
         private void btnInName_Click(object sender, EventArgs e)
         {
-            SelectMaterielForm select = new SelectMaterielForm(this);
+            SelectMaterielForm select = new SelectMaterielForm(this, null);
             select.ShowDialog();
         }
         //关闭

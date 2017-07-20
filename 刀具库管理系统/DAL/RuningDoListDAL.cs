@@ -281,7 +281,19 @@ namespace DAL
 
                             case InOutType.KNIFE_IN:
                             case InOutType.KNIFE_IN_USE:
+                                sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_DH])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME, @C_DH)";
+                                com.CommandText = sql;
+                                Hashtable tableKI = new Hashtable();
+                                tableKI.Add("C_MATERIEL_ID", dt.Rows[i][4]);
+                                tableKI.Add("C_PLACE", dt.Rows[i][5]);
+                                tableKI.Add("DEC_COUNT", dt.Rows[i][6]);
+                                tableKI.Add("D_END_TIME", dt.Rows[i][3]);
+                                tableKI.Add("C_DH", dh);
 
+                                DbParameter[] parmsKI = dbHelper.getParams(tableKI);
+                                com.Parameters.Clear();
+                                com.Parameters.AddRange(parmsKI);
+                                com.ExecuteNonQuery();
                                 break;
                             default:
                                 break;
@@ -452,13 +464,13 @@ namespace DAL
         }
 
         /// <summary>
-        /// 联机入库
+        /// 联机任务
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="meno"></param>
         /// <param name="station"></param>
         /// <returns></returns>
-        public bool SaveDolist(DataTable dt, string meno, InOutType type)
+        public string SaveDolist(DataTable dt, string meno, InOutType type)
         {
             int result = 0;
 
@@ -529,11 +541,11 @@ namespace DAL
 
                 if (result > 0)
                 {
-                    return true;
+                    return dh;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
             }
             catch (Exception ex)

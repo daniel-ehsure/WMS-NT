@@ -329,8 +329,8 @@
     <EmbeddedResource Include="QuerryOperateOutForm.resx">
       <DependentUpon>QuerryOperateOutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OperateOutKnifeForm.resx">
-      <DependentUpon>OperateOutKnifeForm.cs</DependentUpon>
+    <EmbeddedResource Include="OperateOutKnifeUseForm.resx">
+      <DependentUpon>OperateOutKnifeUseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectMaterielOutNumForm.resx">
       <DependentUpon>SelectMaterielOutNumForm.cs</DependentUpon>
@@ -469,11 +469,11 @@
     <Compile Include="QuerryOperateOutForm.designer.cs">
       <DependentUpon>QuerryOperateOutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OperateOutKnifeForm.cs">
+    <Compile Include="OperateOutKnifeUseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OperateOutKnifeForm.Designer.cs">
-      <DependentUpon>OperateOutKnifeForm.cs</DependentUpon>
+    <Compile Include="OperateOutKnifeUseForm.Designer.cs">
+      <DependentUpon>OperateOutKnifeUseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SelectMaterielOutNumForm.cs">
       <SubType>Form</SubType>

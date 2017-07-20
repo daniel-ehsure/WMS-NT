@@ -144,13 +144,24 @@ namespace DAL
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public DataTable getListByIN(string id, string name, string placeArea)
+        public DataTable getListByIN(string id, string name, string placeArea, InOutType type)
         {
             string sql;
 
-            sql = " SELECT [C_ID], [C_NAME], case when b.num > 0 then '是' else '否' end FROM [T_JB_Place] a " +
+            if (type.Equals(InOutType.MATERIEL_IN))
+            {
+                sql = " SELECT [C_ID], [C_NAME], case when b.num > 0 then '是' else '否' end FROM [T_JB_Place] a " +
+                                " left join (select C_PLACE, count(*) num from [T_OPERATE_STOCKS] group by C_PLACE) b on a.C_ID = b.C_PLACE where I_END=1 and I_INUSE = 1 " +
+                                " and C_ID not in (select C_PLACE from T_RUNING_DOLIST) ";
+            }
+            else
+            {
+                sql = " SELECT [C_ID], [C_NAME], case when b.num > 0 then '是' else '否' end FROM [T_JB_Place] a " +
                 " left join (select C_PLACE, count(*) num from [T_OPERATE_STOCKS] group by C_PLACE) b on a.C_ID = b.C_PLACE where I_END=1 and I_INUSE = 1 " +
-                " and C_ID not in (select C_PLACE from T_RUNING_DOLIST) ";
+                " and C_ID not in (select C_PLACE from T_RUNING_DOLIST) " +
+                " and C_ID not in (select C_PLACE from T_OPERATE_INOUT_SUB where I_FLAG = 1) " +
+                " and C_ID not in (select C_PLACE from T_OPERATE_STOCKS) ";
+            }
 
             DataTable dt = new DataTable();
             try

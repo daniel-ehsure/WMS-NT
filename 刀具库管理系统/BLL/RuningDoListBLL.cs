@@ -62,7 +62,7 @@ namespace BLL
        /// <param name="meno"></param>
        /// <param name="station"></param>
        /// <returns></returns>
-       public bool SaveDolist(DataTable dt, string meno, InOutType type)
+       public string SaveDolist(DataTable dt, string meno, InOutType type)
        {
            return dal.SaveDolist(dt, meno, type);
        }

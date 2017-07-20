@@ -38,9 +38,9 @@ namespace BLL
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public DataTable getListByIN(string id, string name, string placeArea)
+        public DataTable getListByIN(string id, string name, string placeArea, InOutType type)
         {
-            return dal.getListByIN(id, name, placeArea);
+            return dal.getListByIN(id, name, placeArea, type);
         }
 
         /// <summary>

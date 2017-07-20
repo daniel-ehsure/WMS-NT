@@ -16,10 +16,13 @@ namespace UI
         MaterielBLL mbll = new MaterielBLL();
         MaterielTypeBLL tBll = new MaterielTypeBLL();
         InterfaceSelect parent;
-        public SelectMaterielForm(InterfaceSelect parent)
+        string materielType;
+
+        public SelectMaterielForm(InterfaceSelect parent, string materielType)
         {
             InitializeComponent();
             this.parent = parent;
+            this.materielType = materielType;
         }
 
         private void SelectMaterielFinishForm_Load(object sender, EventArgs e)
@@ -35,12 +38,11 @@ namespace UI
         public void queryList()
         {
             string name = string.Empty.Equals(txtName.Text.Trim())?null:txtName.Text;
-            string area = "0002";
-            string type = "0002";
+            string area = null;
             int finish = -1;
             string standerd = string.Empty.Equals(txtStand.Text.Trim())?null:txtStand.Text;;
             string userid = Global.longid;
-            DataTable dt = mbll.getMaterielList(name, area, type, finish, standerd, userid);
+            DataTable dt = mbll.getMaterielList(name, area, materielType, finish, standerd, userid);
 
             dgv_Data.DataSource = dt;
 

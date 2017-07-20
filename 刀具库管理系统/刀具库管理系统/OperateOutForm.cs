@@ -34,14 +34,6 @@ namespace UI
         {
             initData();
 
-            if (bll.HasDoList())
-            {
-                MessageBox.Show("存在未完成的联机任务，不能进行出入库操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                btnHand.Enabled = false;
-                btnDoList.Enabled = false;
-                btnOK.Enabled = false;
-            }
-
             #region 初始化 物料类别
             DataTable dt = tbll.GetList(null, null, null, 1);
             DataView dataView = dt.DefaultView;
@@ -104,6 +96,12 @@ namespace UI
             {
                 try
                 {
+                    if (bll.HasDoList())
+                    {
+                        MessageBox.Show("存在未完成的联机任务，不能进行出入库操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     string result = bll.handOut(dt, txtInMeno.Text, inOutType);
 
                     if (!string.IsNullOrEmpty(result))
@@ -147,11 +145,18 @@ namespace UI
             {
                 try
                 {
-                    if (dbll.SaveDolist(dt, txtInMeno.Text, inOutType))
+                    if (bll.HasDoList())
+                    {
+                        MessageBox.Show("存在未完成的联机任务，不能进行出入库操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    string res = dbll.SaveDolist(dt, txtInMeno.Text, inOutType);
+
+                    if (!string.IsNullOrEmpty(res))
                     {
                         MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Log.saveLog("保存零件出库联机任务成功！");
-                        Close();
+                        Log.saveLog("保存零件出库联机任务成功！单号：" + res);
                         setMain(true);
                         initMain();
                         initSub();

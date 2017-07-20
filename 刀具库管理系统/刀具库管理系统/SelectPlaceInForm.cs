@@ -13,21 +13,25 @@ namespace UI
 {
     public partial class SelectPlaceInForm : Form
     {
-        PlaceBLL bll = new PlaceBLL();     
+        PlaceBLL bll = new PlaceBLL();
         InterfaceSelect parent = null;
         Label lbl = null;
         InOutType inOutType;
         string placeArea;
+        DataTable dtPar;
 
         int index = 0;
-        public SelectPlaceInForm(InterfaceSelect parent, InOutType inOutType, string placeArea)
+
+        public SelectPlaceInForm(InterfaceSelect parent, InOutType inOutType, string placeArea, DataTable dtPar)
         {
             InitializeComponent();
             this.parent = parent;
             this.inOutType = inOutType;
             this.placeArea = placeArea;
+            this.dtPar = dtPar;
         }
-        public SelectPlaceInForm(InterfaceSelect parent,Label lbl)
+
+        public SelectPlaceInForm(InterfaceSelect parent, Label lbl)
         {
             InitializeComponent();
             this.parent = parent;
@@ -65,7 +69,7 @@ namespace UI
         {
             setParent();
         }
-       
+
 
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -86,28 +90,28 @@ namespace UI
         {
             try
             {
-                switch (inOutType)
-                {
-                    case InOutType.MATERIEL_OUT:
-                        //有零件的，no dolist
-                        break;
-                    case InOutType.MATERIEL_IN:
-                        //no dolist
-                        break;
-                    case InOutType.KNIFE_OUT_USE:
-                        //
-                        break;
-                    case InOutType.KNIFE_IN:
-                        break;
-                    case InOutType.KNIFE_IN_USE:
-                        break;
-                    default:
-                        break;
+                DataTable dt = bll.getListByIN(id, name, placeArea, inOutType);
+
+                if (inOutType.Equals(InOutType.KNIFE_IN))
+                {//新刀具入库时，要去掉已选中的货位
+                    List<int> listToDel = new List<int>();
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dtPar.Rows.Count; j++)
+                        {
+                            if (dt.Rows[i][0].Equals(dtPar.Rows[j][4]))
+                            {
+                                listToDel.Add(i);
+                            }
+                        }
+                    }
+
+                    listToDel.Sort();
+                    listToDel.Reverse();
+
+                    listToDel.ForEach(i => dt.Rows.RemoveAt(i));
                 }
-
-                DataTable dt = bll.getListByIN(id, name, placeArea);
-
-
 
                 dgv_Data.DataSource = dt;
                 dgv_Data.Columns[0].HeaderText = "编码";
@@ -127,7 +131,7 @@ namespace UI
                 return;
             }
         }
-      
+
 
         /// <summary>
         /// 查询货位列表

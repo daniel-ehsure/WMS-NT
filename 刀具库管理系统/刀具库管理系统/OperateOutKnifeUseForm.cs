@@ -11,7 +11,7 @@ using Util;
 
 namespace UI
 {
-    public partial class OperateOutKnifeForm : Form, InterfaceSelect
+    public partial class OperateOutKnifeUseForm : Form, InterfaceSelect
     {
         OperateInOutBLL bll = new OperateInOutBLL();
         PlaceAreaBLL sbll = new PlaceAreaBLL();
@@ -19,7 +19,7 @@ namespace UI
         DataTable dt;
         InOutType inOutType = InOutType.MATERIEL_OUT;
 
-        public OperateOutKnifeForm()
+        public OperateOutKnifeUseForm()
         {
             InitializeComponent();
         }
@@ -103,7 +103,7 @@ namespace UI
         //选择货位
         private void button7_Click(object sender, EventArgs e)
         {
-            SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType, "");
+            SelectPlaceInForm select = new SelectPlaceInForm(this, inOutType, "", dt);
             select.ShowDialog();
         }
 

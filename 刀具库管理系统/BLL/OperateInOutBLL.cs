@@ -46,6 +46,18 @@ namespace BLL
             return dal.getList(startDate, endDate, planid, inout, mid);
         }
 
+        /// <summary>
+        /// 获得刀具报废
+        /// </summary>
+        /// <param name="materile"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="inout"></param>
+        /// <returns></returns>
+        public DataTable getKDList(DateTime startDate, DateTime endDate, string planid, InOutType type, string mid)
+        {
+            return dal.getKDList(startDate, endDate, planid, type, mid);
+        }
 
         /// <summary>
         /// 托盘是否被使用
@@ -598,5 +610,10 @@ namespace BLL
             
         }
 
+
+        public bool DisableKnife(List<string> list)
+        {
+            return dal.DisableKnife(list);
+        }
     }
 }

@@ -22,6 +22,8 @@ namespace UI
         string ids;
         public string materielId = string.Empty;
         List<string> list;
+        List<string> listIds;
+        List<string> listMachine;
 
         public SelectKnifeOutForm(string ids, DataTable dt, DataTable dtBak, List<string> listIds, List<string> listMachine)
         {
@@ -29,6 +31,8 @@ namespace UI
             this.ids = ids;
             this.dt = dt;
             this.dtBak = dtBak;
+            this.listIds = listIds;
+            this.listMachine = listMachine;
 
             #region 初始化 机床
             DataTable dtt = mBll.GetList();
@@ -93,7 +97,7 @@ namespace UI
         //关闭
         private void button3_Click(object sender, EventArgs e)
         {
-            dt.Clear();
+            dtBak.Clear();
             this.Close();
         }
 
@@ -102,37 +106,47 @@ namespace UI
         {
             if (cmbMachine.Text.Trim().Length > 0)
             {
-                if (dgv_Data.SelectedRows.Count > 0)
+                if (listMachine.Contains(cmbMachine.Text.Trim()) && listIds.Contains(ids))
                 {
-                    List<string> listRep = new List<string>();
-
-                    //for (int j = 0; j < dgv_Data.SelectedRows.Count; j++)
-                    //{
-                    //    if (listUseKnife.Contains(dgv_Data.SelectedRows[j].Cells[0].Value.ToString()))
-                    //    {
-                    //        listRep.Add(
-                    //    }
-                    //}
-
-                    for (int j = 0; j < dgv_Data.SelectedRows.Count; j++)
-                    {
-                        DataRow dr = dt.NewRow();
-                        dr[0] = dgv_Data.SelectedRows[j].Cells[0].Value.ToString();
-                        dr[1] = dgv_Data.SelectedRows[j].Cells[1].Value.ToString();
-                        dr[2] = dgv_Data.SelectedRows[j].Cells[3].Value.ToString();
-                        //dr[3] = Convert.ToInt32(dgv_Data.SelectedRows[j].Cells[8].Value);
-                        dr[4] = dgv_Data.SelectedRows[j].Cells[4].Value.ToString();
-                        //dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
-                        dr[6] = Global.longid;
-
-                        dt.Rows.Add(dr);
-                    }
-
-                    Close();
+                    MessageBox.Show("同一码不能出库到同一机床！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("请选择数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (dgv_Data.SelectedRows.Count > 0)
+                    {
+                        List<string> listRep = new List<string>();
+
+                        for (int j = 0; j < dgv_Data.SelectedRows.Count; j++)
+                        {
+                            if (string.IsNullOrEmpty(dgv_Data.SelectedRows[j].Cells[4].Value.ToString()))
+                            {
+                                MessageBox.Show("库中无此刀具，编号："+dgv_Data.SelectedRows[j].Cells[0].Value.ToString()+"！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
+                            }
+                            else
+                            {
+                                DataRow dr = dtBak.NewRow();
+                                dr[0] = dgv_Data.SelectedRows[j].Cells[0].Value.ToString();
+                                dr[1] = dgv_Data.SelectedRows[j].Cells[1].Value.ToString();
+                                dr[2] = dgv_Data.SelectedRows[j].Cells[3].Value.ToString();
+                                //dr[3] = Convert.ToInt32(dgv_Data.SelectedRows[j].Cells[8].Value);
+                                dr[4] = dgv_Data.SelectedRows[j].Cells[4].Value.ToString();
+                                //dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
+                                dr[6] = Global.longid;
+
+                                dtBak.Rows.Add(dr);
+                            }
+                        }
+
+                        listIds.Add(ids);
+                        listMachine.Add(cmbMachine.Text.Trim());
+
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("请选择数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
             else

@@ -644,7 +644,7 @@ from T_OPERATE_PRODUCE_PLAN a,T_JB_COMPONENT b
                             on a.C_ID = c.C_MATERIEL_ID
                             left join (select C_MATERIEL, count(*) useNum from T_OPERATE_INOUT_SUB where I_FLAG = 1 group by C_MATERIEL)d
                             on a.C_ID = d.C_MATERIEL
-                            where a.C_ID in ('" + ids + @"') ";
+                            where a.C_ID in ('" + ids + @"') and c.C_PLACE not in (select C_PLACE from T_Runing_Dolist)";
 
             DataTable dt = new DataTable();
 

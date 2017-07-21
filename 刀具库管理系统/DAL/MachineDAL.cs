@@ -45,25 +45,38 @@ namespace DAL
         {
             try
             {
-                string sql =
-                    "INSERT INTO " + "[" + tableName +
-                    "] ([C_ID])" +
-                    "VALUES (@C_ID)";
+                string sql = "select count(*) from " + tableName + " where C_ID = '" + id + "'";
 
-                Hashtable table = new Hashtable();
 
-                table.Add("C_ID", id);
+                object obj2 = dbHelper.GetScalar(sql);
+                int count = Convert.IsDBNull(obj2) ? 0 : Convert.ToInt32(obj2);
 
-                DbParameter[] parms = dbHelper.getParams(table);
-
-                int count = dbHelper.ExecuteCommand(sql, parms);
                 if (count > 0)
                 {
                     return true;
                 }
                 else
                 {
-                    return false;
+                    sql =
+                    "INSERT INTO " + "[" + tableName +
+                    "] ([C_ID])" +
+                    "VALUES (@C_ID)";
+
+                    Hashtable table = new Hashtable();
+
+                    table.Add("C_ID", id);
+
+                    DbParameter[] parms = dbHelper.getParams(table);
+
+                    count = dbHelper.ExecuteCommand(sql, parms);
+                    if (count > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception ex)

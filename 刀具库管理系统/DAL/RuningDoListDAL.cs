@@ -212,6 +212,7 @@ namespace DAL
                         switch (type)
                         {
                             case InOutType.MATERIEL_OUT:
+                            case InOutType.KNIFE_OUT_USE:
                                 sql = "UPDATE [T_OPERATE_STOCKS] SET  [DEC_COUNT]=[DEC_COUNT] - @DEC_COUNT where [C_MATERIEL_ID] = @C_MATERIEL_ID and [C_PLACE] = @C_PLACE";
                                 com.CommandText = sql;
                                 Hashtable table3 = new Hashtable();
@@ -227,10 +228,6 @@ namespace DAL
                                 sql = "DELETE FROM  [T_OPERATE_STOCKS] where [DEC_COUNT] <=0";
                                 com.CommandText = sql;
                                 com.ExecuteNonQuery();
-                                break;
-
-                            case InOutType.KNIFE_OUT_USE:
-
                                 break;
 
                             case InOutType.MATERIEL_IN:
@@ -279,8 +276,33 @@ namespace DAL
                                 }
                                 break;
 
-                            case InOutType.KNIFE_IN:
                             case InOutType.KNIFE_IN_USE:
+                                sql = "UPDATE [T_OPERATE_INOUT_SUB] SET  [I_FLAG]=2 where [C_PLACE] = @C_PLACE and [I_FLAG]=1";
+                                com.CommandText = sql;
+                                Hashtable tablePrid = new Hashtable();
+                                tablePrid.Add("C_PLACE", dt.Rows[i][5]);
+
+                                DbParameter[] parmsPrid = dbHelper.getParams(tablePrid);
+                                com.Parameters.Clear();
+                                com.Parameters.AddRange(parmsPrid);
+                                result = com.ExecuteNonQuery();
+
+                                sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_DH])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME, @C_DH)";
+                                com.CommandText = sql;
+                                Hashtable table7 = new Hashtable();
+                                table7.Add("C_MATERIEL_ID", dt.Rows[i][4]);
+                                table7.Add("C_PLACE", dt.Rows[i][5]);
+                                table7.Add("DEC_COUNT", dt.Rows[i][6]);
+                                table7.Add("D_END_TIME", dt.Rows[i][3]);
+                                table7.Add("C_DH", dh);
+
+                                DbParameter[] parms7 = dbHelper.getParams(table7);
+                                com.Parameters.Clear();
+                                com.Parameters.AddRange(parms7);
+                                com.ExecuteNonQuery();
+                                break;
+
+                            case InOutType.KNIFE_IN:
                                 sql = "INSERT INTO [T_OPERATE_STOCKS]([C_MATERIEL_ID], [C_PLACE], [DEC_COUNT], [D_END_TIME], [C_DH])  VALUES (@C_MATERIEL_ID, @C_PLACE, @DEC_COUNT, @D_END_TIME, @C_DH)";
                                 com.CommandText = sql;
                                 Hashtable tableKI = new Hashtable();
@@ -295,6 +317,7 @@ namespace DAL
                                 com.Parameters.AddRange(parmsKI);
                                 com.ExecuteNonQuery();
                                 break;
+
                             default:
                                 break;
                         }
@@ -508,8 +531,8 @@ namespace DAL
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     sql = @"INSERT INTO [T_Runing_Dolist]([Dec_ID], [C_DH],  [I_INOUT], [D_RQ], [C_MATERIEL], 
-                            [C_PLACE], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MEMO])
-                            VALUES(@Dec_ID, @C_DH, @I_INOUT, @D_RQ, @C_MATERIEL, @C_PLACE, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MEMO)";
+                            [C_PLACE], [DEC_COUNT],  [C_CZY], [I_RUN], [D_AddRQ], [C_MEMO], [I_FLAG], [C_MACHINE])
+                            VALUES(@Dec_ID, @C_DH, @I_INOUT, @D_RQ, @C_MATERIEL, @C_PLACE, @DEC_COUNT, @C_CZY, @I_RUN, @D_AddRQ, @C_MEMO, @I_FLAG, @C_MACHINE)";
                     com.CommandText = sql;
 
                     Hashtable table2 = new Hashtable();
@@ -531,6 +554,18 @@ namespace DAL
                     {
                         table2.Add("C_MEMO", meno);
                     }
+
+                    if (type.Equals(InOutType.KNIFE_OUT_USE))
+                    {
+                        table2.Add("I_FLAG", 1);
+                        table2.Add("C_MACHINE", dt.Rows[i][7]);
+                    }
+                    else
+                    {
+                        table2.Add("I_FLAG", 0);
+                        table2.Add("C_MACHINE", DBNull.Value);
+                    }
+
                     DbParameter[] parms2 = dbHelper.getParams(table2);
                     com.Parameters.Clear();
                     com.Parameters.AddRange(parms2);

@@ -20,13 +20,14 @@ namespace UI
         MaterielBLL mbll = new MaterielBLL();
         MaterielTypeBLL tbll = new MaterielTypeBLL();
         StocksBLL stockBll = new StocksBLL();
+        MachineBLL mabll = new MachineBLL();
         DataTable dtBak;
         DataTable dt;
         InOutType inOutType = InOutType.KNIFE_OUT_USE;
         public T_JB_Materiel materielNow;
         string ids = "001,002,003";
-        List<string> listIds;
-        List<string> listMachine;
+        List<string> listIds = new List<string>();
+        List<string> listMachine = new List<string>();
 
         public OperateOutKnifeUseForm()
         {
@@ -96,6 +97,8 @@ namespace UI
                         return;
                     }
 
+                    listMachine.ForEach(item => mabll.Save(item));
+
                     string result = bll.handOut(dt, txtInMeno.Text, inOutType);
 
                     if (!string.IsNullOrEmpty(result))
@@ -122,7 +125,17 @@ namespace UI
         //test
         private void button3_Click(object sender, EventArgs e)
         {
+            //扫码后执行 测试
             dtBak = dt.Clone();
+
+            string mes = string.Empty;
+            //验证码
+            if (!CheckBarcode(ids, ref mes))
+            {
+                MessageBox.Show(mes, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             SelectKnifeOutForm select = new SelectKnifeOutForm(ids, dt, dtBak, listIds, listMachine);
             select.ShowDialog();
 
@@ -130,6 +143,39 @@ namespace UI
             {
                 addRowMult(dtBak);
             }
+        }
+
+        private bool CheckBarcode(string ids, ref string mes)
+        {
+            if (ids.Length < 1)
+            {
+                mes = "码为空！";
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    string[] arr = ids.Split(new char[] { ',' });
+
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        T_JB_Materiel mo = mbll.getMaterielById(arr[i]);
+                        if (mo == null)
+                        {
+                            mes = "码无法解析！";
+                            return false;
+                        }
+                    }
+                }
+                catch
+                {
+                    mes = "码无法解析！";
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         //联机出库
@@ -183,7 +229,7 @@ namespace UI
             dr[4] = txtInPlace.Text.Trim();
             dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
             dr[6] = Global.longid;
-            //dr[7] = lblTypeName.Text;
+            
 
             dt.Rows.InsertAt(dr, 0);
         }
@@ -200,6 +246,7 @@ namespace UI
                 dr[4] = dtBak.Rows[j][4];
                 dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
                 dr[6] = dtBak.Rows[j][6];
+                dr[7] = listMachine[listMachine.Count - 1];
 
                 dt.Rows.InsertAt(dr, 0);
             }
@@ -209,7 +256,7 @@ namespace UI
         {
             dt = new DataTable();
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 DataColumn column = new DataColumn();
                 column.DataType = System.Type.GetType("System.String");
@@ -234,6 +281,7 @@ namespace UI
             dgv_Data.Columns[5].HeaderText = "出库日期";
             dgv_Data.Columns[6].HeaderText = "操作员";
             dgv_Data.Columns[6].Visible = false;
+            dgv_Data.Columns[7].HeaderText = "机床";
         }
 
         private bool checkInput()

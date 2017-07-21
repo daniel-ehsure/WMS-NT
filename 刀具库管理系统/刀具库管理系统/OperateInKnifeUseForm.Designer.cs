@@ -73,7 +73,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.lblPlace = new System.Windows.Forms.Label();
             this.lblTypeName = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -85,6 +84,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgv_Data = new System.Windows.Forms.DataGridView();
+            this.txtMachine = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -294,6 +295,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtMachine);
+            this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.txtMeno);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.txtRL);
@@ -318,7 +321,6 @@
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.txtId);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.lblPlace);
             this.groupBox2.Controls.Add(this.lblTypeName);
             this.groupBox2.Controls.Add(this.btnOK);
             this.groupBox2.Controls.Add(this.button3);
@@ -342,18 +344,19 @@
             // 
             // txtMeno
             // 
-            this.txtMeno.Location = new System.Drawing.Point(504, 94);
+            this.txtMeno.Location = new System.Drawing.Point(717, 94);
             this.txtMeno.Margin = new System.Windows.Forms.Padding(2);
             this.txtMeno.MaxLength = 100;
             this.txtMeno.Multiline = true;
             this.txtMeno.Name = "txtMeno";
-            this.txtMeno.Size = new System.Drawing.Size(313, 46);
+            this.txtMeno.ReadOnly = true;
+            this.txtMeno.Size = new System.Drawing.Size(100, 46);
             this.txtMeno.TabIndex = 149;
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(439, 101);
+            this.label19.Location = new System.Drawing.Point(652, 102);
             this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(65, 12);
@@ -365,6 +368,7 @@
             this.txtRL.Location = new System.Drawing.Point(304, 93);
             this.txtRL.Margin = new System.Windows.Forms.Padding(2);
             this.txtRL.Name = "txtRL";
+            this.txtRL.ReadOnly = true;
             this.txtRL.Size = new System.Drawing.Size(100, 21);
             this.txtRL.TabIndex = 147;
             // 
@@ -403,6 +407,7 @@
             this.txtAngle.Location = new System.Drawing.Point(77, 68);
             this.txtAngle.Margin = new System.Windows.Forms.Padding(2);
             this.txtAngle.Name = "txtAngle";
+            this.txtAngle.ReadOnly = true;
             this.txtAngle.Size = new System.Drawing.Size(100, 21);
             this.txtAngle.TabIndex = 142;
             // 
@@ -421,6 +426,7 @@
             this.txtWT.Location = new System.Drawing.Point(717, 68);
             this.txtWT.Margin = new System.Windows.Forms.Padding(2);
             this.txtWT.Name = "txtWT";
+            this.txtWT.ReadOnly = true;
             this.txtWT.Size = new System.Drawing.Size(100, 21);
             this.txtWT.TabIndex = 140;
             // 
@@ -439,6 +445,7 @@
             this.txtLT.Location = new System.Drawing.Point(504, 68);
             this.txtLT.Margin = new System.Windows.Forms.Padding(2);
             this.txtLT.Name = "txtLT";
+            this.txtLT.ReadOnly = true;
             this.txtLT.Size = new System.Drawing.Size(100, 21);
             this.txtLT.TabIndex = 138;
             // 
@@ -457,6 +464,7 @@
             this.txtMT.Location = new System.Drawing.Point(304, 68);
             this.txtMT.Margin = new System.Windows.Forms.Padding(2);
             this.txtMT.Name = "txtMT";
+            this.txtMT.ReadOnly = true;
             this.txtMT.Size = new System.Drawing.Size(100, 21);
             this.txtMT.TabIndex = 136;
             // 
@@ -475,6 +483,7 @@
             this.txtDim3.Location = new System.Drawing.Point(717, 43);
             this.txtDim3.Margin = new System.Windows.Forms.Padding(2);
             this.txtDim3.Name = "txtDim3";
+            this.txtDim3.ReadOnly = true;
             this.txtDim3.Size = new System.Drawing.Size(100, 21);
             this.txtDim3.TabIndex = 134;
             // 
@@ -493,6 +502,7 @@
             this.txtDim2.Location = new System.Drawing.Point(504, 43);
             this.txtDim2.Margin = new System.Windows.Forms.Padding(2);
             this.txtDim2.Name = "txtDim2";
+            this.txtDim2.ReadOnly = true;
             this.txtDim2.Size = new System.Drawing.Size(100, 21);
             this.txtDim2.TabIndex = 132;
             // 
@@ -511,6 +521,7 @@
             this.txtDim1.Location = new System.Drawing.Point(304, 43);
             this.txtDim1.Margin = new System.Windows.Forms.Padding(2);
             this.txtDim1.Name = "txtDim1";
+            this.txtDim1.ReadOnly = true;
             this.txtDim1.Size = new System.Drawing.Size(100, 21);
             this.txtDim1.TabIndex = 130;
             // 
@@ -549,6 +560,7 @@
             this.txtId.Location = new System.Drawing.Point(77, 18);
             this.txtId.Margin = new System.Windows.Forms.Padding(2);
             this.txtId.Name = "txtId";
+            this.txtId.ReadOnly = true;
             this.txtId.Size = new System.Drawing.Size(100, 21);
             this.txtId.TabIndex = 126;
             this.txtId.TabStop = false;
@@ -563,18 +575,6 @@
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 125;
             this.label6.Text = "编  码：";
-            // 
-            // lblPlace
-            // 
-            this.lblPlace.AutoSize = true;
-            this.lblPlace.ForeColor = System.Drawing.Color.Red;
-            this.lblPlace.Location = new System.Drawing.Point(637, 22);
-            this.lblPlace.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblPlace.Name = "lblPlace";
-            this.lblPlace.Size = new System.Drawing.Size(11, 12);
-            this.lblPlace.TabIndex = 124;
-            this.lblPlace.Text = "*";
-            this.lblPlace.Visible = false;
             // 
             // lblTypeName
             // 
@@ -704,6 +704,25 @@
             this.dgv_Data.TabIndex = 65;
             this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
+            // txtMachine
+            // 
+            this.txtMachine.Location = new System.Drawing.Point(504, 96);
+            this.txtMachine.Margin = new System.Windows.Forms.Padding(2);
+            this.txtMachine.Name = "txtMachine";
+            this.txtMachine.ReadOnly = true;
+            this.txtMachine.Size = new System.Drawing.Size(100, 21);
+            this.txtMachine.TabIndex = 151;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(439, 100);
+            this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(65, 12);
+            this.label20.TabIndex = 150;
+            this.label20.Text = "机    床：";
+            // 
             // OperateInKnifeUseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -768,7 +787,6 @@
         private System.Windows.Forms.DataGridView dgv_Data;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ImageList imageList2;
-        private System.Windows.Forms.Label lblPlace;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDim3;
@@ -794,5 +812,7 @@
         private System.Windows.Forms.TextBox txtMeno;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label lblTypeName;
+        private System.Windows.Forms.TextBox txtMachine;
+        private System.Windows.Forms.Label label20;
     }
 }

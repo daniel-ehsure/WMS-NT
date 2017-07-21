@@ -47,10 +47,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.dgv_Data = new System.Windows.Forms.DataGridView();
             this.txtMeno = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.txtRL = new System.Windows.Forms.TextBox();
@@ -84,6 +80,10 @@
             this.label22 = new System.Windows.Forms.Label();
             this.txtMaterielName = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dgv_Data = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -319,61 +319,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "明细信息";
             // 
-            // btnOK
-            // 
-            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOK.ImageIndex = 0;
-            this.btnOK.ImageList = this.imageList1;
-            this.btnOK.Location = new System.Drawing.Point(851, 123);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(64, 22);
-            this.btnOK.TabIndex = 115;
-            this.btnOK.Text = "确认(&O)";
-            this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Visible = false;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // label5
-            // 
-            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label5.Location = new System.Drawing.Point(8, 225);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(920, 8);
-            this.label5.TabIndex = 30;
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.dgv_Data);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(8, 233);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(920, 132);
-            this.panel2.TabIndex = 31;
-            // 
-            // dgv_Data
-            // 
-            this.dgv_Data.AllowUserToAddRows = false;
-            this.dgv_Data.AllowUserToDeleteRows = false;
-            this.dgv_Data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_Data.BackgroundColor = System.Drawing.Color.White;
-            this.dgv_Data.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Data.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_Data.Location = new System.Drawing.Point(0, 0);
-            this.dgv_Data.MultiSelect = false;
-            this.dgv_Data.Name = "dgv_Data";
-            this.dgv_Data.ReadOnly = true;
-            this.dgv_Data.RowHeadersVisible = false;
-            this.dgv_Data.RowTemplate.Height = 23;
-            this.dgv_Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Data.Size = new System.Drawing.Size(916, 128);
-            this.dgv_Data.TabIndex = 65;
-            this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
-            // 
             // txtMeno
             // 
             this.txtMeno.Location = new System.Drawing.Point(503, 92);
@@ -381,6 +326,7 @@
             this.txtMeno.MaxLength = 100;
             this.txtMeno.Multiline = true;
             this.txtMeno.Name = "txtMeno";
+            this.txtMeno.ReadOnly = true;
             this.txtMeno.Size = new System.Drawing.Size(313, 46);
             this.txtMeno.TabIndex = 182;
             // 
@@ -399,6 +345,7 @@
             this.txtRL.Location = new System.Drawing.Point(303, 91);
             this.txtRL.Margin = new System.Windows.Forms.Padding(2);
             this.txtRL.Name = "txtRL";
+            this.txtRL.ReadOnly = true;
             this.txtRL.Size = new System.Drawing.Size(100, 21);
             this.txtRL.TabIndex = 180;
             // 
@@ -437,6 +384,7 @@
             this.txtAngle.Location = new System.Drawing.Point(76, 66);
             this.txtAngle.Margin = new System.Windows.Forms.Padding(2);
             this.txtAngle.Name = "txtAngle";
+            this.txtAngle.ReadOnly = true;
             this.txtAngle.Size = new System.Drawing.Size(100, 21);
             this.txtAngle.TabIndex = 176;
             // 
@@ -455,6 +403,7 @@
             this.txtWT.Location = new System.Drawing.Point(716, 66);
             this.txtWT.Margin = new System.Windows.Forms.Padding(2);
             this.txtWT.Name = "txtWT";
+            this.txtWT.ReadOnly = true;
             this.txtWT.Size = new System.Drawing.Size(100, 21);
             this.txtWT.TabIndex = 174;
             // 
@@ -473,6 +422,7 @@
             this.txtLT.Location = new System.Drawing.Point(503, 66);
             this.txtLT.Margin = new System.Windows.Forms.Padding(2);
             this.txtLT.Name = "txtLT";
+            this.txtLT.ReadOnly = true;
             this.txtLT.Size = new System.Drawing.Size(100, 21);
             this.txtLT.TabIndex = 172;
             // 
@@ -491,6 +441,7 @@
             this.txtMT.Location = new System.Drawing.Point(303, 66);
             this.txtMT.Margin = new System.Windows.Forms.Padding(2);
             this.txtMT.Name = "txtMT";
+            this.txtMT.ReadOnly = true;
             this.txtMT.Size = new System.Drawing.Size(100, 21);
             this.txtMT.TabIndex = 170;
             // 
@@ -509,6 +460,7 @@
             this.txtDim3.Location = new System.Drawing.Point(716, 41);
             this.txtDim3.Margin = new System.Windows.Forms.Padding(2);
             this.txtDim3.Name = "txtDim3";
+            this.txtDim3.ReadOnly = true;
             this.txtDim3.Size = new System.Drawing.Size(100, 21);
             this.txtDim3.TabIndex = 168;
             // 
@@ -527,6 +479,7 @@
             this.txtDim2.Location = new System.Drawing.Point(503, 41);
             this.txtDim2.Margin = new System.Windows.Forms.Padding(2);
             this.txtDim2.Name = "txtDim2";
+            this.txtDim2.ReadOnly = true;
             this.txtDim2.Size = new System.Drawing.Size(100, 21);
             this.txtDim2.TabIndex = 166;
             // 
@@ -545,6 +498,7 @@
             this.txtDim1.Location = new System.Drawing.Point(303, 41);
             this.txtDim1.Margin = new System.Windows.Forms.Padding(2);
             this.txtDim1.Name = "txtDim1";
+            this.txtDim1.ReadOnly = true;
             this.txtDim1.Size = new System.Drawing.Size(100, 21);
             this.txtDim1.TabIndex = 164;
             // 
@@ -583,6 +537,7 @@
             this.txtId.Location = new System.Drawing.Point(76, 16);
             this.txtId.Margin = new System.Windows.Forms.Padding(2);
             this.txtId.Name = "txtId";
+            this.txtId.ReadOnly = true;
             this.txtId.Size = new System.Drawing.Size(100, 21);
             this.txtId.TabIndex = 160;
             this.txtId.TabStop = false;
@@ -689,6 +644,61 @@
             this.label28.Size = new System.Drawing.Size(65, 12);
             this.label28.TabIndex = 150;
             this.label28.Text = "刀具名称：";
+            // 
+            // btnOK
+            // 
+            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOK.ImageIndex = 0;
+            this.btnOK.ImageList = this.imageList1;
+            this.btnOK.Location = new System.Drawing.Point(851, 123);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(64, 22);
+            this.btnOK.TabIndex = 115;
+            this.btnOK.Text = "确认(&O)";
+            this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Visible = false;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // label5
+            // 
+            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label5.Location = new System.Drawing.Point(8, 225);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(920, 8);
+            this.label5.TabIndex = 30;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.dgv_Data);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(8, 233);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(920, 132);
+            this.panel2.TabIndex = 31;
+            // 
+            // dgv_Data
+            // 
+            this.dgv_Data.AllowUserToAddRows = false;
+            this.dgv_Data.AllowUserToDeleteRows = false;
+            this.dgv_Data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_Data.BackgroundColor = System.Drawing.Color.White;
+            this.dgv_Data.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_Data.Location = new System.Drawing.Point(0, 0);
+            this.dgv_Data.MultiSelect = false;
+            this.dgv_Data.Name = "dgv_Data";
+            this.dgv_Data.ReadOnly = true;
+            this.dgv_Data.RowHeadersVisible = false;
+            this.dgv_Data.RowTemplate.Height = 23;
+            this.dgv_Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_Data.Size = new System.Drawing.Size(916, 128);
+            this.dgv_Data.TabIndex = 65;
+            this.dgv_Data.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Data_CellDoubleClick);
             // 
             // OperateOutKnifeUseForm
             // 

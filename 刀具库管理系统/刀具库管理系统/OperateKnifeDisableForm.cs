@@ -59,7 +59,7 @@ namespace UI
         {
             if (checkInput())
             {
-                //addRow();
+                addRowMult(dtBak);
                 initSub();
             }
         }
@@ -124,13 +124,28 @@ namespace UI
         //选择物料
         private void button3_Click(object sender, EventArgs e)
         {
+            //测试
+            T_JB_Materiel mo = mbll.getMaterielById("001");
+            SelectKnifeUse(mo);
+        }
+
+        /// <summary>
+        /// 选择刀具
+        /// </summary>
+        /// <param name="mo"></param>
+        private void SelectKnifeUse(T_JB_Materiel mo)
+        {
             dtBak = dt.Clone();
-            SelectKnifeUseForm select = new SelectKnifeUseForm(null, dt, dtBak);
+            SelectKnifeUseForm select = new SelectKnifeUseForm(mo.C_id, dt, dtBak);
             select.ShowDialog();
 
             if (dtBak.Rows.Count > 0)
             {
-                addRowMult(dtBak);
+                //addRowMult(dtBak);
+                ModelToUI(mo);
+
+                txtInPlace.Text = dtBak.Rows[0][4].ToString();
+                txtMachine.Text = dtBak.Rows[0][7].ToString();
             }
         }
 
@@ -198,71 +213,7 @@ namespace UI
         private bool checkInput()
         {
             bool flag = true;
-
-            if (flag)
-            {
-                if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
-                {
-                    flag = false;
-                    this.lblTypeName.Visible = true;
-                }
-                else
-                {
-                    this.lblTypeName.Visible = false;
-                    if (bll.isPlaceInuse(txtInPlace.Text.Trim()))
-                    {
-                        this.lblTypeName.Visible = true;
-                        flag = false;
-                    }
-                    else
-                    {
-                        this.lblTypeName.Visible = false;
-                    }
-                }
-            }
-
-            if (flag)
-            {
-                if (txtMaterielName.Text == null || string.Empty.Equals(txtMaterielName.Text))
-                {
-                    flag = false;
-                    this.lblMaterielName.Visible = true;
-                }
-                else
-                {
-                    this.lblMaterielName.Visible = false;
-
-                    try
-                    {
-                        T_JB_Materiel materiel = mbll.getMaterielById(txtId.Text);
-                        if (materiel == null)
-                        {//当前刀具不存在，增加
-                            if (mbll.save(materielNow, Global.longid))
-                            {
-                                Log.saveLog("自动保存刀具成功！id：" + materielNow.C_id);
-                            }
-                            else
-                            {
-                                MessageBox.Show("自动保存刀具失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                
-                                this.lblMaterielName.Visible = true;
-                                flag = false;
-                            }
-                        }
-                        else
-                        {//存在，更新
-                            this.lblMaterielName.Visible = false;
-
-                            //mbll.update(materielNow);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-
+                        
             return flag;
         }
 
@@ -284,6 +235,8 @@ namespace UI
             this.txtDim3.Text = string.Empty;
             this.txtAngle.Text = string.Empty;
             this.txtRL.Text = string.Empty;
+
+            txtMachine.Text = string.Empty;
         }
 
         private void dgv_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -327,6 +280,8 @@ namespace UI
             this.txtDim3.Text = materiel.Dec_dimension3.ToString();
             this.txtAngle.Text = materiel.Dec_angle.ToString();
             this.txtRL.Text = materiel.C_regrinding_length;
+
+            txtMachine.Text = string.Empty;
         }
 
 
@@ -378,13 +333,13 @@ namespace UI
             {
                 T_JB_Materiel mo = Utility.AnalyzeBarcodeMateriel(inOutType);
 
-                dtBak = dt.Clone();
-                SelectKnifeUseForm select = new SelectKnifeUseForm(mo.C_id, dt, dtBak);
-                select.ShowDialog();
-
-                if (dtBak.Rows.Count > 0)
+                if (mo != null)
                 {
-                    addRowMult(dtBak);
+                    SelectKnifeUse(mo);
+                }
+                else
+                {
+                    MessageBox.Show("无法解析！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

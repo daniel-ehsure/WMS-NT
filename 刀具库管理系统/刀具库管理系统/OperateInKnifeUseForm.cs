@@ -61,7 +61,7 @@ namespace UI
             if (checkInput())
             {
                 setMain(false);
-                addRow();
+                addRowMult(dtBak);
                 initSub();
             }
         }
@@ -120,13 +120,28 @@ namespace UI
         //选择物料
         private void button3_Click(object sender, EventArgs e)
         {
+            //测试
+            T_JB_Materiel mo = mbll.getMaterielById("001");
+            SelectKnifeUse(mo);
+        }
+
+        /// <summary>
+        /// 选择刀具
+        /// </summary>
+        /// <param name="mo"></param>
+        private void SelectKnifeUse(T_JB_Materiel mo)
+        {
             dtBak = dt.Clone();
-            SelectKnifeUseForm select = new SelectKnifeUseForm("001", dt, dtBak);
+            SelectKnifeUseForm select = new SelectKnifeUseForm(mo.C_id, dt, dtBak);
             select.ShowDialog();
 
             if (dtBak.Rows.Count > 0)
             {
-                addRowMult(dtBak);
+                //addRowMult(dtBak);
+                ModelToUI(mo);
+
+                txtInPlace.Text = dtBak.Rows[0][4].ToString();
+                txtMachine.Text = dtBak.Rows[0][7].ToString();
             }
         }
 
@@ -202,6 +217,7 @@ namespace UI
                 dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
                 dr[6] = dtBak.Rows[j][6];
                 dr[7] = dtBak.Rows[j][7];
+                dr[8] = dtBak.Rows[j][8];
 
                 dt.Rows.InsertAt(dr, 0);
             }
@@ -214,7 +230,7 @@ namespace UI
         {
             dt = new DataTable();
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 DataColumn column = new DataColumn();
                 column.DataType = System.Type.GetType("System.String");
@@ -241,6 +257,8 @@ namespace UI
             dgv_Data.Columns[6].HeaderText = "操作员";
             dgv_Data.Columns[6].Visible = false;
             dgv_Data.Columns[7].HeaderText = "机床";
+            dgv_Data.Columns[8].HeaderText = "编码";
+            dgv_Data.Columns[8].Visible = false;
         }
 
         /// <summary>
@@ -254,70 +272,6 @@ namespace UI
             {
                 MessageBox.Show("入库日期不能大于当前日期!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 flag = false;
-            }
-
-            if (flag)
-            {
-                if (txtInPlace.Text == null || string.Empty.Equals(txtInPlace.Text))
-                {
-                    flag = false;
-                    this.lblTypeName.Visible = true;
-                }
-                else
-                {
-                    this.lblTypeName.Visible = false;
-                    if (bll.isPlaceInuse(txtInPlace.Text.Trim()))
-                    {
-                        this.lblTypeName.Visible = true;
-                        flag = false;
-                    }
-                    else
-                    {
-                        this.lblTypeName.Visible = false;
-                    }
-                }
-            }
-
-            if (flag)
-            {
-                if (txtMaterielName.Text == null || string.Empty.Equals(txtMaterielName.Text))
-                {
-                    flag = false;
-                    this.lblMaterielName.Visible = true;
-                }
-                else
-                {
-                    this.lblMaterielName.Visible = false;
-
-                    try
-                    {
-                        T_JB_Materiel materiel = mbll.getMaterielById(txtId.Text);
-                        if (materiel == null)
-                        {//当前刀具不存在，增加
-                            if (mbll.save(materielNow, Global.longid))
-                            {
-                                Log.saveLog("自动保存刀具成功！id：" + materielNow.C_id);
-                            }
-                            else
-                            {
-                                MessageBox.Show("自动保存刀具失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                
-                                this.lblMaterielName.Visible = true;
-                                flag = false;
-                            }
-                        }
-                        else
-                        {//存在，更新
-                            this.lblMaterielName.Visible = false;
-
-                            //mbll.update(materielNow);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
             }
 
             return flag;
@@ -354,6 +308,8 @@ namespace UI
             this.txtDim3.Text = string.Empty;
             this.txtAngle.Text = string.Empty;
             this.txtRL.Text = string.Empty;
+
+            txtMachine.Text = string.Empty;
         }
 
         private void dgv_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -448,18 +404,20 @@ namespace UI
 
         private void txtId_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //扫码
             if (e.KeyChar == 13)
             {
                 T_JB_Materiel mo = Utility.AnalyzeBarcodeMateriel(inOutType);
 
-                dtBak = dt.Clone();
-                SelectKnifeUseForm select = new SelectKnifeUseForm(mo.C_id, dt, dtBak);
-                select.ShowDialog();
-
-                if (dtBak.Rows.Count > 0)
+                if (mo != null)
                 {
-                    addRowMult(dtBak);
+                    SelectKnifeUse(mo);
                 }
+                else
+                {
+                    MessageBox.Show("无法解析！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                
             }
         }
     }

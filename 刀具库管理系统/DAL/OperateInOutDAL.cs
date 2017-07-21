@@ -447,8 +447,8 @@ namespace DAL
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        sql = "INSERT INTO [T_OPERATE_INOUT_SUB]([C_ID], [C_CRK_LEIBIE],[C_MATERIEL], [C_PLACE], [DEC_COUNT]) " +
-                             "  VALUES(@C_ID,@C_CRK_LEIBIE, @C_MATERIEL, @C_PLACE, @DEC_COUNT)";
+                        sql = "INSERT INTO [T_OPERATE_INOUT_SUB]([C_ID], [C_CRK_LEIBIE],[C_MATERIEL], [C_PLACE], [DEC_COUNT], [I_FLAG]) " +
+                             "  VALUES(@C_ID,@C_CRK_LEIBIE, @C_MATERIEL, @C_PLACE, @DEC_COUNT, @I_FLAG)";
                         com.CommandText = sql;
                         Hashtable table2 = new Hashtable();
                         table2.Add("C_ID", c_id);
@@ -456,6 +456,7 @@ namespace DAL
                         table2.Add("C_MATERIEL", dt.Rows[i][0]);
                         table2.Add("C_PLACE", dt.Rows[i][4]);
                         table2.Add("DEC_COUNT", dt.Rows[i][3]);
+                        table2.Add("I_FLAG", 0);
 
                         DbParameter[] parms2 = dbHelper.getParams(table2);
                         com.Parameters.Clear();
@@ -503,6 +504,19 @@ namespace DAL
                             DbParameter[] parms3 = dbHelper.getParams(table3);
                             com.Parameters.Clear();
                             com.Parameters.AddRange(parms3);
+                            result = com.ExecuteNonQuery();
+                        }
+
+                        if (type.Equals(InOutType.KNIFE_IN_USE))
+                        {
+                            sql = "UPDATE [T_OPERATE_INOUT_SUB] SET  [I_FLAG]=2 where [C_PLACE] = @C_PLACE and [I_FLAG]=1";
+                            com.CommandText = sql;
+                            Hashtable tablePrid = new Hashtable();
+                            tablePrid.Add("C_PLACE", dt.Rows[i][4]);
+
+                            DbParameter[] parmsPrid = dbHelper.getParams(tablePrid);
+                            com.Parameters.Clear();
+                            com.Parameters.AddRange(parmsPrid);
                             result = com.ExecuteNonQuery();
                         }
                     }
@@ -1430,13 +1444,15 @@ namespace DAL
             }
         }
 
-        public DataTable getKDList(DateTime startDate, DateTime endDate, string planid, InOutType type, string mid)
+        public DataTable getKDList(DateTime startDate, DateTime endDate, string place, string machine, InOutType type, string mid)
         {
-            string sql = @"select a.C_ID,a.C_MATERIEL,
-                             c.c_name,a.C_MACHINE,a.C_PLACE,CONVERT(varchar(12) ,  b.D_RQ, 111 ) as D_RQ, a.PRID
+            string sql = @"select a.C_MATERIEL,
+                             c.c_name,d.C_NAME,c.C_STANDARD,a.C_PLACE,a.C_MACHINE,CONVERT(varchar(12) ,  b.D_RQ, 111 ) as D_RQ, a.PRID
                              from T_OPERATE_INOUT_SUB a 
                             left join T_OPERATE_INOUT_MAIN b on a.C_ID = b.C_ID and a.C_CRK_LEIBIE =b.C_CRK_LEIBIE
-                            left join T_JB_Materiel c on a.C_MATERIEL = c.C_ID where I_FLAG = 1 and a.C_CRK_LEIBIE = " + (int)type +
+                            left join T_JB_Materiel c on a.C_MATERIEL = c.C_ID 
+                            left join T_JB_MaterielTYPE d on c.C_TYPE = d.C_ID 
+                            where I_FLAG = 1 and a.C_CRK_LEIBIE = " + (int)type +
                             " and a.C_PLACE not in (select C_PLACE from T_Runing_Dolist)";
 
             DataTable dt = new DataTable();
@@ -1456,9 +1472,22 @@ namespace DAL
 
                 if (mid != null && !(string.Empty.Equals(mid)))
                 {
-                    sql += " and a.C_MATERIEL like '%" + mid + "%'";
+                    sql += " and a.C_MATERIEL = '" + mid + "'";
 
                 }
+
+                if (place != null && !(string.Empty.Equals(place)))
+                {
+                    sql += " and a.C_PLACE like '%" + place + "%'";
+
+                }
+
+                if (machine != null && !(string.Empty.Equals(machine)))
+                {
+                    sql += " and a.C_MACHINE like '%" + machine + "%'";
+
+                }
+
                 sql += " order by D_RQ desc";
                 if (table.Count > 0)
                 {

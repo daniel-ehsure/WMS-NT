@@ -54,9 +54,9 @@ namespace BLL
         /// <param name="endDate"></param>
         /// <param name="inout"></param>
         /// <returns></returns>
-        public DataTable getKDList(DateTime startDate, DateTime endDate, string planid, InOutType type, string mid)
+        public DataTable getKDList(DateTime startDate, DateTime endDate, string place, string machine, InOutType type, string mid)
         {
-            return dal.getKDList(startDate, endDate, planid, type, mid);
+            return dal.getKDList(startDate, endDate, place, machine, type, mid);
         }
 
         /// <summary>

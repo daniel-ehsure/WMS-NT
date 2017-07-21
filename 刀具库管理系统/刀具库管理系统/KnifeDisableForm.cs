@@ -47,7 +47,8 @@ namespace UI
             }
             else
             {
-                this.dataGridView1.DataSource = bll.getKDList(beGinTime, endTime, txtInName.Text.Trim(), InOutType.KNIFE_OUT_USE, this.textBox1.Text);
+                //参数有问题
+                this.dataGridView1.DataSource = bll.getKDList(beGinTime, endTime, txtInName.Text.Trim(),string.Empty, InOutType.KNIFE_OUT_USE, this.textBox1.Text);
                 getName();
                 if (this.dataGridView1.RowCount == 0)
                 {

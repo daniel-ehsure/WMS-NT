@@ -11,7 +11,7 @@ using Util;
 
 namespace UI
 {
-    public partial class OperateInKnifeUseForm : Form, InterfaceSelect
+    public partial class OperateKnifeDisableForm : Form, InterfaceSelect
     {
         OperateInOutBLL bll = new OperateInOutBLL();
         PlaceAreaBLL sbll = new PlaceAreaBLL();
@@ -23,14 +23,13 @@ namespace UI
         DataTable dtBak;
         InOutType inOutType = InOutType.KNIFE_IN_USE;
         public T_JB_Materiel materielNow;
-        string materielType = "0001";
 
-        public OperateInKnifeUseForm()
+        public OperateKnifeDisableForm()
         {
             InitializeComponent();
         }
 
-        private void OperateInKnifeUseForm_Load(object sender, EventArgs e)
+        private void OperateIKnifeDisableForm_Load(object sender, EventArgs e)
         {
             initData();
 
@@ -60,8 +59,7 @@ namespace UI
         {
             if (checkInput())
             {
-                setMain(false);
-                addRow();
+                //addRow();
                 initSub();
             }
         }
@@ -94,14 +92,20 @@ namespace UI
                         return;
                     }
 
-                    string result = bll.HandIn(dt, txtInMeno.Text, inOutType);
+                    List<string> list = new List<string>();
+                    StringBuilder sb = new StringBuilder();
 
-                    if (!string.IsNullOrEmpty(result))
+                    for (int j = 0; j < dgv_Data.Rows.Count; j++)
                     {
-                        MessageBox.Show("入库成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Log.saveLog("刀具使用入库成功！单号：" + result);
-                        setMain(true);
-                        initMain();
+                        list.Add(dgv_Data.Rows[j].Cells[8].Value.ToString());
+                        sb.Append(dgv_Data.Rows[j].Cells[0].Value);
+                        sb.Append(",");
+                    }
+
+                    if (bll.DisableKnife(list))
+                    {
+                        MessageBox.Show("刀具报废成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Log.saveLog("刀具报废成功！编码：" + sb.Remove(sb.Length - 1, 1));
                         initSub();
                         dt.Rows.Clear();
                     }
@@ -121,72 +125,13 @@ namespace UI
         private void button3_Click(object sender, EventArgs e)
         {
             dtBak = dt.Clone();
-            SelectKnifeUseForm select = new SelectKnifeUseForm("001", dt, dtBak);
+            SelectKnifeUseForm select = new SelectKnifeUseForm(null, dt, dtBak);
             select.ShowDialog();
 
             if (dtBak.Rows.Count > 0)
             {
                 addRowMult(dtBak);
             }
-        }
-
-        //联机入库
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (dt.Rows.Count <= 0)
-            {
-                MessageBox.Show("没有要入库的记录!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            else
-            {
-                try
-                {
-                    if (bll.HasDoList())
-                    {
-                        MessageBox.Show("存在未完成的联机任务，不能进行出入库操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    string res = dbll.SaveDolist(dt, txtInMeno.Text, inOutType);
-
-                    if (!string.IsNullOrEmpty(res))
-                    {
-                        MessageBox.Show("保存联机任务成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Log.saveLog("保存刀具使用出库联机任务成功！单号：" + res);
-                        setMain(true);
-                        initMain();
-                        initSub();
-                        dt.Rows.Clear();
-                    }
-                    else
-                    {
-                        MessageBox.Show("保存联机任务失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("与数据库连接失败，请查看网络连接是否正常。如不能解决请与网络管理员联系！", "严重错误：", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 增加数据行
-        /// </summary>
-        private void addRow()
-        {
-            DataRow dr = dt.NewRow();
-            dr[0] = txtId.Text;
-            dr[1] = txtMaterielName.Text;
-            dr[2] = txtStand.Text;
-            dr[3] = 1;
-            dr[4] = txtInPlace.Text.Trim();
-            dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
-            dr[6] = Global.longid;
-            dr[7] = lblTypeName.Text;
-
-            dt.Rows.InsertAt(dr, 0);
         }
 
         private void addRowMult(DataTable dtBak)
@@ -199,9 +144,9 @@ namespace UI
                 dr[2] = dtBak.Rows[j][2];
                 dr[3] = 1;
                 dr[4] = dtBak.Rows[j][4];
-                dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
                 dr[6] = dtBak.Rows[j][6];
                 dr[7] = dtBak.Rows[j][7];
+                dr[8] = dtBak.Rows[j][8];
 
                 dt.Rows.InsertAt(dr, 0);
             }
@@ -214,7 +159,7 @@ namespace UI
         {
             dt = new DataTable();
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 DataColumn column = new DataColumn();
                 column.DataType = System.Type.GetType("System.String");
@@ -238,9 +183,12 @@ namespace UI
             dgv_Data.Columns[3].HeaderText = "数量";
             dgv_Data.Columns[4].HeaderText = "货位";
             dgv_Data.Columns[5].HeaderText = "入库日期";
+            dgv_Data.Columns[5].Visible = false;
             dgv_Data.Columns[6].HeaderText = "操作员";
             dgv_Data.Columns[6].Visible = false;
             dgv_Data.Columns[7].HeaderText = "机床";
+            dgv_Data.Columns[8].HeaderText = "编号";
+            dgv_Data.Columns[8].Visible = false;
         }
 
         /// <summary>
@@ -250,11 +198,6 @@ namespace UI
         private bool checkInput()
         {
             bool flag = true;
-            if (Convert.ToDateTime(dtpIndate.Value.ToShortDateString()) > Convert.ToDateTime(DateTime.Now.ToShortDateString()))
-            {
-                MessageBox.Show("入库日期不能大于当前日期!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                flag = false;
-            }
 
             if (flag)
             {
@@ -323,19 +266,6 @@ namespace UI
             return flag;
         }
 
-        private void setMain(bool flag)
-        {
-            dtpIndate.Enabled = flag;
-            //txtInPlace.Enabled = flag;
-            //button7.Enabled = flag;
-            txtInMeno.Enabled = flag;
-        }
-        private void initMain()
-        {
-            txtInPlace.Text = string.Empty;
-            txtInMeno.Text = string.Empty;
-        }
-
         private void initSub()
         {
             txtInPlace.Text = string.Empty;
@@ -372,10 +302,6 @@ namespace UI
                 if (i < dt.Rows.Count)
                 {
                     dt.Rows.Remove(dt.Rows[i]);
-                }
-                if (dt.Rows.Count <= 0)
-                {
-                    setMain(true);
                 }
             }
         }

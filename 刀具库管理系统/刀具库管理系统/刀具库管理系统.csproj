@@ -347,6 +347,9 @@
     <EmbeddedResource Include="SelectKnifeUseForm.resx">
       <DependentUpon>SelectKnifeUseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OperateKnifeDisableForm.resx">
+      <DependentUpon>OperateKnifeDisableForm.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -516,6 +519,12 @@
     </Compile>
     <Compile Include="SelectKnifeUseForm.designer.cs">
       <DependentUpon>SelectKnifeUseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OperateKnifeDisableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperateKnifeDisableForm.Designer.cs">
+      <DependentUpon>OperateKnifeDisableForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

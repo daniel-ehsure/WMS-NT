@@ -80,6 +80,7 @@ namespace UI
                 //dr[5] = dtpIndate.Value.ToString("yyyy-MM-dd");
                 dr[6] = Global.longid;
                 dr[7] = dgv_Data.SelectedRows[0].Cells[5].Value.ToString();
+                dr[8] = dgv_Data.SelectedRows[0].Cells[7].Value.ToString();
 
                 dtBak.Rows.Add(dr);
 
